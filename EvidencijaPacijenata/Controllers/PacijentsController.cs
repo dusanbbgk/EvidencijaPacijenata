@@ -84,7 +84,7 @@ namespace EvidencijaPacijenata.Controllers
             {
                 db.Entry(pacijent).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = Session["IDPacijenta"] });
             }
             return View(pacijent);
         }

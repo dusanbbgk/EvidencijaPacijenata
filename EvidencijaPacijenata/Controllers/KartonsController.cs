@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using EvidencijaPacijenata.Models;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using EvidencijaPacijenata.Models;
 
 namespace EvidencijaPacijenata.Controllers
 {
@@ -25,15 +22,13 @@ namespace EvidencijaPacijenata.Controllers
         public ActionResult Details(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Karton karton = db.Kartons.SingleOrDefault(k => k.IDPacijenta == id);
             if (karton == null)
-            {
                 return HttpNotFound();
-            }
-            return View(karton);
+            else if (karton.IDPacijenta != Convert.ToInt32(Session["IDPacijenta"]))
+                return RedirectToAction("Index", "Home");
+            else return View(karton);
         }
 
         // GET: Kartons/Create
