@@ -1,0 +1,107 @@
+﻿@model EvidencijaPacijenata.Models.Karton
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Karton</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DatumVremeNalaza)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DatumVremeNalaza)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Disanje)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Disanje)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Puls)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Puls)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TelesnaTemperatura)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TelesnaTemperatura)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KrvniPritisak)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KrvniPritisak)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Mokraca)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Mokraca)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Stolica)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Stolica)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KrvaSlika)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KrvaSlika)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpecificniPregled)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpecificniPregled)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Korisnik.Ime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Korisnik.Ime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Korisnik1.Ime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Korisnik1.Ime)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

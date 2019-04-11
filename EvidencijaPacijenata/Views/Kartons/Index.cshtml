@@ -1,0 +1,94 @@
+﻿@model IEnumerable<EvidencijaPacijenata.Models.Karton>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DatumVremeNalaza)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Disanje)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Puls)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TelesnaTemperatura)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KrvniPritisak)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Mokraca)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Stolica)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KrvaSlika)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SpecificniPregled)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Korisnik.Ime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Korisnik1.Ime)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DatumVremeNalaza)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Disanje)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Puls)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TelesnaTemperatura)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KrvniPritisak)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Mokraca)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Stolica)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KrvaSlika)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SpecificniPregled)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Korisnik.Ime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Korisnik1.Ime)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

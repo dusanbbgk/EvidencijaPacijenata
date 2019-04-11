@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using EvidencijaPacijenata.Models;
+using System;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace EvidencijaPacijenata.Controllers
@@ -10,7 +9,51 @@ namespace EvidencijaPacijenata.Controllers
     {
         public ActionResult Index()
         {
+            if (TempData["info"] != null)
+            {
+                ViewBag.info = TempData["info"];
+                TempData.Clear();
+            }
             return View();
+        }
+        [HttpPost]
+        public ActionResult PacijentLogin(string KorisnickoIme, string Lozinka)
+        {
+            DateTime dt = DateTime.Now;
+            DateTime dateOnly = dt.Date;
+            using (DBZUstanovaEntities model = new DBZUstanovaEntities())
+            {
+                var pacijent = model.Korisniks.OfType<Pacijent>().SingleOrDefault(p => p.KorisnickoIme == KorisnickoIme && p.Lozinka == Lozinka);
+                if (pacijent != null)
+                {
+                    if (pacijent.Odobren == 0)
+                    {
+                        TempData["info"] = "Nalog Vam nije odobren!";
+                        return RedirectToAction("Index");
+                    }
+                    else if (string.Compare(dateOnly.ToString("yyyy-MM-dd"), pacijent.IstekOsiguranja.ToString("yyyy-MM-dd")) > 0)
+                    {
+                        TempData["info"] = "Osiguranje Vam je isteklo!";
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        Session["IDPacijenta"] = pacijent.ID;
+                        Session["ImePrezime"] = pacijent.Ime + " " + pacijent.Prezime;
+                        return RedirectToAction("Index");
+                    }
+                }
+                else
+                {
+                    TempData["info"] = "Pacijent nije pronađen u bazi!";
+                    return RedirectToAction("Index");
+                }
+            }
+        }
+        public ActionResult Logout()
+        {
+            Session.Abandon();
+            return RedirectToAction("Index");
         }
 
         public ActionResult About()
