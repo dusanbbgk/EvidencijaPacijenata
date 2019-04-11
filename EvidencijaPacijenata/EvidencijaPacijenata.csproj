@@ -124,6 +124,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KartonsController.cs" />
+    <Compile Include="Controllers\PacijentsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -287,6 +288,11 @@
     <Content Include="Views\Kartons\Details.cshtml" />
     <Content Include="Views\Kartons\Edit.cshtml" />
     <Content Include="Views\Kartons\Index.cshtml" />
+    <Content Include="Views\Pacijents\Create.cshtml" />
+    <Content Include="Views\Pacijents\Delete.cshtml" />
+    <Content Include="Views\Pacijents\Details.cshtml" />
+    <Content Include="Views\Pacijents\Edit.cshtml" />
+    <Content Include="Views\Pacijents\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

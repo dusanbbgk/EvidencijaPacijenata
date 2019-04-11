@@ -1,0 +1,153 @@
+﻿@model EvidencijaPacijenata.Models.Pacijent
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Pacijent</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Ime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Prezime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Prezime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KorisnickoIme)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KorisnickoIme)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lozinka)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lozinka)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.JMBG)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.JMBG)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NosilacOsiguranja)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NosilacOsiguranja)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SrodstvoSaNosiocem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SrodstvoSaNosiocem)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDOdeljenja)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDOdeljenja)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDUstanove)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDUstanove)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KrvnaGrupa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KrvnaGrupa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pol)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pol)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Adresa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Adresa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefon)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefon)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IstekOsiguranja)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IstekOsiguranja)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Odobren)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Odobren)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
