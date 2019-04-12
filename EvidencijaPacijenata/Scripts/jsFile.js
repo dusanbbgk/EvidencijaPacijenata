@@ -19,19 +19,19 @@
 }
 
 function proveriRegistracijuPacijenta() {
-    var Ime = $("#Ime").text();
+    /*var Ime = $("#Ime").text();
     var Prezime = $("#Prezime").text();
-    var KorisnickoIme = $("#KorisnickoIme").text();
-    var Lozinka = $("#Lozinka").text();
-    var Lozinka2 = $("#Lozinka2").text();
-    var JMBG = $("#JMBG").text();
+    var KorisnickoIme = $("#KorisnickoIme").text();*/
+    var Lozinka = $("#lozinka1").text();
+    var Lozinka2 = $("#lozinka2").text();
+    /*var JMBG = $("#JMBG").text();
     var NosilacOsiguranja = $("#NosilacOsiguranja").text();
     var SrodstvoSaNosiocem = $("#SrodstvoSaNosiocem").text();
     var KrvnaGrupa = $("#KrvnaGrupa").text();
     var Pol = $("#Pol").text();
     var Adresa = $("#Adresa").text();
     var Telefon = $("#Telefon").text();
-    var Email = $("#Email").text();
+    var Email = $("#Email").text();*/
 
     /*if (!(Ime != "" && Prezime != "" && KorisnickoIme != "" && Lozinka != "" && Lozinka2 != "" && JMBG != "" && NosilacOsiguranja != ""
         && SrodstvoSaNosiocem != "" && KrvnaGrupa != "" && Pol != "" && Adresa != "" && Telefon != "" && Email != "")) {

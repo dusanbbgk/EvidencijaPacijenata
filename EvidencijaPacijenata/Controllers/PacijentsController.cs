@@ -17,7 +17,7 @@ namespace EvidencijaPacijenata.Controllers
         // GET: Pacijents
         public ActionResult Index()
         {
-            return View(db.Korisniks.ToList());
+            return View(db.Korisniks.OfType<Pacijent>().ToList());
         }
 
         // GET: Pacijents/Details/5
@@ -38,6 +38,8 @@ namespace EvidencijaPacijenata.Controllers
         // GET: Pacijents/Create
         public ActionResult Create()
         {
+            if (Session["IDPacijenta"] != null)
+                return RedirectToAction("Index", "Home");
             return View();
         }
 
@@ -48,13 +50,17 @@ namespace EvidencijaPacijenata.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Ime,Prezime,KorisnickoIme,Lozinka,JMBG,NosilacOsiguranja,SrodstvoSaNosiocem,IDOdeljenja,IDUstanove,KrvnaGrupa,Pol,Adresa,Telefon,Email,IstekOsiguranja,Odobren")] Pacijent pacijent)
         {
+            DateTime dt = DateTime.Now;
+            DateTime dateOnly = dt.Date;
+            pacijent.IstekOsiguranja = dateOnly.AddMonths(6);
             if (ModelState.IsValid)
             {
                 db.Korisniks.Add(pacijent);
                 db.SaveChanges();
+                if(Session["IDPacijenta"] == null)
+                    return RedirectToAction("Index", "Home");
                 return RedirectToAction("Index");
             }
-
             return View(pacijent);
         }
 
@@ -84,7 +90,9 @@ namespace EvidencijaPacijenata.Controllers
             {
                 db.Entry(pacijent).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Details", new { id = Session["IDPacijenta"] });
+                if(Session["IDPacijenta"] != null)
+                    return RedirectToAction("Details", new { id = Session["IDPacijenta"] });
+                return RedirectToAction("Index");
             }
             return View(pacijent);
         }
