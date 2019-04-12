@@ -123,8 +123,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IzvestajsController.cs" />
     <Compile Include="Controllers\KartonsController.cs" />
     <Compile Include="Controllers\PacijentsController.cs" />
+    <Compile Include="Controllers\ResetPasswordController.cs" />
+    <Compile Include="Controllers\UputsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -293,6 +296,17 @@
     <Content Include="Views\Pacijents\Details.cshtml" />
     <Content Include="Views\Pacijents\Edit.cshtml" />
     <Content Include="Views\Pacijents\Index.cshtml" />
+    <Content Include="Views\Izvestajs\Create.cshtml" />
+    <Content Include="Views\Izvestajs\Delete.cshtml" />
+    <Content Include="Views\Izvestajs\Details.cshtml" />
+    <Content Include="Views\Izvestajs\Edit.cshtml" />
+    <Content Include="Views\Izvestajs\Index.cshtml" />
+    <Content Include="Views\Uputs\Create.cshtml" />
+    <Content Include="Views\Uputs\Delete.cshtml" />
+    <Content Include="Views\Uputs\Details.cshtml" />
+    <Content Include="Views\Uputs\Edit.cshtml" />
+    <Content Include="Views\Uputs\Index.cshtml" />
+    <Content Include="Views\ResetPassword\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

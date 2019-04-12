@@ -44,3 +44,20 @@ function proveriRegistracijuPacijenta() {
     }
     return true;
 }
+
+function resetPassword() {
+    
+    var KorisnickoIme = $("#korisnickoIme").val();
+    var email = $("#email").val();
+    var Lozinka = $("#lozinka").val();
+    var Lozinka2 = document.getElementById("lozinka2").value;
+    if (KorisnickoIme == "" || email == "" || Lozinka == "" || Lozinka2 == "") {
+        alert("Morate popuniti sva polja!");
+        return false;
+    }
+    if (Lozinka != Lozinka2) {
+        alert("Ponovljena lozinka nije ista!");
+        return false;
+    }
+    return true;
+}

@@ -9,6 +9,11 @@ namespace EvidencijaPacijenata.Controllers
     {
         public ActionResult Index()
         {
+            if (Session["resetPass"] != null)
+            {
+                ViewBag.resetPass = Session["resetPass"];
+                Session["resetPass"] = null;
+            }
             if (TempData["info"] != null)
             {
                 ViewBag.info = TempData["info"];

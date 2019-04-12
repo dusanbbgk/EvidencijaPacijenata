@@ -1,0 +1,51 @@
+﻿@model EvidencijaPacijenata.Models.Izvestaj
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Izvestaj</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DatumPregleda)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DatumPregleda)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dijagnoza)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dijagnoza)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Korisnik.Ime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Korisnik.Ime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Korisnik1.Ime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Korisnik1.Ime)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
