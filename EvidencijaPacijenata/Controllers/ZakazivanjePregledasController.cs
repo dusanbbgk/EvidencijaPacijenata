@@ -1,5 +1,6 @@
 ﻿using EvidencijaPacijenata.Models;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -55,6 +56,9 @@ namespace EvidencijaPacijenata.Controllers
                               lop1.LekarOpstePrakse.Ime,
                               lop1.LekarOpstePrakse.Prezime
                           }), "ID", "Ime", "Prezime");
+                string[] strings = new[] { "8:00", "8:20" };
+                SelectList termini = new SelectList(strings);
+                ViewBag.VremePregleda = termini;
                 return View();
             }
             //ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>(), "ID", "Ime");
@@ -69,6 +73,10 @@ namespace EvidencijaPacijenata.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,IDPacijenta,IDLekara,DatumPregleda,DatumZakazivanja,VremePregleda")] ZakazivanjePregleda zakazivanjePregleda)
         {
+            DateTime dt = DateTime.Now;
+            DateTime dateOnly = dt.Date;
+            zakazivanjePregleda.DatumZakazivanja = dateOnly;
+            zakazivanjePregleda.IDPacijenta = Convert.ToInt32(Session["IDPacijenta"]);
             if (ModelState.IsValid)
             {
                 db.ZakazivanjePregledas.Add(zakazivanjePregleda);
