@@ -128,6 +128,7 @@
     <Compile Include="Controllers\PacijentsController.cs" />
     <Compile Include="Controllers\ResetPasswordController.cs" />
     <Compile Include="Controllers\UputsController.cs" />
+    <Compile Include="Controllers\ZakazivanjePregledasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -307,6 +308,11 @@
     <Content Include="Views\Uputs\Edit.cshtml" />
     <Content Include="Views\Uputs\Index.cshtml" />
     <Content Include="Views\ResetPassword\Index.cshtml" />
+    <Content Include="Views\ZakazivanjePregledas\Create.cshtml" />
+    <Content Include="Views\ZakazivanjePregledas\Delete.cshtml" />
+    <Content Include="Views\ZakazivanjePregledas\Details.cshtml" />
+    <Content Include="Views\ZakazivanjePregledas\Edit.cshtml" />
+    <Content Include="Views\ZakazivanjePregledas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

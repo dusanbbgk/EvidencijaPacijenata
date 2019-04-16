@@ -1,0 +1,58 @@
+﻿@model IEnumerable<EvidencijaPacijenata.Models.ZakazivanjePregleda>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DatumPregleda)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DatumZakazivanja)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VremePregleda)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Korisnik.Ime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Korisnik1.Ime)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DatumPregleda)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DatumZakazivanja)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VremePregleda)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Korisnik.Ime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Korisnik1.Ime)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

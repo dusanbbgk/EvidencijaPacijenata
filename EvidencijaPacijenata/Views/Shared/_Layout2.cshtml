@@ -56,6 +56,7 @@
                 else
                 {
                     <ul class="nav navbar-nav">
+                        <li class="nav-item"><a href="@Url.Action("Create","ZakazivanjePregledas")" class="nav-link">Zakaži pregled</a></li>
                         <li class="nav-item"><a href="@Url.Action("Details","Kartons", new { id = Session["IDPacijenta"] })" class="nav-link">Moj Karton</a></li>
                         <li class="nav-item"><a href="@Url.Action("Details", "Pacijents", new { id = Session["IDPacijenta"] })" class="nav-link">@Session["ImePrezime"]</a></li>
                         <li class="nav-item"><a href="@Url.Action("Logout", "Home")" class="nav-link">(Odjavi se)</a></li>
