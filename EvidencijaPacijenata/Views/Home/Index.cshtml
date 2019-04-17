@@ -2,9 +2,16 @@
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
+@{
+    var dateNow = DateTime.Now;
+    var pocetak = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, 17, 40, 0);
+}
 
 <div class="container pt-5 text-center">
     <div class="row">
-        <div class="col-4 h3 bg-info">@ViewBag.info@ViewBag.resetPass</div>
+        <div class="col-4 h3 bg-info">
+            @ViewBag.info@ViewBag.resetPass
+            @pocetak
+        </div>
     </div>
 </div>

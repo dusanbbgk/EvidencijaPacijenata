@@ -44,28 +44,38 @@ namespace EvidencijaPacijenata.Controllers
                 var IDUstanove = (from x in db.Korisniks.OfType<Pacijent>()
                                   where x.ID == IDPacijenta
                                   select x.IDUstanove).SingleOrDefault();
-                //ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<LekarOpstePrakse>(), "ID", "Ime");
-                ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<LekarOpstePrakse>().Join(db.Odeljenjes,
-                              lop => lop.ID,
-                              od => od.ID,
-                              (lop, od) => new { LekarOpstePrakse = lop, Odeljenje = od })
-                          .Where(od1 => od1.Odeljenje.IDUstanove == IDUstanove)
-                          .Select(lop1 => new
-                          {
-                              lop1.LekarOpstePrakse.ID,
-                              lop1.LekarOpstePrakse.Ime,
-                              lop1.LekarOpstePrakse.Prezime
-                          }), "ID", "Ime", "Prezime");
-                string[] strings = new[] { "8:00", "8:20" };
-                SelectList termini = new SelectList(strings);
-                ViewBag.VremePregleda = termini;
+                ViewBag.IDLekara = new SelectList(from k in db.Korisniks.OfType<LekarOpstePrakse>()
+                              join o in db.Odeljenjes on k.IDOdeljenja equals o.ID
+                              where o.IDUstanove == IDUstanove
+                              select new
+                              {
+                                  k.ID,
+                                  k.Ime
+                              }, "ID", "Ime");
+
+                List<SelectListItem> termini = new List<SelectListItem>();
+                var dateNow = DateTime.Now;
+                var pocetak = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, 8, 0, 0);
+                var kraj = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, 16, 0, 0);
+
+                while (DateTime.Compare(pocetak, kraj) <= 0)
+                {
+                    termini.Add(new SelectListItem { Text = pocetak.ToString("hh:mm"), Value = pocetak.ToString("hh:mm") });
+                    pocetak = pocetak.AddMinutes(20);   
+                }
+                SelectList listaTermina = new SelectList(termini, "Value", "Text");
+                ViewBag.VremePregleda = listaTermina;
                 return View();
             }
-            //ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>(), "ID", "Ime");
             else
                 return RedirectToAction("Index", "Home");
         }
-
+        [HttpPost]
+        public ActionResult Termini(int IDLekara)
+        {
+            SelectList VremePregleda = new SelectList(from zp in db.ZakazivanjePregledas where zp.IDLekara == IDLekara select new { zp.VremePregleda }, "Value");
+            return Json(VremePregleda);
+        }
         // POST: ZakazivanjePregledas/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
