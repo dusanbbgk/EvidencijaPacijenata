@@ -11,7 +11,17 @@
     <div class="row">
         <div class="col-4 h3 bg-info">
             @ViewBag.info@ViewBag.resetPass
-            @pocetak
+
+        </div>
+    </div>
+    <div>
+        <div>
+            <form action="/Home/LekarLogin" method="post" name="forma">
+                @ViewBag.notFound<br />
+                Korisnicko ime: <input type="text" name="KorisnickoIme" />
+                Lozinka: <input type="password" name="Lozinka" />
+                <input type="submit" value="Login" onclick="return proveriLogin();" />
+            </form>
         </div>
     </div>
 </div>

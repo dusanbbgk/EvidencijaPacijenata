@@ -55,6 +55,33 @@ namespace EvidencijaPacijenata.Controllers
                 }
             }
         }
+        [HttpPost]
+        public ActionResult LekarLogin(string KorisnickoIme, string Lozinka) {
+            using (DBZUstanovaEntities model = new DBZUstanovaEntities())
+            {
+                LekarOpstePrakse LOP = model.Korisniks.OfType<LekarOpstePrakse>().SingleOrDefault(k => k.KorisnickoIme == KorisnickoIme && k.Lozinka == Lozinka);
+                if (LOP != null)
+                {
+                    Session["IDLekara"] = LOP.ID;
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    LekarSpecijalista LS = model.Korisniks.OfType<LekarSpecijalista>().SingleOrDefault(k => k.KorisnickoIme == KorisnickoIme && k.Lozinka == Lozinka);
+                    if (LS != null)
+                    {
+                        Session["IDLekara"] = LS.ID;
+                        Session["Specijalizacija"] = LS.Specijalizacija;
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        TempData["info"] = "Lekar nije pronađen u bazi!";
+                        return RedirectToAction("Index");
+                    }
+                }
+            }
+        }
         public ActionResult Logout()
         {
             Session.Abandon();

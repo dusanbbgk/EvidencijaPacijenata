@@ -9,7 +9,6 @@
         var procemessage = "<option value='0'> Please wait...</option>";
         $("#divTermini").html(procemessage).show();
         var url = "/ZakazivanjePregledas/Termini/";
-
         $.ajax({
             url: url,
             data: { IDLekara: IDLekara },
@@ -18,7 +17,7 @@
             success: function (data) {
                 var markup = "<option value='0'>Izaberite termin</option>";
                 for (var x = 0; x < data.length; x++) {
-                    markup += "<option value=" + data[x].Value + ">" + data[x].Value + "</option>";
+                    markup += "<option value=" + data[x].Text + ">" + data[x].Text + "</option>";
                 }
                 $("#divTermini").html(markup).show();
             },
