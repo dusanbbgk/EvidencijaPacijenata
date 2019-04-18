@@ -14,10 +14,24 @@ namespace EvidencijaPacijenata.Controllers
         private DBZUstanovaEntities db = new DBZUstanovaEntities();
 
         // GET: ZakazivanjePregledas
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            var zakazivanjePregledas = db.ZakazivanjePregledas.Include(z => z.Korisnik).Include(z => z.Korisnik1);
-            return View(zakazivanjePregledas.ToList());
+            DateTime dt = DateTime.Now;
+            DateTime dateOnly = dt.Date;
+            if (id == null)
+            {
+                var zakazivanjePregledas = db.ZakazivanjePregledas.Include(z => z.Korisnik).Include(z => z.Korisnik1);
+                return View(zakazivanjePregledas.ToList());
+            }
+            else if (Convert.ToInt32(Session["IDLekara"]) == id)
+            {
+                var zakazaniPregledi = (from zp in db.ZakazivanjePregledas
+                                        where zp.DatumPregleda == dateOnly && zp.IDLekara == id
+                                        select zp);
+                return View(zakazaniPregledi.ToList());
+            }
+            else
+                return RedirectToAction("Index", "Home");
         }
 
         // GET: ZakazivanjePregledas/Details/5
@@ -45,13 +59,13 @@ namespace EvidencijaPacijenata.Controllers
                                   where x.ID == IDPacijenta
                                   select x.IDUstanove).SingleOrDefault();
                 ViewBag.IDLekara = new SelectList(from k in db.Korisniks.OfType<LekarOpstePrakse>()
-                              join o in db.Odeljenjes on k.IDOdeljenja equals o.ID
-                              where o.IDUstanove == IDUstanove
-                              select new
-                              {
-                                  k.ID,
-                                  k.Ime
-                              }, "ID", "Ime");
+                                                  join o in db.Odeljenjes on k.IDOdeljenja equals o.ID
+                                                  where o.IDUstanove == IDUstanove
+                                                  select new
+                                                  {
+                                                      k.ID,
+                                                      k.Ime
+                                                  }, "ID", "Ime");
 
                 List<SelectListItem> termini = new List<SelectListItem>();
                 var dateNow = DateTime.Now;
@@ -61,7 +75,7 @@ namespace EvidencijaPacijenata.Controllers
                 while (DateTime.Compare(pocetak, kraj) <= 0)
                 {
                     termini.Add(new SelectListItem { Text = pocetak.ToString("hh:mm"), Value = pocetak.ToString("hh:mm") });
-                    pocetak = pocetak.AddMinutes(20);   
+                    pocetak = pocetak.AddMinutes(20);
                 }
                 SelectList listaTermina = new SelectList(termini, "Value", "Text");
                 ViewBag.VremePregleda = listaTermina;

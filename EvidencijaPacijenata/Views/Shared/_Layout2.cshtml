@@ -65,7 +65,7 @@
                 else if (Session["IDPacijenta"] == null && Session["IDLekara"] != null)
                 {
                     <ul class="nav navbar-nav">
-                        <li class="nav-item"><a href="@Url.Action("Index", "ZakazivanjePregledas")" class="nav-link">Zakazani pregledi</a></li>
+                        <li class="nav-item"><a href="@Url.Action("Index", "ZakazivanjePregledas", new { id = Session["IDLekara"] })" class="nav-link">Zakazani pregledi</a></li>
                         @if (Session["Specijalizacija"] != null)
                         {
                             <li class="nav-item"><a href="@Url.Action("Details", "Odeljenjes", new { id = Session["IDOdeljenjaLekara"] })" class="nav-link">Vaše odeljenje</a></li>
