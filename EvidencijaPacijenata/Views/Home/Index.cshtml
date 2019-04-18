@@ -6,22 +6,23 @@
     var dateNow = DateTime.Now;
     var pocetak = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, 17, 40, 0);
 }
+@section LekarLogin
+    {
+    @if (Session["IDLekara"] == null && Session["IDPacijenta"] == null)
+    {
 
-<div class="container pt-5 text-center">
-    <div class="row">
-        <div class="col-4 h3 bg-info">
-            @ViewBag.info@ViewBag.resetPass
+        <form action="~/Home/LekarLogin" method="post" name="forma2">
+            @ViewBag.notFound<br />
+            Korisnicko ime: <input type="text" name="KorisnickoIme" /><br />
+            Lozinka: <input type="password" name="Lozinka" /><br />
+            <input type="submit" value="Login" onclick="return proveriLogin();" />
+        </form>
+    }
+    else
+    {
+        <p></p>
+    }
+}
+@ViewBag.info@ViewBag.resetPass
 
-        </div>
-    </div>
-    <div>
-        <div>
-            <form action="/Home/LekarLogin" method="post" name="forma">
-                @ViewBag.notFound<br />
-                Korisnicko ime: <input type="text" name="KorisnickoIme" />
-                Lozinka: <input type="password" name="Lozinka" />
-                <input type="submit" value="Login" onclick="return proveriLogin();" />
-            </form>
-        </div>
-    </div>
-</div>
+

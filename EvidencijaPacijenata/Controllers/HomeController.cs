@@ -63,6 +63,7 @@ namespace EvidencijaPacijenata.Controllers
                 if (LOP != null)
                 {
                     Session["IDLekara"] = LOP.ID;
+                    Session["ImePrezime"] = LOP.Ime + " " + LOP.Prezime;
                     return RedirectToAction("Index");
                 }
                 else
@@ -71,7 +72,9 @@ namespace EvidencijaPacijenata.Controllers
                     if (LS != null)
                     {
                         Session["IDLekara"] = LS.ID;
+                        Session["ImePrezime"] = LS.Ime + " " + LS.Prezime;
                         Session["Specijalizacija"] = LS.Specijalizacija;
+                        Session["IDOdeljenjaLekara"] = LS.IDOdeljenja;
                         return RedirectToAction("Index");
                     }
                     else

@@ -29,15 +29,5 @@ namespace EvidencijaPacijenata.Models
 
         public virtual Odeljenje Odeljenje { get; set; }
         public virtual Ustanova Ustanova { get; set; }
-
-        public Pacijent() { }
-        public Pacijent(string KorisnickoIme, string Lozinka)
-        {
-            DateTime dt = DateTime.Now;
-            DateTime dateOnly = dt.Date;
-            using (DBZUstanovaEntities model = new DBZUstanovaEntities())
-            {
-            }
-        }
     }
 }

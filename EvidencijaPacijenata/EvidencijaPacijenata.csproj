@@ -125,6 +125,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IzvestajsController.cs" />
     <Compile Include="Controllers\KartonsController.cs" />
+    <Compile Include="Controllers\LekarOpstePraksesController.cs" />
+    <Compile Include="Controllers\LekarSpecijalistasController.cs" />
+    <Compile Include="Controllers\OdeljenjesController.cs" />
     <Compile Include="Controllers\PacijentsController.cs" />
     <Compile Include="Controllers\ResetPasswordController.cs" />
     <Compile Include="Controllers\UputsController.cs" />
@@ -314,6 +317,21 @@
     <Content Include="Views\ZakazivanjePregledas\Details.cshtml" />
     <Content Include="Views\ZakazivanjePregledas\Edit.cshtml" />
     <Content Include="Views\ZakazivanjePregledas\Index.cshtml" />
+    <Content Include="Views\LekarOpstePrakses\Create.cshtml" />
+    <Content Include="Views\LekarOpstePrakses\Delete.cshtml" />
+    <Content Include="Views\LekarOpstePrakses\Details.cshtml" />
+    <Content Include="Views\LekarOpstePrakses\Edit.cshtml" />
+    <Content Include="Views\LekarOpstePrakses\Index.cshtml" />
+    <Content Include="Views\Odeljenjes\Create.cshtml" />
+    <Content Include="Views\Odeljenjes\Delete.cshtml" />
+    <Content Include="Views\Odeljenjes\Details.cshtml" />
+    <Content Include="Views\Odeljenjes\Edit.cshtml" />
+    <Content Include="Views\Odeljenjes\Index.cshtml" />
+    <Content Include="Views\LekarSpecijalistas\Create.cshtml" />
+    <Content Include="Views\LekarSpecijalistas\Delete.cshtml" />
+    <Content Include="Views\LekarSpecijalistas\Details.cshtml" />
+    <Content Include="Views\LekarSpecijalistas\Edit.cshtml" />
+    <Content Include="Views\LekarSpecijalistas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
