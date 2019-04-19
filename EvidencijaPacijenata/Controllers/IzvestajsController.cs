@@ -37,10 +37,21 @@ namespace EvidencijaPacijenata.Controllers
         }
 
         // GET: Izvestajs/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.IDLekara = new SelectList(db.Korisniks, "ID", "Ime");
-            ViewBag.IDPacijenta = new SelectList(db.Korisniks, "ID", "Ime");
+            var IDLekara = Convert.ToInt32(Session["IDLekara"]);
+            if (id.HasValue)
+            {
+                ViewBag.IDPacijenta = new SelectList(from p in db.Korisniks.OfType<Pacijent>() where p.ID == id select p, "ID", "Ime");
+                if (Session["Specijalizacija"] == null)
+                    ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<LekarOpstePrakse>().Where(lop => lop.ID == IDLekara), "ID", "Ime");
+                else
+                    ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<LekarSpecijalista>().Where(ls => ls.ID == IDLekara), "ID", "Ime");
+            }
+            else {
+                ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<Lekar>(), "ID", "Ime");
+                ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>(), "ID", "Ime");
+            }
             return View();
         }
 
@@ -51,6 +62,9 @@ namespace EvidencijaPacijenata.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,IDPacijenta,IDLekara,DatumPregleda,Dijagnoza")] Izvestaj izvestaj)
         {
+            DateTime dt = DateTime.Now;
+            DateTime dateOnly = dt.Date;
+            izvestaj.DatumPregleda = dateOnly;
             if (ModelState.IsValid)
             {
                 db.Izvestajs.Add(izvestaj);
