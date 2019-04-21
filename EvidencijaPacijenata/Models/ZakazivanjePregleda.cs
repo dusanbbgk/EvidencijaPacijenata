@@ -18,8 +18,9 @@ namespace EvidencijaPacijenata.Models
         public int IDPacijenta { get; set; }
         public int IDLekara { get; set; }
         public System.DateTime DatumPregleda { get; set; }
+        public System.TimeSpan VremePregleda { get; set; }
         public System.DateTime DatumZakazivanja { get; set; }
-        public Nullable<System.TimeSpan> VremePregleda { get; set; }
+        public int ZavrsenPregled { get; set; }
     
         public virtual Korisnik Korisnik { get; set; }
         public virtual Korisnik Korisnik1 { get; set; }

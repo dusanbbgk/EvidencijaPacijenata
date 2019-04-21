@@ -18,5 +18,6 @@ namespace EvidencijaPacijenata.Models
         public string Naslov { get; set; }
         public string Tekst { get; set; }
         public System.DateTime DatumObjave { get; set; }
+        public string Slika { get; set; }
     }
 }

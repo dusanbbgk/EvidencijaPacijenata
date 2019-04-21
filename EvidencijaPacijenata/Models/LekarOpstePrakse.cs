@@ -14,8 +14,5 @@ namespace EvidencijaPacijenata.Models
     
     public partial class LekarOpstePrakse : Lekar
     {
-        public string ImePrezime() {
-            return Ime + " " + Prezime;
-        }
     }
 }

@@ -16,13 +16,15 @@ namespace EvidencijaPacijenata.Models
     {
         public int ID { get; set; }
         public int IDPacijenta { get; set; }
-        public int IDLekara { get; set; }
+        public int IDLekaraOd { get; set; }
+        public int IDLekaraKome { get; set; }
         public System.DateTime DatumPregleda { get; set; }
         public int IDOdeljenja { get; set; }
         public int ZavrsenPregled { get; set; }
     
         public virtual Korisnik Korisnik { get; set; }
         public virtual Korisnik Korisnik1 { get; set; }
+        public virtual Korisnik Korisnik2 { get; set; }
         public virtual Odeljenje Odeljenje { get; set; }
     }
 }

@@ -19,6 +19,11 @@ namespace EvidencijaPacijenata.Controllers
                 ViewBag.info = TempData["info"];
                 TempData.Clear();
             }
+            if (Session["NemaKarton"] != null)
+            {
+                ViewBag.NemaKarton = Session["NemaKarton"];
+                Session["NemaKarton"] = null;    
+            }
             return View();
         }
         [HttpPost]

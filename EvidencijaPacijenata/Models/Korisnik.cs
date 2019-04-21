@@ -24,6 +24,7 @@ namespace EvidencijaPacijenata.Models
             this.RadnoVremeLekaras = new HashSet<RadnoVremeLekara>();
             this.Uputs = new HashSet<Uput>();
             this.Uputs1 = new HashSet<Uput>();
+            this.Uputs2 = new HashSet<Uput>();
             this.ZakazivanjePregledas = new HashSet<ZakazivanjePregleda>();
             this.ZakazivanjePregledas1 = new HashSet<ZakazivanjePregleda>();
         }
@@ -48,6 +49,8 @@ namespace EvidencijaPacijenata.Models
         public virtual ICollection<Uput> Uputs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Uput> Uputs1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Uput> Uputs2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ZakazivanjePregleda> ZakazivanjePregledas { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

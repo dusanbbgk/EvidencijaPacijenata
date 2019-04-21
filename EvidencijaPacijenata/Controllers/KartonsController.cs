@@ -25,7 +25,10 @@ namespace EvidencijaPacijenata.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             Karton karton = db.Kartons.SingleOrDefault(k => k.IDPacijenta == id);
             if (karton == null)
-                return HttpNotFound();
+            {
+                Session["NemaKarton"] = "Nemate karton!";
+                return RedirectToAction("Index", "Home");
+            }
             else if (karton.IDPacijenta != Convert.ToInt32(Session["IDPacijenta"]))
                 return RedirectToAction("Index", "Home");
             else return View(karton);

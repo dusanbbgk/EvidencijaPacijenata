@@ -27,6 +27,12 @@
         <th>
             @Html.DisplayNameFor(model => model.Odeljenje.Naziv)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Korisnik2.Ime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Korisnik11.Ime)
+        </th>
         <th></th>
     </tr>
 
@@ -46,6 +52,12 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Odeljenje.Naziv)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Korisnik2.Ime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Korisnik11.Ime)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |

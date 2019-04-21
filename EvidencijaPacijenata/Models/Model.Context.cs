@@ -30,7 +30,6 @@ namespace EvidencijaPacijenata.Models
         public virtual DbSet<Korisnik> Korisniks { get; set; }
         public virtual DbSet<Odeljenje> Odeljenjes { get; set; }
         public virtual DbSet<RadnoVremeLekara> RadnoVremeLekaras { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Uput> Uputs { get; set; }
         public virtual DbSet<Ustanova> Ustanovas { get; set; }
         public virtual DbSet<Vesti> Vestis { get; set; }

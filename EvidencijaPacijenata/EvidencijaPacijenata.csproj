@@ -156,7 +156,6 @@
     <Compile Include="Models\LekarSpecijalista.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ListaTermina.cs" />
     <Compile Include="Models\Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -179,9 +178,6 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RadnoVremeLekara.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Uput.cs">
@@ -210,20 +206,13 @@
     <Content Include="Content\Site.css" />
     <Content Include="Models\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model.Context.cs</LastGenOutput>
       <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model.edmx</DependentUpon>
       <LastGenOutput>Model.cs</LastGenOutput>
-    </Content>
-    <EntityDeploy Include="Models\Model.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model.edmx.diagram">
-      <DependentUpon>Model.edmx</DependentUpon>
     </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -247,6 +236,13 @@
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
+    <EntityDeploy Include="Models\Model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model.edmx.diagram">
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -306,11 +302,6 @@
     <Content Include="Views\Izvestajs\Details.cshtml" />
     <Content Include="Views\Izvestajs\Edit.cshtml" />
     <Content Include="Views\Izvestajs\Index.cshtml" />
-    <Content Include="Views\Uputs\Create.cshtml" />
-    <Content Include="Views\Uputs\Delete.cshtml" />
-    <Content Include="Views\Uputs\Details.cshtml" />
-    <Content Include="Views\Uputs\Edit.cshtml" />
-    <Content Include="Views\Uputs\Index.cshtml" />
     <Content Include="Views\ResetPassword\Index.cshtml" />
     <Content Include="Views\ZakazivanjePregledas\Create.cshtml" />
     <Content Include="Views\ZakazivanjePregledas\Delete.cshtml" />
@@ -332,6 +323,11 @@
     <Content Include="Views\LekarSpecijalistas\Details.cshtml" />
     <Content Include="Views\LekarSpecijalistas\Edit.cshtml" />
     <Content Include="Views\LekarSpecijalistas\Index.cshtml" />
+    <Content Include="Views\Uputs\Create.cshtml" />
+    <Content Include="Views\Uputs\Delete.cshtml" />
+    <Content Include="Views\Uputs\Details.cshtml" />
+    <Content Include="Views\Uputs\Edit.cshtml" />
+    <Content Include="Views\Uputs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

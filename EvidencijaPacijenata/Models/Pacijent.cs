@@ -10,8 +10,8 @@
 namespace EvidencijaPacijenata.Models
 {
     using System;
-    using System.Linq;
-
+    using System.Collections.Generic;
+    
     public partial class Pacijent : Korisnik
     {
         public string JMBG { get; set; }
@@ -26,7 +26,7 @@ namespace EvidencijaPacijenata.Models
         public string Email { get; set; }
         public System.DateTime IstekOsiguranja { get; set; }
         public int Odobren { get; set; }
-
+    
         public virtual Odeljenje Odeljenje { get; set; }
         public virtual Ustanova Ustanova { get; set; }
     }

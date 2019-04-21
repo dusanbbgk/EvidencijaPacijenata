@@ -18,15 +18,15 @@ namespace EvidencijaPacijenata.Controllers
         {
             DateTime dt = DateTime.Now;
             DateTime dateOnly = dt.Date;
-            if (id == null)
+            if (id == null && Convert.ToInt32(Session["IDAdmina"]) == id)
             {
                 var zakazivanjePregledas = db.ZakazivanjePregledas.Include(z => z.Korisnik).Include(z => z.Korisnik1);
                 return View(zakazivanjePregledas.ToList());
             }
-            else if (Convert.ToInt32(Session["IDLekara"]) == id)
+            if (Convert.ToInt32(Session["IDLekara"]) == id)
             {
                 var zakazaniPregledi = (from zp in db.ZakazivanjePregledas
-                                        where zp.DatumPregleda == dateOnly && zp.IDLekara == id
+                                        where zp.DatumPregleda == dateOnly && zp.IDLekara == id && zp.ZavrsenPregled == 0
                                         select zp);
                 return View(zakazaniPregledi.ToList());
             }
@@ -101,6 +101,7 @@ namespace EvidencijaPacijenata.Controllers
             DateTime dateOnly = dt.Date;
             zakazivanjePregleda.DatumZakazivanja = dateOnly;
             zakazivanjePregleda.IDPacijenta = Convert.ToInt32(Session["IDPacijenta"]);
+            zakazivanjePregleda.ZavrsenPregled = 0;
             if (ModelState.IsValid)
             {
                 db.ZakazivanjePregledas.Add(zakazivanjePregleda);

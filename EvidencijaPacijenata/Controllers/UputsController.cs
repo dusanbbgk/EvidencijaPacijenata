@@ -17,7 +17,7 @@ namespace EvidencijaPacijenata.Controllers
         // GET: Uputs
         public ActionResult Index()
         {
-            var uputs = db.Uputs.Include(u => u.Korisnik).Include(u => u.Korisnik1).Include(u => u.Odeljenje);
+            var uputs = db.Uputs.Include(u => u.Korisnik).Include(u => u.Korisnik1).Include(u => u.Odeljenje).Include(u => u.Korisnik2);
             return View(uputs.ToList());
         }
 
@@ -42,6 +42,8 @@ namespace EvidencijaPacijenata.Controllers
             ViewBag.IDLekara = new SelectList(db.Korisniks, "ID", "Ime");
             ViewBag.IDPacijenta = new SelectList(db.Korisniks, "ID", "Ime");
             ViewBag.IDOdeljenja = new SelectList(db.Odeljenjes, "ID", "Naziv");
+            ViewBag.IDLekaraKome = new SelectList(db.Korisniks, "ID", "Ime");
+            ViewBag.IDLekaraOd = new SelectList(db.Korisniks, "ID", "Ime");
             return View();
         }
 
@@ -50,7 +52,7 @@ namespace EvidencijaPacijenata.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,IDPacijenta,IDLekara,DatumPregleda,IDOdeljenja,ZavrsenPregled")] Uput uput)
+        public ActionResult Create([Bind(Include = "ID,IDPacijenta,IDLekara,DatumPregleda,IDOdeljenja,ZavrsenPregled,IDLekaraOd,IDLekaraKome")] Uput uput)
         {
             if (ModelState.IsValid)
             {
@@ -59,9 +61,11 @@ namespace EvidencijaPacijenata.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IDLekara = new SelectList(db.Korisniks, "ID", "Ime", uput.IDLekara);
+            //ViewBag.IDLekara = new SelectList(db.Korisniks, "ID", "Ime", uput.IDLekara);
             ViewBag.IDPacijenta = new SelectList(db.Korisniks, "ID", "Ime", uput.IDPacijenta);
             ViewBag.IDOdeljenja = new SelectList(db.Odeljenjes, "ID", "Naziv", uput.IDOdeljenja);
+            ViewBag.IDLekaraKome = new SelectList(db.Korisniks, "ID", "Ime", uput.IDLekaraKome);
+            ViewBag.IDLekaraOd = new SelectList(db.Korisniks, "ID", "Ime", uput.IDLekaraOd);
             return View(uput);
         }
 
@@ -77,9 +81,11 @@ namespace EvidencijaPacijenata.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.IDLekara = new SelectList(db.Korisniks, "ID", "Ime", uput.IDLekara);
+            //ViewBag.IDLekara = new SelectList(db.Korisniks, "ID", "Ime", uput.IDLekara);
             ViewBag.IDPacijenta = new SelectList(db.Korisniks, "ID", "Ime", uput.IDPacijenta);
             ViewBag.IDOdeljenja = new SelectList(db.Odeljenjes, "ID", "Naziv", uput.IDOdeljenja);
+            ViewBag.IDLekaraKome = new SelectList(db.Korisniks, "ID", "Ime", uput.IDLekaraKome);
+            ViewBag.IDLekaraOd = new SelectList(db.Korisniks, "ID", "Ime", uput.IDLekaraOd);
             return View(uput);
         }
 
@@ -88,7 +94,7 @@ namespace EvidencijaPacijenata.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,IDPacijenta,IDLekara,DatumPregleda,IDOdeljenja,ZavrsenPregled")] Uput uput)
+        public ActionResult Edit([Bind(Include = "ID,IDPacijenta,IDLekara,DatumPregleda,IDOdeljenja,ZavrsenPregled,IDLekaraOd,IDLekaraKome")] Uput uput)
         {
             if (ModelState.IsValid)
             {
@@ -96,9 +102,11 @@ namespace EvidencijaPacijenata.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IDLekara = new SelectList(db.Korisniks, "ID", "Ime", uput.IDLekara);
+            //ViewBag.IDLekara = new SelectList(db.Korisniks, "ID", "Ime", uput.IDLekara);
             ViewBag.IDPacijenta = new SelectList(db.Korisniks, "ID", "Ime", uput.IDPacijenta);
             ViewBag.IDOdeljenja = new SelectList(db.Odeljenjes, "ID", "Naziv", uput.IDOdeljenja);
+            ViewBag.IDLekaraKome = new SelectList(db.Korisniks, "ID", "Ime", uput.IDLekaraKome);
+            ViewBag.IDLekaraOd = new SelectList(db.Korisniks, "ID", "Ime", uput.IDLekaraOd);
             return View(uput);
         }
 

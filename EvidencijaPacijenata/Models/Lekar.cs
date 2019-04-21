@@ -16,6 +16,7 @@ namespace EvidencijaPacijenata.Models
     {
         public int IDOdeljenja { get; set; }
         public string Licenca { get; set; }
+        public string Slika { get; set; }
     
         public virtual Odeljenje Odeljenje { get; set; }
     }

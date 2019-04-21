@@ -57,6 +57,7 @@
           <Property Name="IDOdeljenja" Type="int" Nullable="false" />
           <Property Name="Licenca" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Specijalizacija" Type="nvarchar" MaxLength="60" />
+          <Property Name="Slika" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Odeljenje">
           <Key>
@@ -94,23 +95,14 @@
           <Property Name="Pocetak" Type="time" Precision="7" Nullable="false" />
           <Property Name="Kraj" Type="time" Precision="7" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="Uput">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IDPacijenta" Type="int" Nullable="false" />
-          <Property Name="IDLekara" Type="int" Nullable="false" />
+          <Property Name="IDLekaraOd" Type="int" Nullable="false" />
+          <Property Name="IDLekaraKome" Type="int" Nullable="false" />
           <Property Name="DatumPregleda" Type="date" Nullable="false" />
           <Property Name="IDOdeljenja" Type="int" Nullable="false" />
           <Property Name="ZavrsenPregled" Type="int" Nullable="false" />
@@ -124,7 +116,7 @@
           <Property Name="Adresa" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Telefon" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="60" Nullable="false" />
-          <Property Name="Slika" Type="varchar" MaxLength="50" />
+          <Property Name="Slika" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Vesti">
           <Key>
@@ -134,6 +126,7 @@
           <Property Name="Naslov" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Tekst" Type="text" Nullable="false" />
           <Property Name="DatumObjave" Type="date" Nullable="false" />
+          <Property Name="Slika" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="ZakazivanjePregleda">
           <Key>
@@ -143,8 +136,9 @@
           <Property Name="IDPacijenta" Type="int" Nullable="false" />
           <Property Name="IDLekara" Type="int" Nullable="false" />
           <Property Name="DatumPregleda" Type="date" Nullable="false" />
+          <Property Name="VremePregleda" Type="time" Precision="7" Nullable="false" />
           <Property Name="DatumZakazivanja" Type="date" Nullable="false" />
-          <Property Name="VremePregleda" Type="time" Precision="7" />
+          <Property Name="ZavrsenPregled" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_AdministratorKorisnik">
           <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="1" />
@@ -290,7 +284,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UputLekar">
+        <Association Name="FK_UputLekarKome">
           <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="1" />
           <End Role="Uput" Type="Self.Uput" Multiplicity="*" />
           <ReferentialConstraint>
@@ -298,7 +292,19 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Uput">
-              <PropertyRef Name="IDLekara" />
+              <PropertyRef Name="IDLekaraKome" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UputLekarOd">
+          <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="1" />
+          <End Role="Uput" Type="Self.Uput" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnik">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Uput">
+              <PropertyRef Name="IDLekaraOd" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -359,7 +365,6 @@
           <EntitySet Name="Odeljenje" EntityType="Self.Odeljenje" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pacijent" EntityType="Self.Pacijent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RadnoVremeLekara" EntityType="Self.RadnoVremeLekara" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Uput" EntityType="Self.Uput" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ustanova" EntityType="Self.Ustanova" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vesti" EntityType="Self.Vesti" Schema="dbo" store:Type="Tables" />
@@ -412,7 +417,11 @@
             <End Role="Korisnik" EntitySet="Korisnik" />
             <End Role="RadnoVremeLekara" EntitySet="RadnoVremeLekara" />
           </AssociationSet>
-          <AssociationSet Name="FK_UputLekar" Association="Self.FK_UputLekar">
+          <AssociationSet Name="FK_UputLekarKome" Association="Self.FK_UputLekarKome">
+            <End Role="Korisnik" EntitySet="Korisnik" />
+            <End Role="Uput" EntitySet="Uput" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UputLekarOd" Association="Self.FK_UputLekarOd">
             <End Role="Korisnik" EntitySet="Korisnik" />
             <End Role="Uput" EntitySet="Uput" />
           </AssociationSet>
@@ -485,14 +494,16 @@
           <NavigationProperty Name="Kartons" Relationship="Self.FK_KartonLekar" FromRole="Korisnik" ToRole="Karton" />
           <NavigationProperty Name="Kartons1" Relationship="Self.FK_KartonPacijent" FromRole="Korisnik" ToRole="Karton" />
           <NavigationProperty Name="RadnoVremeLekaras" Relationship="Self.FK_RadnoVremeLekaraLekar" FromRole="Korisnik" ToRole="RadnoVremeLekara" />
-          <NavigationProperty Name="Uputs" Relationship="Self.FK_UputLekar" FromRole="Korisnik" ToRole="Uput" />
-          <NavigationProperty Name="Uputs1" Relationship="Self.FK_UputPacijent" FromRole="Korisnik" ToRole="Uput" />
+          <NavigationProperty Name="Uputs" Relationship="Self.FK_UputLekarKome" FromRole="Korisnik" ToRole="Uput" />
+          <NavigationProperty Name="Uputs1" Relationship="Self.FK_UputLekarOd" FromRole="Korisnik" ToRole="Uput" />
+          <NavigationProperty Name="Uputs2" Relationship="Self.FK_UputPacijent" FromRole="Korisnik" ToRole="Uput" />
           <NavigationProperty Name="ZakazivanjePregledas" Relationship="Self.FK_ZakazivanjePregledaLekar" FromRole="Korisnik" ToRole="ZakazivanjePregleda" />
           <NavigationProperty Name="ZakazivanjePregledas1" Relationship="Self.FK_ZakazivanjePregledaPacijent" FromRole="Korisnik" ToRole="ZakazivanjePregleda" />
         </EntityType>
         <EntityType Name="Lekar" BaseType="DBZUstanovaModel.Korisnik" Abstract="true">
           <Property Name="IDOdeljenja" Type="Int32" Nullable="false" />
           <Property Name="Licenca" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Slika" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Odeljenje" Relationship="Self.FK_LekarOdeljenje" FromRole="Lekar" ToRole="Odeljenje" />
         </EntityType>
         <EntityType Name="Odeljenje">
@@ -534,28 +545,20 @@
           <Property Name="Kraj" Type="Time" Nullable="false" Precision="7" />
           <NavigationProperty Name="Korisnik" Relationship="Self.FK_RadnoVremeLekaraLekar" FromRole="RadnoVremeLekara" ToRole="Korisnik" />
         </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="Uput">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IDPacijenta" Type="Int32" Nullable="false" />
-          <Property Name="IDLekara" Type="Int32" Nullable="false" />
+          <Property Name="IDLekaraOd" Type="Int32" Nullable="false" />
+          <Property Name="IDLekaraKome" Type="Int32" Nullable="false" />
           <Property Name="DatumPregleda" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="IDOdeljenja" Type="Int32" Nullable="false" />
           <Property Name="ZavrsenPregled" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Korisnik" Relationship="Self.FK_UputLekar" FromRole="Uput" ToRole="Korisnik" />
-          <NavigationProperty Name="Korisnik1" Relationship="Self.FK_UputPacijent" FromRole="Uput" ToRole="Korisnik" />
+          <NavigationProperty Name="Korisnik" Relationship="Self.FK_UputLekarKome" FromRole="Uput" ToRole="Korisnik" />
+          <NavigationProperty Name="Korisnik1" Relationship="Self.FK_UputLekarOd" FromRole="Uput" ToRole="Korisnik" />
+          <NavigationProperty Name="Korisnik2" Relationship="Self.FK_UputPacijent" FromRole="Uput" ToRole="Korisnik" />
           <NavigationProperty Name="Odeljenje" Relationship="Self.FK_UputOdeljenje" FromRole="Uput" ToRole="Odeljenje" />
         </EntityType>
         <EntityType Name="Ustanova">
@@ -567,7 +570,7 @@
           <Property Name="Adresa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Telefon" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Slika" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Slika" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Odeljenjes" Relationship="Self.FK_OdeljenjeUstanova" FromRole="Ustanova" ToRole="Odeljenje" />
           <NavigationProperty Name="Pacijents" Relationship="Self.FK_PacijentUstanova" FromRole="Ustanova" ToRole="Pacijent" />
         </EntityType>
@@ -579,6 +582,7 @@
           <Property Name="Naslov" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Tekst" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DatumObjave" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Slika" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ZakazivanjePregleda">
           <Key>
@@ -588,8 +592,9 @@
           <Property Name="IDPacijenta" Type="Int32" Nullable="false" />
           <Property Name="IDLekara" Type="Int32" Nullable="false" />
           <Property Name="DatumPregleda" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="VremePregleda" Type="Time" Nullable="false" Precision="7" />
           <Property Name="DatumZakazivanja" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="VremePregleda" Type="Time" Precision="7" />
+          <Property Name="ZavrsenPregled" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Korisnik" Relationship="Self.FK_ZakazivanjePregledaLekar" FromRole="ZakazivanjePregleda" ToRole="Korisnik" />
           <NavigationProperty Name="Korisnik1" Relationship="Self.FK_ZakazivanjePregledaPacijent" FromRole="ZakazivanjePregleda" ToRole="Korisnik" />
         </EntityType>
@@ -653,7 +658,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UputLekar">
+        <Association Name="FK_UputLekarKome">
           <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="1" />
           <End Role="Uput" Type="Self.Uput" Multiplicity="*" />
           <ReferentialConstraint>
@@ -661,7 +666,19 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Uput">
-              <PropertyRef Name="IDLekara" />
+              <PropertyRef Name="IDLekaraKome" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UputLekarOd">
+          <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="1" />
+          <End Role="Uput" Type="Self.Uput" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnik">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Uput">
+              <PropertyRef Name="IDLekaraOd" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -767,7 +784,6 @@
           <EntitySet Name="Korisniks" EntityType="Self.Korisnik" />
           <EntitySet Name="Odeljenjes" EntityType="Self.Odeljenje" />
           <EntitySet Name="RadnoVremeLekaras" EntityType="Self.RadnoVremeLekara" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Uputs" EntityType="Self.Uput" />
           <EntitySet Name="Ustanovas" EntityType="Self.Ustanova" />
           <EntitySet Name="Vestis" EntityType="Self.Vesti" />
@@ -792,7 +808,11 @@
             <End Role="Korisnik" EntitySet="Korisniks" />
             <End Role="RadnoVremeLekara" EntitySet="RadnoVremeLekaras" />
           </AssociationSet>
-          <AssociationSet Name="FK_UputLekar" Association="Self.FK_UputLekar">
+          <AssociationSet Name="FK_UputLekarKome" Association="Self.FK_UputLekarKome">
+            <End Role="Korisnik" EntitySet="Korisniks" />
+            <End Role="Uput" EntitySet="Uputs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UputLekarOd" Association="Self.FK_UputLekarOd">
             <End Role="Korisnik" EntitySet="Korisniks" />
             <End Role="Uput" EntitySet="Uputs" />
           </AssociationSet>
@@ -883,13 +903,6 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
-            <EntityTypeMapping TypeName="IsTypeOf(DBZUstanovaModel.Lekar)">
-              <MappingFragment StoreEntitySet="Lekar">
-                <ScalarProperty Name="Licenca" ColumnName="Licenca" />
-                <ScalarProperty Name="IDOdeljenja" ColumnName="IDOdeljenja" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(DBZUstanovaModel.Pacijent)">
               <MappingFragment StoreEntitySet="Pacijent">
                 <ScalarProperty Name="Odobren" ColumnName="Odobren" />
@@ -907,17 +920,25 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
-            <EntityTypeMapping TypeName="IsTypeOf(DBZUstanovaModel.LekarSpecijalista)">
+            <EntityTypeMapping TypeName="IsTypeOf(DBZUstanovaModel.Lekar)">
               <MappingFragment StoreEntitySet="Lekar">
+                <ScalarProperty Name="Slika" ColumnName="Slika" />
+                <ScalarProperty Name="Licenca" ColumnName="Licenca" />
+                <ScalarProperty Name="IDOdeljenja" ColumnName="IDOdeljenja" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Specijalizacija" ColumnName="Specijalizacija" />
-                <Condition ColumnName="TipLekara" Value="LekarSpecijalista" />
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(DBZUstanovaModel.LekarOpstePrakse)">
               <MappingFragment StoreEntitySet="Lekar">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <Condition ColumnName="TipLekara" Value="LekarOpstePrakse" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(DBZUstanovaModel.LekarSpecijalista)">
+              <MappingFragment StoreEntitySet="Lekar">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Specijalizacija" ColumnName="Specijalizacija" />
+                <Condition ColumnName="TipLekara" Value="LekarSpecijalista" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -941,23 +962,13 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="DBZUstanovaModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Uputs">
             <EntityTypeMapping TypeName="DBZUstanovaModel.Uput">
               <MappingFragment StoreEntitySet="Uput">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDPacijenta" ColumnName="IDPacijenta" />
-                <ScalarProperty Name="IDLekara" ColumnName="IDLekara" />
+                <ScalarProperty Name="IDLekaraOd" ColumnName="IDLekaraOd" />
+                <ScalarProperty Name="IDLekaraKome" ColumnName="IDLekaraKome" />
                 <ScalarProperty Name="DatumPregleda" ColumnName="DatumPregleda" />
                 <ScalarProperty Name="IDOdeljenja" ColumnName="IDOdeljenja" />
                 <ScalarProperty Name="ZavrsenPregled" ColumnName="ZavrsenPregled" />
@@ -983,6 +994,7 @@
                 <ScalarProperty Name="Naslov" ColumnName="Naslov" />
                 <ScalarProperty Name="Tekst" ColumnName="Tekst" />
                 <ScalarProperty Name="DatumObjave" ColumnName="DatumObjave" />
+                <ScalarProperty Name="Slika" ColumnName="Slika" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -993,8 +1005,9 @@
                 <ScalarProperty Name="IDPacijenta" ColumnName="IDPacijenta" />
                 <ScalarProperty Name="IDLekara" ColumnName="IDLekara" />
                 <ScalarProperty Name="DatumPregleda" ColumnName="DatumPregleda" />
-                <ScalarProperty Name="DatumZakazivanja" ColumnName="DatumZakazivanja" />
                 <ScalarProperty Name="VremePregleda" ColumnName="VremePregleda" />
+                <ScalarProperty Name="DatumZakazivanja" ColumnName="DatumZakazivanja" />
+                <ScalarProperty Name="ZavrsenPregled" ColumnName="ZavrsenPregled" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
