@@ -73,8 +73,9 @@ namespace EvidencijaPacijenata.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.IDLekara = new SelectList(db.Korisniks, "ID", "Ime", karton.IDLekara);
-            ViewBag.IDPacijenta = new SelectList(db.Korisniks, "ID", "Ime", karton.IDPacijenta);
+            Session["IDKartona"] = karton.ID;
+            ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<Lekar>(), "ID", "Ime", karton.IDLekara);
+            ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>(), "ID", "Ime", karton.IDPacijenta);
             return View(karton);
         }
 
@@ -87,6 +88,8 @@ namespace EvidencijaPacijenata.Controllers
         {
             if (ModelState.IsValid)
             {
+                karton.ID = Convert.ToInt32(Session["IDKartona"]);
+                Session["IDKartona"] = null;
                 db.Entry(karton).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

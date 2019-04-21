@@ -39,7 +39,7 @@ namespace EvidencijaPacijenata.Controllers
         // GET: Uputs/Create
         public ActionResult Create()
         {
-            ViewBag.IDLekara = new SelectList(db.Korisniks, "ID", "Ime");
+            //ViewBag.IDLekara = new SelectList(db.Korisniks, "ID", "Ime");
             ViewBag.IDPacijenta = new SelectList(db.Korisniks, "ID", "Ime");
             ViewBag.IDOdeljenja = new SelectList(db.Odeljenjes, "ID", "Naziv");
             ViewBag.IDLekaraKome = new SelectList(db.Korisniks, "ID", "Ime");
