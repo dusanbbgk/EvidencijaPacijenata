@@ -3,15 +3,21 @@
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout2.cshtml";
+    DateTime danas = DateTime.Now;
+    DateTime sutra = danas.AddDays(1);
 }
 <script language="javascript" type="text/javascript">
-    function PrikaziTermine(IDLekara) {
+    $(document).ready(function () {
+        PrikaziTermine();
+    });
+
+    function PrikaziTermine() {
         var procemessage = "<option value='0'> Please wait...</option>";
         $("#divTermini").html(procemessage).show();
         var url = "/ZakazivanjePregledas/Termini/";
         $.ajax({
             url: url,
-            data: { IDLekara: IDLekara },
+            data: { IDLekara: document.getElementById("idLekara").value, DatumPregleda: document.getElementById("datumPregleda").value },
             cache: false,
             type: "POST",
             success: function (data) {
@@ -31,72 +37,61 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>ZakazivanjePregleda</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.IDPacijenta, "IDPacijenta", htmlAttributes: new { @class = "control-label col-md-2" })
+
+    <div class="form-horizontal">
+        <h4>ZakazivanjePregleda</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.IDPacijenta, "IDPacijenta", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("IDPacijenta", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IDPacijenta, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IDLekara, "IDLekara", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("IDPacijenta", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IDPacijenta, "", new { @class = "text-danger" })
+                @Html.DropDownList("IDLekara", null, htmlAttributes: new { @id = "idLekara", @class = "form-control", @onchange = "javascript:PrikaziTermine();" })
+                @Html.ValidationMessageFor(model => model.IDLekara, "", new { @class = "text-danger" })
             </div>
-        </div>*@
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.IDLekara, "IDLekara", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("IDLekara", null, htmlAttributes: new { @class = "form-control", @onchange = "javascript:PrikaziTermine(this.value);" })
-            @Html.ValidationMessageFor(model => model.IDLekara, "", new { @class = "text-danger" })
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.DatumPregleda, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.DatumPregleda, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DatumPregleda, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.DatumZakazivanja, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.DatumPregleda, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DatumZakazivanja, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DatumZakazivanja, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.DatumPregleda, new { htmlAttributes = new { @id = "datumPregleda", @type = "date", @class = "form-control", @Value = "2019-04-23", @onchange = "javascript:PrikaziTermine();" } })
+                @Html.ValidationMessageFor(model => model.DatumPregleda, "", new { @class = "text-danger" })
             </div>
-        </div>*@
+        </div>
 
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.VremePregleda, htmlAttributes: new { @class = "control-label col-md-2" })
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.VremePregleda, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.VremePregleda, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.VremePregleda, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.VremePregleda, "VremePregleda", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.VremePregleda, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownList("VremePregleda", null, htmlAttributes: new { @id = "divTermini", @class = "form-control", @onload = "javascript:PrikaziTermine();" })
                 @Html.ValidationMessageFor(model => model.VremePregleda, "", new { @class = "text-danger" })
             </div>
-        </div>*@
+        </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.VremePregleda, "VremePregleda", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <select id="divTermini" name="divTermini" class = "form-control">
 
-            </select>
-            @Html.DropDownList("VremePregleda", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.VremePregleda, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
         </div>
     </div>
-
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
-    </div>
-</div>
 }
 
 <div>

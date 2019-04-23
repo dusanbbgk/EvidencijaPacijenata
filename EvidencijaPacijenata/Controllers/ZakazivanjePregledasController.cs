@@ -66,32 +66,23 @@ namespace EvidencijaPacijenata.Controllers
                                                       k.ID,
                                                       k.Ime
                                                   }, "ID", "Ime");
-
-                List<SelectListItem> termini = new List<SelectListItem>();
-                var dateNow = DateTime.Now;
-                var pocetak = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, 8, 0, 0);
-                var kraj = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, 16, 0, 0);
-
-                while (DateTime.Compare(pocetak, kraj) <= 0)
-                {
-                    termini.Add(new SelectListItem { Text = pocetak.ToString("hh:mm"), Value = pocetak.ToString("hh:mm") });
-                    pocetak = pocetak.AddMinutes(20);
-                }
-                SelectList listaTermina = new SelectList(termini, "Value", "Text");
-                ViewBag.VremePregleda = listaTermina;
+                List<SelectListItem> izbor = new List<SelectListItem>();
+                izbor.Add(new SelectListItem { Text = "--- Izaberite termin ---", Value = "0" });
+                ViewBag.VremePregleda = new SelectList(izbor, "Value", "Text");
                 return View();
             }
             else
                 return RedirectToAction("Index", "Home");
         }
         [HttpPost]
-        public ActionResult Termini(int IDLekara)
+        public ActionResult Termini(string IDLekara, string DatumPregleda)
         {
+            DateTime datumPregleda = Convert.ToDateTime(DatumPregleda);
+            int idLekara = Convert.ToInt32(IDLekara);
             List<SelectListItem> termini = new List<SelectListItem>();
             var dateNow = DateTime.Now;
             var pocetak = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, 8, 0, 0);
             var kraj = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, 16, 0, 0);
-
             while (DateTime.Compare(pocetak, kraj) <= 0)
             {
                 termini.Add(new SelectListItem { Text = pocetak.ToString("hh:mm"), Value = pocetak.ToString("hh:mm") });
@@ -102,13 +93,11 @@ namespace EvidencijaPacijenata.Controllers
             {
                 DateTime datum = Convert.ToDateTime(termini[i].Value);
                 TimeSpan vreme = datum.TimeOfDay;
-                var termin = db.ZakazivanjePregledas.SingleOrDefault(zp => zp.IDLekara == IDLekara && zp.VremePregleda == vreme);
+                var termin = db.ZakazivanjePregledas.SingleOrDefault(zp => zp.IDLekara == idLekara && zp.VremePregleda == vreme && zp.DatumPregleda == datumPregleda);
                 if(termin == null)
-                    slobodniTermini.Add(/*new SelectListItem { Text = termini[i].Text, Value = termini[i].Value }*/termini[i]);
+                    slobodniTermini.Add(termini[i]);
             }
             SelectList slobodniTerminiLista = new SelectList(slobodniTermini, "Value", "Text");
-
-            //SelectList VremePregleda = new SelectList(from zp in db.ZakazivanjePregledas where zp.IDLekara == IDLekara select zp, "VremePregleda", "VremePregleda");
             return Json(slobodniTerminiLista);
         }
         // POST: ZakazivanjePregledas/Create

@@ -73,6 +73,9 @@ namespace EvidencijaPacijenata.Controllers
                 }
                 else
                 {
+                        
+                }
+                {
                     LekarSpecijalista LS = model.Korisniks.OfType<LekarSpecijalista>().SingleOrDefault(k => k.KorisnickoIme == KorisnickoIme && k.Lozinka == Lozinka);
                     if (LS != null)
                     {
