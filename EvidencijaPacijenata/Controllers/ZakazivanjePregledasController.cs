@@ -87,8 +87,29 @@ namespace EvidencijaPacijenata.Controllers
         [HttpPost]
         public ActionResult Termini(int IDLekara)
         {
-            SelectList VremePregleda = new SelectList(from zp in db.ZakazivanjePregledas where zp.IDLekara == IDLekara select new { zp.VremePregleda }, "Value");
-            return Json(VremePregleda);
+            List<SelectListItem> termini = new List<SelectListItem>();
+            var dateNow = DateTime.Now;
+            var pocetak = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, 8, 0, 0);
+            var kraj = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, 16, 0, 0);
+
+            while (DateTime.Compare(pocetak, kraj) <= 0)
+            {
+                termini.Add(new SelectListItem { Text = pocetak.ToString("hh:mm"), Value = pocetak.ToString("hh:mm") });
+                pocetak = pocetak.AddMinutes(20);
+            }
+            List<SelectListItem> slobodniTermini = new List<SelectListItem>();
+            for (int i = 0; i < termini.Count; i++)
+            {
+                DateTime datum = Convert.ToDateTime(termini[i].Value);
+                TimeSpan vreme = datum.TimeOfDay;
+                var termin = db.ZakazivanjePregledas.SingleOrDefault(zp => zp.IDLekara == IDLekara && zp.VremePregleda == vreme);
+                if(termin == null)
+                    slobodniTermini.Add(/*new SelectListItem { Text = termini[i].Text, Value = termini[i].Value }*/termini[i]);
+            }
+            SelectList slobodniTerminiLista = new SelectList(slobodniTermini, "Value", "Text");
+
+            //SelectList VremePregleda = new SelectList(from zp in db.ZakazivanjePregledas where zp.IDLekara == IDLekara select zp, "VremePregleda", "VremePregleda");
+            return Json(slobodniTerminiLista);
         }
         // POST: ZakazivanjePregledas/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
