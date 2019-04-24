@@ -1,5 +1,6 @@
 ﻿using EvidencijaPacijenata.Models;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -51,7 +52,13 @@ namespace EvidencijaPacijenata.Controllers
                                                             where lop.ID == IDLekaraOd
                                                             select lop, "ID", "Ime");
                         ViewBag.IDUstanove = new SelectList(db.Ustanovas, "ID", "Naziv");
-                        ViewBag.IDLekaraKome = new SelectList(db.Korisniks.OfType<LekarSpecijalista>(), "ID", "Ime");
+                        List<SelectListItem> izbor = new List<SelectListItem>();
+                        izbor.Add(new SelectListItem { Text = "--- Izaberite odeljenje ---", Value = "0" });
+                        ViewBag.IDOdeljenja = new SelectList(izbor, "Value", "Text");
+                        List<SelectListItem> izbor2 = new List<SelectListItem>();
+                        izbor2.Add(new SelectListItem { Text = "--- Izaberite lekara ---", Value = "0" });
+                        ViewBag.IDLekaraKome = new SelectList(izbor2, "Value", "Text");
+
                     }
                 }
             }
@@ -62,19 +69,29 @@ namespace EvidencijaPacijenata.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Odeljenja(int IDUstanove)
+        public ActionResult Odeljenja(string IDUstanove)
         {
+            int idUstanove = Convert.ToInt32(IDUstanove);
             SelectList IDOdeljenja = new SelectList(from od in db.Odeljenjes
-                                                    where od.IDUstanove == IDUstanove
-                                                    select od, "ID", "Ime");
+                                                    where od.IDUstanove == idUstanove
+                                                    select od, "ID", "Naziv");
             return Json(IDOdeljenja);
+        }
+        [HttpPost]
+        public ActionResult Lekari(string IDOdeljenja)
+        {
+            int idOdeljenja = Convert.ToInt32(IDOdeljenja);
+            SelectList IDLekaraKome = new SelectList(from od in db.Korisniks.OfType<LekarSpecijalista>()
+                                                    where od.IDOdeljenja == idOdeljenja
+                                                     select od, "ID", "Ime");
+            return Json(IDLekaraKome);
         }
         // POST: Uputs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,IDPacijenta,IDLekara,DatumPregleda,IDOdeljenja,ZavrsenPregled,IDLekaraOd,IDLekaraKome")] Uput uput)
+        public ActionResult Create([Bind(Include = "ID,IDPacijenta,IDLekaraOd,IDLekaraKome,DatumPregleda,IDOdeljenja,ZavrsenPregled")] Uput uput)
         {
             if (ModelState.IsValid)
             {

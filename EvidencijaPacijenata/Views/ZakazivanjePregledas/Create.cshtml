@@ -3,8 +3,6 @@
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout2.cshtml";
-    DateTime danas = DateTime.Now;
-    DateTime sutra = danas.AddDays(1);
 }
 <script language="javascript" type="text/javascript">
     $(document).ready(function () {
@@ -64,7 +62,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DatumPregleda, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DatumPregleda, new { htmlAttributes = new { @id = "datumPregleda", @type = "date", @class = "form-control", @Value = "2019-04-23", @onchange = "javascript:PrikaziTermine();" } })
+                @Html.EditorFor(model => model.DatumPregleda, new { htmlAttributes = new { @id = "datumPregleda", @type = "date", @class = "form-control", @Value = ViewBag.DatumPregleda, @onchange = "javascript:PrikaziTermine();" } })
                 @Html.ValidationMessageFor(model => model.DatumPregleda, "", new { @class = "text-danger" })
             </div>
         </div>
