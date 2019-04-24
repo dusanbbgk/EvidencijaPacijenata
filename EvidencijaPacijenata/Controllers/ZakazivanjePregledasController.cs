@@ -69,7 +69,7 @@ namespace EvidencijaPacijenata.Controllers
                 List<SelectListItem> izbor = new List<SelectListItem>();
                 izbor.Add(new SelectListItem { Text = "--- Izaberite termin ---", Value = "0" });
                 ViewBag.VremePregleda = new SelectList(izbor, "Value", "Text");
-                ViewBag.DatumPregleda = DateTime.Now.Date.AddMonths(1).ToString("yyyy-MM-dd");
+                ViewBag.DatumPregleda = DateTime.Now.Date.AddDays(1).ToString("yyyy-MM-dd");
                 return View();
             }
             else
