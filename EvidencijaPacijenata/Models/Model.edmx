@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DBZUstanovaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DBZUstanovaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Administrator">
           <Key>
             <PropertyRef Name="ID" />
@@ -356,6 +356,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="slobodniTermini" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="lekarId" Type="int" Mode="In" />
+          <Parameter Name="datum" Type="date" Mode="In" />
+          <Parameter Name="vreme" Type="time" Mode="In" />
+        </Function>
         <EntityContainer Name="DBZUstanovaModelStoreContainer">
           <EntitySet Name="Administrator" EntityType="Self.Administrator" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Izvestaj" EntityType="Self.Izvestaj" Schema="dbo" store:Type="Tables" />
@@ -442,8 +447,7 @@
             <End Role="ZakazivanjePregleda" EntitySet="ZakazivanjePregleda" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DBZUstanovaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -848,7 +852,21 @@
             <End Role="Ustanova" EntitySet="Ustanovas" />
             <End Role="Pacijent" EntitySet="Korisniks" />
           </AssociationSet>
+          <FunctionImport Name="slobodniTermini" ReturnType="Collection(DBZUstanovaModel.slobodniTermini_Result)">
+            <Parameter Name="lekarId" Mode="In" Type="Int32" />
+            <Parameter Name="datum" Mode="In" Type="DateTime" />
+            <Parameter Name="vreme" Mode="In" Type="Time" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="slobodniTermini_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="IDPacijenta" Nullable="false" />
+          <Property Type="Int32" Name="IDLekara" Nullable="false" />
+          <Property Type="DateTime" Name="DatumPregleda" Nullable="false" />
+          <Property Type="Time" Name="VremePregleda" Nullable="false" />
+          <Property Type="DateTime" Name="DatumZakazivanja" Nullable="false" />
+          <Property Type="Int32" Name="ZavrsenPregled" Nullable="false" />
+        </ComplexType>
         <EntityType Name="LekarOpstePrakse" BaseType="DBZUstanovaModel.Lekar" />
         <EntityType Name="LekarSpecijalista" BaseType="DBZUstanovaModel.Lekar" >
           <Property Name="Specijalizacija" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
@@ -903,6 +921,14 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(DBZUstanovaModel.Lekar)">
+              <MappingFragment StoreEntitySet="Lekar">
+                <ScalarProperty Name="Slika" ColumnName="Slika" />
+                <ScalarProperty Name="Licenca" ColumnName="Licenca" />
+                <ScalarProperty Name="IDOdeljenja" ColumnName="IDOdeljenja" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(DBZUstanovaModel.Pacijent)">
               <MappingFragment StoreEntitySet="Pacijent">
                 <ScalarProperty Name="Odobren" ColumnName="Odobren" />
@@ -917,14 +943,6 @@
                 <ScalarProperty Name="SrodstvoSaNosiocem" ColumnName="SrodstvoSaNosiocem" />
                 <ScalarProperty Name="NosilacOsiguranja" ColumnName="NosilacOsiguranja" />
                 <ScalarProperty Name="JMBG" ColumnName="JMBG" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-            <EntityTypeMapping TypeName="IsTypeOf(DBZUstanovaModel.Lekar)">
-              <MappingFragment StoreEntitySet="Lekar">
-                <ScalarProperty Name="Slika" ColumnName="Slika" />
-                <ScalarProperty Name="Licenca" ColumnName="Licenca" />
-                <ScalarProperty Name="IDOdeljenja" ColumnName="IDOdeljenja" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1011,7 +1029,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <FunctionImportMapping FunctionImportName="slobodniTermini" FunctionName="DBZUstanovaModel.Store.slobodniTermini">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DBZUstanovaModel.slobodniTermini_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDPacijenta" ColumnName="IDPacijenta" />
+                <ScalarProperty Name="IDLekara" ColumnName="IDLekara" />
+                <ScalarProperty Name="DatumPregleda" ColumnName="DatumPregleda" />
+                <ScalarProperty Name="VremePregleda" ColumnName="VremePregleda" />
+                <ScalarProperty Name="DatumZakazivanja" ColumnName="DatumZakazivanja" />
+                <ScalarProperty Name="ZavrsenPregled" ColumnName="ZavrsenPregled" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

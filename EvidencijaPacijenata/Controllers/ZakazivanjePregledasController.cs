@@ -94,9 +94,13 @@ namespace EvidencijaPacijenata.Controllers
             {
                 DateTime datum = Convert.ToDateTime(termini[i].Value);
                 TimeSpan vreme = datum.TimeOfDay;
-                var termin = db.ZakazivanjePregledas.SingleOrDefault(zp => zp.IDLekara == idLekara && zp.VremePregleda == vreme && zp.DatumPregleda == datumPregleda);
-                if(termin == null)
+
+                int termin = db.slobodniTermini(idLekara, datumPregleda, vreme).Count();
+                if (termin == 0)
                     slobodniTermini.Add(termini[i]);
+                //var termin = db.ZakazivanjePregledas.SingleOrDefault(zp => zp.IDLekara == idLekara && zp.VremePregleda == vreme && zp.DatumPregleda == datumPregleda);
+                //if(termin == null)
+                //    slobodniTermini.Add(termini[i]);
             }
             SelectList slobodniTerminiLista = new SelectList(slobodniTermini, "Value", "Text");
             return Json(slobodniTerminiLista);

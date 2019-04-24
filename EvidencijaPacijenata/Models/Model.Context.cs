@@ -12,6 +12,8 @@ namespace EvidencijaPacijenata.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class DBZUstanovaEntities : DbContext
     {
@@ -34,5 +36,22 @@ namespace EvidencijaPacijenata.Models
         public virtual DbSet<Ustanova> Ustanovas { get; set; }
         public virtual DbSet<Vesti> Vestis { get; set; }
         public virtual DbSet<ZakazivanjePregleda> ZakazivanjePregledas { get; set; }
+    
+        public virtual ObjectResult<slobodniTermini_Result> slobodniTermini(Nullable<int> lekarId, Nullable<System.DateTime> datum, Nullable<System.TimeSpan> vreme)
+        {
+            var lekarIdParameter = lekarId.HasValue ?
+                new ObjectParameter("lekarId", lekarId) :
+                new ObjectParameter("lekarId", typeof(int));
+    
+            var datumParameter = datum.HasValue ?
+                new ObjectParameter("datum", datum) :
+                new ObjectParameter("datum", typeof(System.DateTime));
+    
+            var vremeParameter = vreme.HasValue ?
+                new ObjectParameter("vreme", vreme) :
+                new ObjectParameter("vreme", typeof(System.TimeSpan));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<slobodniTermini_Result>("slobodniTermini", lekarIdParameter, datumParameter, vremeParameter);
+        }
     }
 }
