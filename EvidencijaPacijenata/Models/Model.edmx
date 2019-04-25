@@ -356,6 +356,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="pretragaPacijenata" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pretraga" Type="nvarchar" Mode="In" />
+          <Parameter Name="IDLekara" Type="int" Mode="In" />
+        </Function>
         <Function Name="slobodniTermini" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="lekarId" Type="int" Mode="In" />
           <Parameter Name="datum" Type="date" Mode="In" />
@@ -857,6 +861,10 @@
             <Parameter Name="datum" Mode="In" Type="DateTime" />
             <Parameter Name="vreme" Mode="In" Type="Time" />
           </FunctionImport>
+          <FunctionImport Name="pretragaPacijenata" ReturnType="Collection(DBZUstanovaModel.pretragaPacijenata_Result)">
+            <Parameter Name="pretraga" Mode="In" Type="String" />
+            <Parameter Name="IDLekara" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="slobodniTermini_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -871,6 +879,12 @@
         <EntityType Name="LekarSpecijalista" BaseType="DBZUstanovaModel.Lekar" >
           <Property Name="Specijalizacija" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
         </EntityType>
+        <ComplexType Name="pretragaPacijenata_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Ime" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Prezime" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="JMBG" Nullable="false" MaxLength="13" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1039,6 +1053,16 @@
                 <ScalarProperty Name="VremePregleda" ColumnName="VremePregleda" />
                 <ScalarProperty Name="DatumZakazivanja" ColumnName="DatumZakazivanja" />
                 <ScalarProperty Name="ZavrsenPregled" ColumnName="ZavrsenPregled" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="pretragaPacijenata" FunctionName="DBZUstanovaModel.Store.pretragaPacijenata">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DBZUstanovaModel.pretragaPacijenata_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Ime" ColumnName="Ime" />
+                <ScalarProperty Name="Prezime" ColumnName="Prezime" />
+                <ScalarProperty Name="JMBG" ColumnName="JMBG" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

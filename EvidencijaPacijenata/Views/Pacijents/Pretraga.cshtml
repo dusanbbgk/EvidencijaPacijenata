@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EvidencijaPacijenata.Models.Pacijent>
+﻿@model IEnumerable<EvidencijaPacijenata.Models.pretragaPacijenata_Result>
 
 @{
     ViewBag.Title = "Pretraga";
@@ -9,3 +9,44 @@
 {
     @Html.TextBox("pretraga")<input type="submit" value="Pretraga" />
 }
+<table class="table">
+    <thead>
+        <tr>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>JMBG</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count() == 0)
+        {
+            <tr>
+                <td colspan="3">
+                    Nema rezultata pretrage
+                </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @item.Ime
+                </td>
+                <td>
+                    @item.Prezime
+                </td>
+                <td>
+                    @item.JMBG
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+            }
+        }
+    </tbody>
+</table>

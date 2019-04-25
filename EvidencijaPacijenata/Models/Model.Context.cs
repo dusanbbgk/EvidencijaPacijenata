@@ -53,5 +53,18 @@ namespace EvidencijaPacijenata.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<slobodniTermini_Result>("slobodniTermini", lekarIdParameter, datumParameter, vremeParameter);
         }
+    
+        public virtual ObjectResult<pretragaPacijenata_Result> pretragaPacijenata(string pretraga, Nullable<int> iDLekara)
+        {
+            var pretragaParameter = pretraga != null ?
+                new ObjectParameter("pretraga", pretraga) :
+                new ObjectParameter("pretraga", typeof(string));
+    
+            var iDLekaraParameter = iDLekara.HasValue ?
+                new ObjectParameter("IDLekara", iDLekara) :
+                new ObjectParameter("IDLekara", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<pretragaPacijenata_Result>("pretragaPacijenata", pretragaParameter, iDLekaraParameter);
+        }
     }
 }

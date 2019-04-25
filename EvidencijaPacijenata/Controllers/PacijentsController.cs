@@ -22,12 +22,7 @@ namespace EvidencijaPacijenata.Controllers
             if (Session["IDLekara"] != null)
             {
                 int IDLekara = Convert.ToInt32(Session["IDLekara"]);
-                return View((from p in db.Korisniks.OfType<Pacijent>()
-                             join u in db.Ustanovas on p.IDUstanove equals u.ID
-                             join o in db.Odeljenjes on u.ID equals o.IDUstanove
-                             join l in db.Korisniks.OfType<Lekar>() on o.ID equals l.IDOdeljenja
-                             where (p.Ime.Contains(pretraga) || p.Prezime.Contains(pretraga) || pretraga == null) && l.ID == IDLekara
-                             select p).ToList());
+                return View(db.pretragaPacijenata(pretraga, IDLekara).ToList());
             }
             else
                 return RedirectToAction("Index", "Home");
