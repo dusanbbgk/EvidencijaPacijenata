@@ -10,6 +10,7 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
 <table class="table">
     <tr>
         <th>
@@ -63,62 +64,63 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Prezime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.KorisnickoIme)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lozinka)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.JMBG)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NosilacOsiguranja)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SrodstvoSaNosiocem)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IDOdeljenja)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IDUstanove)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.KrvnaGrupa)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Pol)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Adresa)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Telefon)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IstekOsiguranja)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Odobren)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prezime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KorisnickoIme)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lozinka)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JMBG)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NosilacOsiguranja)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SrodstvoSaNosiocem)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IDOdeljenja)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IDUstanove)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KrvnaGrupa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pol)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adresa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefon)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IstekOsiguranja)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Odobren)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
 
 </table>

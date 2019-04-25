@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using EvidencijaPacijenata.Models;
+using System;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using EvidencijaPacijenata.Models;
 
 namespace EvidencijaPacijenata.Controllers
 {
@@ -19,7 +17,21 @@ namespace EvidencijaPacijenata.Controllers
         {
             return View(db.Korisniks.OfType<Pacijent>().ToList());
         }
-
+        public ActionResult Pretraga(string pretraga)
+        {
+            if (Session["IDLekara"] != null)
+            {
+                int IDLekara = Convert.ToInt32(Session["IDLekara"]);
+                return View((from p in db.Korisniks.OfType<Pacijent>()
+                             join u in db.Ustanovas on p.IDUstanove equals u.ID
+                             join o in db.Odeljenjes on u.ID equals o.IDUstanove
+                             join l in db.Korisniks.OfType<Lekar>() on o.ID equals l.IDOdeljenja
+                             where (p.Ime.Contains(pretraga) || p.Prezime.Contains(pretraga) || pretraga == null) && l.ID == IDLekara
+                             select p).ToList());
+            }
+            else
+                return RedirectToAction("Index", "Home");
+        }
         // GET: Pacijents/Details/5
         public ActionResult Details(int? id)
         {
@@ -57,7 +69,7 @@ namespace EvidencijaPacijenata.Controllers
             {
                 db.Korisniks.Add(pacijent);
                 db.SaveChanges();
-                if(Session["IDPacijenta"] == null)
+                if (Session["IDPacijenta"] == null)
                     return RedirectToAction("Index", "Home");
                 return RedirectToAction("Index");
             }
@@ -90,7 +102,7 @@ namespace EvidencijaPacijenata.Controllers
             {
                 db.Entry(pacijent).State = EntityState.Modified;
                 db.SaveChanges();
-                if(Session["IDPacijenta"] != null)
+                if (Session["IDPacijenta"] != null)
                     return RedirectToAction("Details", new { id = Session["IDPacijenta"] });
                 return RedirectToAction("Index");
             }

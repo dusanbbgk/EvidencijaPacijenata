@@ -333,6 +333,7 @@
     <Content Include="Views\Uputs\Details.cshtml" />
     <Content Include="Views\Uputs\Edit.cshtml" />
     <Content Include="Views\Uputs\Index.cshtml" />
+    <Content Include="Views\Pacijents\Pretraga.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,11 @@
+﻿@model IEnumerable<EvidencijaPacijenata.Models.Pacijent>
+
+@{
+    ViewBag.Title = "Pretraga";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+@using (Html.BeginForm("Pretraga", "Pacijents", FormMethod.Get))
+{
+    @Html.TextBox("pretraga")<input type="submit" value="Pretraga" />
+}
