@@ -66,5 +66,7 @@ namespace EvidencijaPacijenata.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<pretragaPacijenata_Result>("pretragaPacijenata", pretragaParameter, iDLekaraParameter);
         }
+
+        public System.Data.Entity.DbSet<EvidencijaPacijenata.Models.pretragaPacijenata_Result> pretragaPacijenata_Result { get; set; }
     }
 }

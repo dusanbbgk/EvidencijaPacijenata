@@ -65,15 +65,16 @@
                 else if (Session["IDPacijenta"] == null && Session["IDLekara"] != null)
                 {
                     <ul class="nav navbar-nav">
-                        <li class="nav-item"><a href="@Url.Action("Index", "ZakazivanjePregledas", new { id = Session["IDLekara"] })" class="nav-link">Zakazani pregledi</a></li>
+
                         <li class="nav-item"><a href="@Url.Action("Pretraga", "Pacijents")" class="nav-link">Pretraga pacijenata</a></li>
                         @if (Session["Specijalizacija"] != null)
                         {
-                            <li class="nav-item"><a href="@Url.Action("Details", "Odeljenjes", new { id = Session["IDOdeljenjaLekara"] })" class="nav-link">Vaše odeljenje</a></li>
+                            <li class="nav-item"><a href="@Url.Action("Index", "Uputs", new { id = Session["IDLekara"] })" class="nav-link">Pristigli uputi</a></li>
                             <li class="nav-item"><a href="@Url.Action("Details", "LekarSpecijalistas", new { id = Session["IDLekara"] })" class="nav-link">@Session["ImePrezime"]</a></li>
                         }
                         else
                         {
+                            <li class="nav-item"><a href="@Url.Action("Index", "ZakazivanjePregledas", new { id = Session["IDLekara"] })" class="nav-link">Zakazani pregledi</a></li>
                             <li class="nav-item"><a href="@Url.Action("Details", "LekarOpstePrakses", new { id = Session["IDLekara"] })" class="nav-link">@Session["ImePrezime"]</a></li>
                         }
                         <li class="nav-item"><a href="@Url.Action("Logout", "Home")" class="nav-link">(Odjavi se)</a></li>

@@ -13,10 +13,18 @@ namespace EvidencijaPacijenata.Controllers
         private DBZUstanovaEntities db = new DBZUstanovaEntities();
 
         // GET: Uputs
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            var uputs = db.Uputs.Include(u => u.Korisnik).Include(u => u.Korisnik1).Include(u => u.Odeljenje).Include(u => u.Korisnik2);
-            return View(uputs.ToList());
+            if (Session["Specijalizacija"] != null && id == Convert.ToInt32(Session["IDLekara"]))
+            {
+                DateTime danas = DateTime.Now.Date;
+                return View(db.Uputs.Where(u => u.IDLekaraKome == id && u.DatumPregleda == danas).ToList());
+            }
+            else
+            {
+                var uputs = db.Uputs.Include(u => u.Korisnik).Include(u => u.Korisnik1).Include(u => u.Odeljenje).Include(u => u.Korisnik2);
+                return View(uputs.ToList());
+            }
         }
 
         // GET: Uputs/Details/5
@@ -60,6 +68,22 @@ namespace EvidencijaPacijenata.Controllers
                         ViewBag.IDLekaraKome = new SelectList(izbor2, "Value", "Text");
 
                     }
+                    else {
+                        int IDLekaraOd = Convert.ToInt32(Session["IDLekara"]);
+                        ViewBag.IDPacijenta = new SelectList(from p in db.Korisniks.OfType<Pacijent>()
+                                                             where p.ID == id
+                                                             select p, "ID", "Ime");
+                        ViewBag.IDLekaraOD = new SelectList(from lop in db.Korisniks.OfType<LekarSpecijalista>()
+                                                            where lop.ID == IDLekaraOd
+                                                            select lop, "ID", "Ime");
+                        ViewBag.IDUstanove = new SelectList(db.Ustanovas, "ID", "Naziv");
+                        List<SelectListItem> izbor = new List<SelectListItem>();
+                        izbor.Add(new SelectListItem { Text = "--- Izaberite odeljenje ---", Value = "0" });
+                        ViewBag.IDOdeljenja = new SelectList(izbor, "Value", "Text");
+                        List<SelectListItem> izbor2 = new List<SelectListItem>();
+                        izbor2.Add(new SelectListItem { Text = "--- Izaberite lekara ---", Value = "0" });
+                        ViewBag.IDLekaraKome = new SelectList(izbor2, "Value", "Text");
+                    }
                 }
             }
             //ViewBag.IDPacijenta = new SelectList(db.Korisniks, "ID", "Ime");
@@ -80,9 +104,10 @@ namespace EvidencijaPacijenata.Controllers
         [HttpPost]
         public ActionResult Lekari(string IDOdeljenja)
         {
+            int IDLekara = Convert.ToInt32(Session["IDLekara"]);
             int idOdeljenja = Convert.ToInt32(IDOdeljenja);
             SelectList IDLekaraKome = new SelectList(from od in db.Korisniks.OfType<LekarSpecijalista>()
-                                                    where od.IDOdeljenja == idOdeljenja
+                                                     where od.IDOdeljenja == idOdeljenja && od.ID != IDLekara
                                                      select od, "ID", "Ime");
             return Json(IDLekaraKome);
         }

@@ -34,6 +34,7 @@ namespace EvidencijaPacijenata.Controllers
             else
                 return RedirectToAction("Index", "Home");
         }
+
         // GET: Pacijents/Details/5
         public ActionResult Details(int? id)
         {
