@@ -57,7 +57,8 @@
             @Html.ActionLink("Details", "Details", new { id = item.ID }) |
             <a href="@Url.Action("Create", "Izvestajs", new { id = item.IDPacijenta })">Napiši izveštaj</a> |
             <a href="@Url.Action("Create", "Uputs", new { id = item.IDPacijenta })">Napiši uput</a> |
-            <a href="@Url.Action("Edit", "Kartons", new { id = item.IDPacijenta })">Karton Pacijenta</a>
+            <a href="@Url.Action("Edit", "Kartons", new { id = item.IDPacijenta })">Karton Pacijenta</a> |
+            <a href="@Url.Action("ZadrziNaOdeljenju", "Pacijents", new { id = item.IDPacijenta })">Zadrži pacijenta na odeljenju</a>
         </td>
     </tr>
 }

@@ -41,6 +41,35 @@ namespace EvidencijaPacijenata.Controllers
                 return RedirectToAction("Index", "Home");
         }
 
+        public ActionResult ZadrziNaOdeljenju(int id) {
+            var pacijent = db.Korisniks.OfType<Pacijent>().SingleOrDefault(p => p.ID == id);
+            if (pacijent != null)
+            {
+                int IDLekara = Convert.ToInt32(Session["IDLekara"]);
+                pacijent.IDOdeljenja = db.Korisniks.OfType<LekarSpecijalista>().First(l => l.ID == IDLekara).IDOdeljenja;
+                db.Entry(pacijent).Property("IDOdeljenja").IsModified = true;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Pretraga", "Pacijents");
+        }
+
+        public ActionResult OtpustiSaOdeljenja(int id)
+        {
+            var pacijent = db.Korisniks.OfType<Pacijent>().SingleOrDefault(p => p.ID == id);
+            if (pacijent != null)
+            {
+                pacijent.IDOdeljenja = null;
+                db.Entry(pacijent).Property("IDOdeljenja").IsModified = true;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Pretraga", "Pacijents");
+        }
+
+
+
+
+
+
         // GET: Pacijents/Details/5
         public ActionResult Details(int? id)
         {

@@ -42,7 +42,8 @@
                         @item.JMBG
                     </td>
                     <td>
-                        @Html.ActionLink("Details", "Details", new { id = item.ID })
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        <a href="@Url.Action("OtpustiSaOdeljenja", "Pacijents", new { id = item.ID })">Otpusti pacijenta sa odeljenju</a>
                     </td>
                 </tr>
             }
