@@ -359,6 +359,7 @@
         <Function Name="pretragaPacijenata" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pretraga" Type="nvarchar" Mode="In" />
           <Parameter Name="IDLekara" Type="int" Mode="In" />
+          <Parameter Name="Uslov" Type="int" Mode="In" />
         </Function>
         <Function Name="slobodniTermini" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="lekarId" Type="int" Mode="In" />
@@ -864,6 +865,7 @@
           <FunctionImport Name="pretragaPacijenata" ReturnType="Collection(DBZUstanovaModel.pretragaPacijenata_Result)">
             <Parameter Name="pretraga" Mode="In" Type="String" />
             <Parameter Name="IDLekara" Mode="In" Type="Int32" />
+            <Parameter Name="Uslov" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="slobodniTermini_Result">

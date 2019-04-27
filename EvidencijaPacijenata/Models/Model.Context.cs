@@ -54,7 +54,7 @@ namespace EvidencijaPacijenata.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<slobodniTermini_Result>("slobodniTermini", lekarIdParameter, datumParameter, vremeParameter);
         }
     
-        public virtual ObjectResult<pretragaPacijenata_Result> pretragaPacijenata(string pretraga, Nullable<int> iDLekara)
+        public virtual ObjectResult<pretragaPacijenata_Result> pretragaPacijenata(string pretraga, Nullable<int> iDLekara, Nullable<int> uslov)
         {
             var pretragaParameter = pretraga != null ?
                 new ObjectParameter("pretraga", pretraga) :
@@ -64,9 +64,11 @@ namespace EvidencijaPacijenata.Models
                 new ObjectParameter("IDLekara", iDLekara) :
                 new ObjectParameter("IDLekara", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<pretragaPacijenata_Result>("pretragaPacijenata", pretragaParameter, iDLekaraParameter);
+            var uslovParameter = uslov.HasValue ?
+                new ObjectParameter("Uslov", uslov) :
+                new ObjectParameter("Uslov", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<pretragaPacijenata_Result>("pretragaPacijenata", pretragaParameter, iDLekaraParameter, uslovParameter);
         }
-
-        public System.Data.Entity.DbSet<EvidencijaPacijenata.Models.pretragaPacijenata_Result> pretragaPacijenata_Result { get; set; }
     }
 }

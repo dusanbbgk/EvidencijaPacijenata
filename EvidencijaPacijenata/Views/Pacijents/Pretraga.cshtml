@@ -31,20 +31,20 @@
         {
             foreach (var item in Model)
             {
-            <tr>
-                <td>
-                    @item.Ime
-                </td>
-                <td>
-                    @item.Prezime
-                </td>
-                <td>
-                    @item.JMBG
-                </td>
-                <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.ID })
-                </td>
-            </tr>
+                <tr>
+                    <td>
+                        @item.Ime
+                    </td>
+                    <td>
+                        @item.Prezime
+                    </td>
+                    <td>
+                        @item.JMBG
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = item.ID })
+                    </td>
+                </tr>
             }
         }
     </tbody>

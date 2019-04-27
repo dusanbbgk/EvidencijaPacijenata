@@ -24,11 +24,17 @@ namespace EvidencijaPacijenata.Controllers
                 int IDLekara = Convert.ToInt32(Session["IDLekara"]);
                 if (pretraga != null)
                 {
-                    return View(db.pretragaPacijenata(pretraga, IDLekara).ToList());
+                    if (Session["Specijalizacija"] != null)
+                        return View(db.pretragaPacijenata(pretraga, IDLekara, 1).ToList());
+                    else
+                        return View(db.pretragaPacijenata(pretraga, IDLekara, 0).ToList());
                 }
                 else {
                     pretraga = "";
-                    return View(db.pretragaPacijenata(pretraga, IDLekara).ToList());
+                    if (Session["Specijalizacija"] != null)
+                        return View(db.pretragaPacijenata(pretraga, IDLekara, 1).ToList());
+                    else
+                        return View(db.pretragaPacijenata(pretraga, IDLekara, 0).ToList());
                 }
             }
             else
