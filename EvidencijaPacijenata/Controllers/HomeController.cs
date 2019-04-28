@@ -7,6 +7,7 @@ namespace EvidencijaPacijenata.Controllers
 {
     public class HomeController : Controller
     {
+        private DBZUstanovaEntities db = new DBZUstanovaEntities();
         public ActionResult Index()
         {
             if (Session["resetPass"] != null)
@@ -24,7 +25,7 @@ namespace EvidencijaPacijenata.Controllers
                 ViewBag.NemaKarton = Session["NemaKarton"];
                 Session["NemaKarton"] = null;    
             }
-            return View();
+            return View(db.Vestis.Take(3).OrderBy(v => v.DatumObjave).ToList());
         }
         [HttpPost]
         public ActionResult PacijentLogin(string KorisnickoIme, string Lozinka)

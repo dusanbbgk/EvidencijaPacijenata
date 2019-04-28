@@ -1,0 +1,57 @@
+﻿@model EvidencijaPacijenata.Models.Vesti
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Vesti</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Naslov)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Naslov)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tekst)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tekst)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DatumObjave)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DatumObjave)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Slika)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Slika)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

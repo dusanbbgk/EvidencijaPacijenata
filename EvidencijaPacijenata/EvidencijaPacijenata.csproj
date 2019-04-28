@@ -119,6 +119,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\VestisController.cs" />
     <Compile Include="Models\Administrator.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -207,6 +208,7 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\VestiCSS.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -337,9 +339,15 @@
     <Content Include="Views\Uputs\Edit.cshtml" />
     <Content Include="Views\Uputs\Index.cshtml" />
     <Content Include="Views\Pacijents\Pretraga.cshtml" />
+    <Content Include="Views\Vestis\Create.cshtml" />
+    <Content Include="Views\Vestis\Delete.cshtml" />
+    <Content Include="Views\Vestis\Details.cshtml" />
+    <Content Include="Views\Vestis\Edit.cshtml" />
+    <Content Include="Views\Vestis\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Imgs\Vesti\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

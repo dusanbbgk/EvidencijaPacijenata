@@ -1,24 +1,42 @@
-﻿@{
+﻿@model IEnumerable<EvidencijaPacijenata.Models.Vesti>
+
+@{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
-@{
-    var dateNow = DateTime.Now;
-    var pocetak = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, 17, 40, 0);
+@section Obavestenja
+    {
+    @ViewBag.info@ViewBag.resetPass@ViewBag.NemaKarton
 }
-@section LekarLogin
-    {
-    @if (Session["IDLekara"] == null && Session["IDPacijenta"] == null)
-    {
+<link href="~/Content/VestiCSS.css" rel="stylesheet" />
+<h3>Poslednje vesti</h3>
+<hr />
+<section class="details-card">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                string text = item.Tekst.Substring(0, 130);
+                <div class="col-md-4">
+                    <div class="card-content">
+                        <a href="@Url.Action("Details", "Vestis", new { id = item.ID})">
+                            <div class="card-img">
+                                <img src="~/Imgs/Vesti/@item.Slika" class="img-thumbnail" alt="">
+                            </div>
+                        </a>
+                        <div class="card-desc">
+                            <a href="@Url.Action("Details", "Vestis", new { id = item.ID})"><h3>@item.Naslov</h3></a>
+                            <p>
+                                @text
+                            </p>
+                            <a href="@Url.Action("Details", "Vestis", new { id = item.ID})" class="btn-card bg-primary">Read more</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
 
-        <form action="~/Home/LekarLogin" method="post" name="forma2">
-            @ViewBag.notFound<br />
-            Korisnicko ime: <input type="text" name="KorisnickoIme" /><br />
-            Lozinka: <input type="password" name="Lozinka" /><br />
-            <input type="submit" value="Login" onclick="return proveriLogin();" />
-        </form>
-    }
-}
-@ViewBag.info@ViewBag.resetPass@ViewBag.NemaKarton
 
 
