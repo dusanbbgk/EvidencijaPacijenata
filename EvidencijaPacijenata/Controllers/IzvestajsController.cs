@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using EvidencijaPacijenata.Models;
+using System;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using EvidencijaPacijenata.Models;
 
 namespace EvidencijaPacijenata.Controllers
 {
@@ -15,10 +13,33 @@ namespace EvidencijaPacijenata.Controllers
         private DBZUstanovaEntities db = new DBZUstanovaEntities();
 
         // GET: Izvestajs
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            var izvestajs = db.Izvestajs.Include(i => i.Korisnik).Include(i => i.Korisnik1);
-            return View(izvestajs.ToList());
+            if (id != null)
+            {
+                if (Session["IDPacijenta"] != null) {
+                    if (id == Convert.ToInt32(Session["IDPacijenta"]))
+                    {
+                        return View((from i in db.Izvestajs
+                                     where i.IDPacijenta == id
+                                     orderby i.DatumPregleda
+                                     select i).ToList());
+                    }
+                    else {
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                else {
+                    var izvestajs = db.Izvestajs.Include(i => i.Korisnik).Include(i => i.Korisnik1);
+                    return View(izvestajs.ToList());
+                }
+            }
+            else
+            {
+                var izvestajs = db.Izvestajs.Include(i => i.Korisnik).Include(i => i.Korisnik1);
+                return View(izvestajs.ToList());
+            }
+            
         }
 
         // GET: Izvestajs/Details/5
@@ -48,7 +69,8 @@ namespace EvidencijaPacijenata.Controllers
                 else
                     ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<LekarSpecijalista>().Where(ls => ls.ID == IDLekara), "ID", "Ime");
             }
-            else {
+            else
+            {
                 ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<Lekar>(), "ID", "Ime");
                 ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>(), "ID", "Ime");
             }

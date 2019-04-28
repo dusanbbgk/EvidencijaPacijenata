@@ -15,10 +15,30 @@ namespace EvidencijaPacijenata.Controllers
         // GET: Uputs
         public ActionResult Index(int? id)
         {
-            if (Session["Specijalizacija"] != null && id == Convert.ToInt32(Session["IDLekara"]))
+            if (id != null)
             {
-                DateTime danas = DateTime.Now.Date;
-                return View(db.Uputs.Where(u => u.IDLekaraKome == id && u.DatumPregleda == danas).ToList());
+                if (Session["IDPacijenta"] != null)
+                {
+                    if (id == Convert.ToInt32(Session["IDPacijenta"]))
+                    {
+                        return View((from u in db.Uputs
+                                    where u.IDPacijenta == id
+                                    orderby u.DatumPregleda
+                                    select u).ToList());
+                    }
+                    else
+                        return RedirectToAction("Index", "Home");
+                }
+                if (Session["Specijalizacija"] != null && id == Convert.ToInt32(Session["IDLekara"]))
+                {
+                    DateTime danas = DateTime.Now.Date;
+                    return View(db.Uputs.Where(u => u.IDLekaraKome == id && u.DatumPregleda == danas).ToList());
+                }
+                else
+                {
+                    var uputs = db.Uputs.Include(u => u.Korisnik).Include(u => u.Korisnik1).Include(u => u.Odeljenje).Include(u => u.Korisnik2);
+                    return View(uputs.ToList());
+                }
             }
             else
             {
@@ -68,7 +88,8 @@ namespace EvidencijaPacijenata.Controllers
                         ViewBag.IDLekaraKome = new SelectList(izbor2, "Value", "Text");
 
                     }
-                    else {
+                    else
+                    {
                         int IDLekaraOd = Convert.ToInt32(Session["IDLekara"]);
                         ViewBag.IDPacijenta = new SelectList(from p in db.Korisniks.OfType<Pacijent>()
                                                              where p.ID == id
