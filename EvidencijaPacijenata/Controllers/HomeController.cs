@@ -23,7 +23,7 @@ namespace EvidencijaPacijenata.Controllers
             if (Session["NemaKarton"] != null)
             {
                 ViewBag.NemaKarton = Session["NemaKarton"];
-                Session["NemaKarton"] = null;    
+                Session["NemaKarton"] = null;
             }
             return View(db.Vestis.Take(3).OrderBy(v => v.DatumObjave).ToList());
         }
@@ -62,7 +62,8 @@ namespace EvidencijaPacijenata.Controllers
             }
         }
         [HttpPost]
-        public ActionResult LekarLogin(string KorisnickoIme, string Lozinka) {
+        public ActionResult LekarLogin(string KorisnickoIme, string Lozinka)
+        {
             using (DBZUstanovaEntities model = new DBZUstanovaEntities())
             {
                 LekarOpstePrakse LOP = model.Korisniks.OfType<LekarOpstePrakse>().SingleOrDefault(k => k.KorisnickoIme == KorisnickoIme && k.Lozinka == Lozinka);
@@ -73,9 +74,6 @@ namespace EvidencijaPacijenata.Controllers
                     return RedirectToAction("Index");
                 }
                 else
-                {
-                        
-                }
                 {
                     LekarSpecijalista LS = model.Korisniks.OfType<LekarSpecijalista>().SingleOrDefault(k => k.KorisnickoIme == KorisnickoIme && k.Lozinka == Lozinka);
                     if (LS != null)
