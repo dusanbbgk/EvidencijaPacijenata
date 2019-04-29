@@ -17,7 +17,7 @@ namespace EvidencijaPacijenata.Controllers
         // GET: LekarSpecijalistas
         public ActionResult Index()
         {
-            return View(db.Korisniks.ToList());
+            return View(db.Korisniks.OfType<LekarSpecijalista>().ToList());
         }
 
         // GET: LekarSpecijalistas/Details/5
@@ -82,6 +82,7 @@ namespace EvidencijaPacijenata.Controllers
         {
             if (ModelState.IsValid)
             {
+                //ModelState.Remove("Lozinka");
                 db.Entry(lekarSpecijalista).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

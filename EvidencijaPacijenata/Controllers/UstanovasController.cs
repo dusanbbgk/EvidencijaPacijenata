@@ -10,107 +10,107 @@ using EvidencijaPacijenata.Models;
 
 namespace EvidencijaPacijenata.Controllers
 {
-    public class LekarOpstePraksesController : Controller
+    public class UstanovasController : Controller
     {
         private DBZUstanovaEntities db = new DBZUstanovaEntities();
 
-        // GET: LekarOpstePrakses
+        // GET: Ustanovas
         public ActionResult Index()
         {
-            return View(db.Korisniks.OfType<LekarOpstePrakse>().ToList());
+            return View(db.Ustanovas.ToList());
         }
 
-        // GET: LekarOpstePrakses/Details/5
+        // GET: Ustanovas/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LekarOpstePrakse lekarOpstePrakse = db.Korisniks.OfType<LekarOpstePrakse>().SingleOrDefault(l => l.ID == id);
-            if (lekarOpstePrakse == null)
+            Ustanova ustanova = db.Ustanovas.Find(id);
+            if (ustanova == null)
             {
                 return HttpNotFound();
             }
-            return View(lekarOpstePrakse);
+            return View(ustanova);
         }
 
-        // GET: LekarOpstePrakses/Create
+        // GET: Ustanovas/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: LekarOpstePrakses/Create
+        // POST: Ustanovas/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Ime,Prezime,KorisnickoIme,Lozinka,IDOdeljenja,Licenca")] LekarOpstePrakse lekarOpstePrakse)
+        public ActionResult Create([Bind(Include = "ID,Naziv,Adresa,Telefon,Email,Slika")] Ustanova ustanova)
         {
             if (ModelState.IsValid)
             {
-                db.Korisniks.Add(lekarOpstePrakse);
+                db.Ustanovas.Add(ustanova);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(lekarOpstePrakse);
+            return View(ustanova);
         }
 
-        // GET: LekarOpstePrakses/Edit/5
+        // GET: Ustanovas/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LekarOpstePrakse lekarOpstePrakse = db.Korisniks.OfType<LekarOpstePrakse>().SingleOrDefault(l => l.ID == id);
-            if (lekarOpstePrakse == null)
+            Ustanova ustanova = db.Ustanovas.Find(id);
+            if (ustanova == null)
             {
                 return HttpNotFound();
             }
-            return View(lekarOpstePrakse);
+            return View(ustanova);
         }
 
-        // POST: LekarOpstePrakses/Edit/5
+        // POST: Ustanovas/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Ime,Prezime,KorisnickoIme,Lozinka,IDOdeljenja,Licenca")] LekarOpstePrakse lekarOpstePrakse)
+        public ActionResult Edit([Bind(Include = "ID,Naziv,Adresa,Telefon,Email,Slika")] Ustanova ustanova)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(lekarOpstePrakse).State = EntityState.Modified;
+                db.Entry(ustanova).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(lekarOpstePrakse);
+            return View(ustanova);
         }
 
-        // GET: LekarOpstePrakses/Delete/5
+        // GET: Ustanovas/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LekarOpstePrakse lekarOpstePrakse = db.Korisniks.OfType<LekarOpstePrakse>().SingleOrDefault(l => l.ID == id);
-            if (lekarOpstePrakse == null)
+            Ustanova ustanova = db.Ustanovas.Find(id);
+            if (ustanova == null)
             {
                 return HttpNotFound();
             }
-            return View(lekarOpstePrakse);
+            return View(ustanova);
         }
 
-        // POST: LekarOpstePrakses/Delete/5
+        // POST: Ustanovas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            LekarOpstePrakse lekarOpstePrakse = db.Korisniks.OfType<LekarOpstePrakse>().SingleOrDefault(l => l.ID == id);
-            db.Korisniks.Remove(lekarOpstePrakse);
+            Ustanova ustanova = db.Ustanovas.Find(id);
+            db.Ustanovas.Remove(ustanova);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

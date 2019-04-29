@@ -40,7 +40,7 @@ namespace EvidencijaPacijenata.Models
         public string Prezime { get; set; }
         [Required(ErrorMessage = "Polje je obavezno")]
         [DisplayName("Broj zdravstvene knjižice")]
-        [RegularExpression(@"^\d{11}$", ErrorMessage = "Nije dobar format")]
+        [RegularExpression(@"^(\d{11})|([A-Za-z0-9]\w{7,})$", ErrorMessage = "Nije dobar format")]
         [Remote("ProveriBZK", "Pacijents", HttpMethod = "POST", ErrorMessage = "Postoji u bazi")]
         public string KorisnickoIme { get; set; }
         [Required(ErrorMessage = "Polje je obavezno")]

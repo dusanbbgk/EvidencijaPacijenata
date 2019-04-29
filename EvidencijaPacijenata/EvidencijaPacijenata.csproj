@@ -123,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\UstanovasController.cs" />
     <Compile Include="Controllers\VestisController.cs" />
     <Compile Include="Models\Administrator.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -356,6 +357,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Imgs\Lekari\" />
     <Folder Include="Imgs\Vesti\" />
+    <Folder Include="Views\Ustanovas\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

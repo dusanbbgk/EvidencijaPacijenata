@@ -117,7 +117,8 @@ namespace EvidencijaPacijenata.Controllers
         }
         [AllowAnonymous]
         [HttpPost]
-        public JsonResult ProveriEmail(string Email) {
+        public JsonResult ProveriEmail(string Email)
+        {
             try
             {
                 return Json(!db.Korisniks.OfType<Pacijent>().Any(p => p.Email == Email), JsonRequestBehavior.AllowGet);
@@ -219,11 +220,13 @@ namespace EvidencijaPacijenata.Controllers
         {
             if (ModelState.IsValid)
             {
+                ModelState.Remove("Lozinka");
                 db.Entry(pacijent).State = EntityState.Modified;
                 db.SaveChanges();
                 if (Session["IDPacijenta"] != null)
                     return RedirectToAction("Details", new { id = Session["IDPacijenta"] });
-                return RedirectToAction("Index");
+                else
+                    return RedirectToAction("Index");
             }
             return View(pacijent);
         }
