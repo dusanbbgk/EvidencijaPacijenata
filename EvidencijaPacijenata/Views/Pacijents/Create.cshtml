@@ -4,15 +4,28 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
-
+<script>
+    function PonLoz() {
+        var Lozinka1 = document.getElementById("Lozinka1").value;
+        var Lozinka2 = document.getElementById("Lozinka2").value;
+        if (Lozinka1 != Lozinka2) {
+            $("#ponLoz").css("color", "red");
+            $("#ponLoz").focus();
+            $("#ponLoz").text("Ponovljena lozinka se ne poklapa");
+        }
+        else {
+            $("#ponLoz").text("");
+        }
+    }
+</script>
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4>Pacijent</h4>
+    <h4>Forma za registraciju pacijenta</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
@@ -42,17 +55,23 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Lozinka, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Lozinka, new { htmlAttributes = new { @class = "form-control", @id = "lozinka1" } })
+            @Html.EditorFor(model => model.Lozinka, new { htmlAttributes = new { @class = "form-control", @id = "Lozinka1" } })
             @Html.ValidationMessageFor(model => model.Lozinka, "", new { @class = "text-danger" })
         </div>
     </div>
-
-    <div class="form-group">  
-        @Html.LabelFor(model => model.Lozinka, htmlAttributes: new { @class = "control-label col-md-2" })
+    @*<div class="form-group">
+        @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            <input type="password" id="lozinka2" class="form-control" />
+            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
         </div>
-    </div>
+    </div>*@
+    <div class="form-group">
+            <label for="lozinka2" class="control-label col-md-2">Ponovljena lozinka</label>
+            <div class="col-md-10">
+                <input type="password" id="Lozinka2" class="form-control" required="" onkeyup="PonLoz()" /><br /><span id="ponLoz"></span>
+            </div>
+        </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.JMBG, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -65,7 +84,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.NosilacOsiguranja, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.NosilacOsiguranja, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.NosilacOsiguranja, new { htmlAttributes = new { @class = "form-control", @Value = "Lično osiguranje" } })
             @Html.ValidationMessageFor(model => model.NosilacOsiguranja, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -73,7 +92,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.SrodstvoSaNosiocem, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.SrodstvoSaNosiocem, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.SrodstvoSaNosiocem, new { htmlAttributes = new { @class = "form-control", @Value = "Lično osiguranje" } })
             @Html.ValidationMessageFor(model => model.SrodstvoSaNosiocem, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -81,7 +100,8 @@
     <div class="form-group">
         @Html.LabelFor(model => model.KrvnaGrupa, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.KrvnaGrupa, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownList("KrvnaGrupa", null, htmlAttributes: new { @class = "form-control" })
+
             @Html.ValidationMessageFor(model => model.KrvnaGrupa, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -89,7 +109,9 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Pol, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Pol, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownList("Pol", null, htmlAttributes: new { @class = "form-control" })
+
+
             @Html.ValidationMessageFor(model => model.Pol, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -120,7 +142,7 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" onclick="return proveriRegistracijuPacijenta();" />
+            <input type="submit" value="Create" class="btn btn-default" />
         </div>
     </div>
 </div>

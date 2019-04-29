@@ -1,6 +1,6 @@
 ﻿using EvidencijaPacijenata.Models;
 using System;
-using System.Data;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -29,7 +29,8 @@ namespace EvidencijaPacijenata.Controllers
                     else
                         return View(db.pretragaPacijenata(pretraga, IDLekara, 0).ToList());
                 }
-                else {
+                else
+                {
                     pretraga = "";
                     if (Session["Specijalizacija"] != null)
                         return View(db.pretragaPacijenata(pretraga, IDLekara, 1).ToList());
@@ -41,7 +42,8 @@ namespace EvidencijaPacijenata.Controllers
                 return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult ZadrziNaOdeljenju(int id) {
+        public ActionResult ZadrziNaOdeljenju(int id)
+        {
             var pacijent = db.Korisniks.OfType<Pacijent>().SingleOrDefault(p => p.ID == id);
             if (pacijent != null)
             {
@@ -88,10 +90,69 @@ namespace EvidencijaPacijenata.Controllers
         // GET: Pacijents/Create
         public ActionResult Create()
         {
-            if (Session["IDPacijenta"] != null)
+            if (Session["IDPacijenta"] != null || Session["IDLekara"] != null)
                 return RedirectToAction("Index", "Home");
-            return View();
+            else
+            {
+                ViewData["KrvnaGrupa"] = new SelectList(
+                    new List<SelectListItem>
+                    {
+                        new SelectListItem { Text = "A+", Value = "A+" },
+                        new SelectListItem { Text = "A-", Value = "A-" },
+                        new SelectListItem { Text = "B+", Value = "B+" },
+                        new SelectListItem { Text = "B-", Value = "B-" },
+                        new SelectListItem { Text = "AB+", Value = "AB+" },
+                        new SelectListItem { Text = "AB-", Value = "AB-" },
+                        new SelectListItem { Text = "0+", Value = "0+" },
+                        new SelectListItem { Text = "0-", Value = "0-" }
+                    }, "Value", "Text");
+                ViewData["Pol"] = new SelectList(
+                    new List<SelectListItem>
+                    {
+                        new SelectListItem { Text = "M", Value = "M" },
+                        new SelectListItem { Text = "Ž", Value = "Ž" },
+                    }, "Value", "Text");
+                return View();
+            }
         }
+        [AllowAnonymous]
+        [HttpPost]
+        public JsonResult ProveriEmail(string Email) {
+            try
+            {
+                return Json(!db.Korisniks.OfType<Pacijent>().Any(p => p.Email == Email), JsonRequestBehavior.AllowGet);
+                //return Json(!IsEmailExists(Email));
+            }
+            catch (Exception ex)
+            {
+                return Json(false);
+            }
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public JsonResult ProveriBZK(string KorisnickoIme)
+        {
+            try
+            {
+                return Json(!db.Korisniks.OfType<Pacijent>().Any(p => p.KorisnickoIme == KorisnickoIme), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(false);
+            }
+        }
+        public JsonResult ProveriJMBG(string JMBG)
+        {
+            try
+            {
+                return Json(!db.Korisniks.OfType<Pacijent>().Any(p => p.JMBG == JMBG), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(false);
+            }
+        }
+
 
         // POST: Pacijents/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -111,6 +172,26 @@ namespace EvidencijaPacijenata.Controllers
                     return RedirectToAction("Index", "Home");
                 return RedirectToAction("Index");
             }
+            var KrvnaGrupa = new SelectList(
+                    new List<SelectListItem>
+                    {
+                        new SelectListItem { Text = "A+", Value = "A+" },
+                        new SelectListItem { Text = "A-", Value = "A-" },
+                        new SelectListItem { Text = "B+", Value = "B+" },
+                        new SelectListItem { Text = "B-", Value = "B-" },
+                        new SelectListItem { Text = "AB+", Value = "AB+" },
+                        new SelectListItem { Text = "AB-", Value = "AB-" },
+                        new SelectListItem { Text = "0+", Value = "0+" },
+                        new SelectListItem { Text = "0-", Value = "0-" }
+                    }, "Value", "Text");
+            ViewData["KrvnaGrupa"] = KrvnaGrupa;
+            var Pol = new SelectList(
+                new List<SelectListItem>
+                {
+                        new SelectListItem { Text = "M", Value = "M" },
+                        new SelectListItem { Text = "Ž", Value = "Ž" },
+                }, "Value", "Text");
+            ViewData["Pol"] = Pol;
             return View(pacijent);
         }
 
