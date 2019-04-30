@@ -44,13 +44,33 @@ namespace EvidencijaPacijenata.Controllers
 
         public ActionResult ZadrziNaOdeljenju(int id)
         {
+            int IDLekara = Convert.ToInt32(Session["IDLekara"]);
+            var Provera = (from o in db.Odeljenjes
+                           join l in db.Korisniks.OfType<LekarSpecijalista>()
+                           on o.ID equals l.IDOdeljenja
+                           where l.ID == IDLekara
+                           select o).First();
+            if (Provera != null)
+            {
+                if (Provera.SlobodnihMesta == 0)
+                {
+                    TempData["OdeljenjePuno"] = "Nema slobodnih mesta na odeljenju";
+                    return RedirectToAction("Index", "Home");
+                }
+            }
             var pacijent = db.Korisniks.OfType<Pacijent>().SingleOrDefault(p => p.ID == id);
             if (pacijent != null)
             {
-                int IDLekara = Convert.ToInt32(Session["IDLekara"]);
                 pacijent.IDOdeljenja = db.Korisniks.OfType<LekarSpecijalista>().First(l => l.ID == IDLekara).IDOdeljenja;
                 db.Entry(pacijent).Property("IDOdeljenja").IsModified = true;
                 db.SaveChanges();
+                Odeljenje odeljenje = db.Odeljenjes.Where(o => o.ID == pacijent.IDOdeljenja).First();
+                if (odeljenje != null)
+                {
+                    odeljenje.SlobodnihMesta--;
+                    db.Entry(odeljenje).Property("SlobodnihMesta").IsModified = true;
+                    db.SaveChanges();
+                }
             }
             return RedirectToAction("Pretraga", "Pacijents");
         }
@@ -60,9 +80,17 @@ namespace EvidencijaPacijenata.Controllers
             var pacijent = db.Korisniks.OfType<Pacijent>().SingleOrDefault(p => p.ID == id);
             if (pacijent != null)
             {
+                var IDOdeljenja = pacijent.IDOdeljenja;
                 pacijent.IDOdeljenja = null;
                 db.Entry(pacijent).Property("IDOdeljenja").IsModified = true;
                 db.SaveChanges();
+                Odeljenje odeljenje = db.Odeljenjes.Where(o => o.ID == IDOdeljenja).First();
+                if (odeljenje != null)
+                {
+                    odeljenje.SlobodnihMesta++;
+                    db.Entry(odeljenje).Property("SlobodnihMesta").IsModified = true;
+                    db.SaveChanges();
+                }
             }
             return RedirectToAction("Pretraga", "Pacijents");
         }

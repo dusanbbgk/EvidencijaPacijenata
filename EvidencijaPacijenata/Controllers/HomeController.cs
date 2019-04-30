@@ -10,6 +10,11 @@ namespace EvidencijaPacijenata.Controllers
         private DBZUstanovaEntities db = new DBZUstanovaEntities();
         public ActionResult Index()
         {
+            if (TempData["OdeljenjePuno"] != null)
+            {
+                ViewBag.OdeljenjePuno = TempData["OdeljenjePuno"];
+                TempData.Clear();
+            }
             if (Session["resetPass"] != null)
             {
                 ViewBag.resetPass = Session["resetPass"];
