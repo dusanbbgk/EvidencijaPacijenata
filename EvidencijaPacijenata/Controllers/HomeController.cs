@@ -10,6 +10,11 @@ namespace EvidencijaPacijenata.Controllers
         private DBZUstanovaEntities db = new DBZUstanovaEntities();
         public ActionResult Index()
         {
+            if (TempData["NemaPregleda"] != null)
+            {
+                ViewBag.NemaPregleda = TempData["NemaPregleda"];
+                TempData.Clear();
+            }
             if (TempData["OdeljenjePuno"] != null)
             {
                 ViewBag.OdeljenjePuno = TempData["OdeljenjePuno"];

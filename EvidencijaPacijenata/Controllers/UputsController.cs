@@ -26,7 +26,6 @@ namespace EvidencijaPacijenata.Controllers
                                     orderby u.DatumPregleda
                                     select u).ToList());
                     }
-                    else
                         return RedirectToAction("Index", "Home");
                 }
                 if (Session["Specijalizacija"] != null && id == Convert.ToInt32(Session["IDLekara"]))

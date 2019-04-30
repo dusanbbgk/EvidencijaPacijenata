@@ -18,42 +18,75 @@ namespace EvidencijaPacijenata.Controllers
         {
             DateTime dt = DateTime.Now;
             DateTime dateOnly = dt.Date;
-            if (id == null && Convert.ToInt32(Session["IDAdmina"]) == id)
+            if (id == null && Session["IDAdmina"] != null)
             {
                 var zakazivanjePregledas = db.ZakazivanjePregledas.Include(z => z.Korisnik).Include(z => z.Korisnik1);
                 return View(zakazivanjePregledas.ToList());
             }
-            if (Convert.ToInt32(Session["IDLekara"]) == id)
+            if (Session["IDLekara"] != null && Session["Specijalizacija"] == null)
             {
-                var zakazaniPregledi = (from zp in db.ZakazivanjePregledas
-                                        where zp.DatumPregleda == dateOnly && zp.IDLekara == id && zp.ZavrsenPregled == 0
-                                        select zp);
-                return View(zakazaniPregledi.ToList());
+                if (Convert.ToInt32(Session["IDLekara"]) == id)
+                {
+                    var zakazaniPregledi = (from zp in db.ZakazivanjePregledas
+                                            where zp.DatumPregleda == dateOnly && zp.IDLekara == id && zp.ZavrsenPregled == 0
+                                            select zp);
+                    return View(zakazaniPregledi.ToList());
+                }
             }
-            else
-                return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: ZakazivanjePregledas/Details/5
         public ActionResult Details(int? id)
         {
+            if (TempData["PostojiZakazanPregled"] != null)
+            {
+                ViewBag.PostojiZakazanPregled = TempData["PostojiZakazanPregled"];
+                TempData.Clear();
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ZakazivanjePregleda zakazivanjePregleda = db.ZakazivanjePregledas.Find(id);
-            if (zakazivanjePregleda == null)
+            if (Session["IDAdmina"] != null || (Session["IDLekara"] != null && Session["Specijalizacija"] == null))
             {
-                return HttpNotFound();
+                ZakazivanjePregleda zakazivanjePregleda = db.ZakazivanjePregledas.Find(id);
+                if (zakazivanjePregleda == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(zakazivanjePregleda);
             }
-            return View(zakazivanjePregleda);
+            if (Session["IDPacijenta"] != null)
+            {
+                if (Convert.ToInt32(Session["IDPacijenta"]) == id)
+                {
+                    DateTime dt = DateTime.Now;
+                    DateTime dateOnly = dt.Date;
+                    var pregled = db.ZakazivanjePregledas.Where(z => z.IDPacijenta == id && z.DatumPregleda >= dateOnly).First();
+                    if (pregled != null)
+                        return View(pregled);
+                    TempData["NemaPregleda"] = "Nemate zakazanih pregleda";
+                }
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: ZakazivanjePregledas/Create
         public ActionResult Create()
         {
+            
             if (Session["IDPacijenta"] != null)
             {
+                var id = Convert.ToInt32(Session["IDPacijenta"]);
+                DateTime dt = DateTime.Now;
+                DateTime dateOnly = dt.Date;
+                var pregled = db.ZakazivanjePregledas.Where(z => z.IDPacijenta == id && z.DatumPregleda >= dateOnly).FirstOrDefault();
+                if (pregled != null)
+                {
+                    TempData["PostojiZakazanPregled"] = "Ne možete zakazati više od jednog pregleda pre nego što obavite već zakazan";
+                    return RedirectToAction("Details", new { id });
+                }
                 var IDPacijenta = Convert.ToInt32(Session["IDPacijenta"]);
                 var IDUstanove = (from x in db.Korisniks.OfType<Pacijent>()
                                   where x.ID == IDPacijenta
@@ -61,11 +94,7 @@ namespace EvidencijaPacijenata.Controllers
                 ViewBag.IDLekara = new SelectList(from k in db.Korisniks.OfType<LekarOpstePrakse>()
                                                   join o in db.Odeljenjes on k.IDOdeljenja equals o.ID
                                                   where o.IDUstanove == IDUstanove
-                                                  select new
-                                                  {
-                                                      k.ID,
-                                                      k.Ime
-                                                  }, "ID", "Ime");
+                                                  select k, "ID", "ImePrezime");
                 List<SelectListItem> izbor = new List<SelectListItem>();
                 izbor.Add(new SelectListItem { Text = "--- Izaberite termin ---", Value = "0" });
                 ViewBag.VremePregleda = new SelectList(izbor, "Value", "Text");
@@ -141,8 +170,12 @@ namespace EvidencijaPacijenata.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.IDLekara = new SelectList(db.Korisniks, "ID", "Ime", zakazivanjePregleda.IDLekara);
-            ViewBag.IDPacijenta = new SelectList(db.Korisniks, "ID", "Ime", zakazivanjePregleda.IDPacijenta);
+            List<SelectListItem> izbor = new List<SelectListItem>();
+            izbor.Add(new SelectListItem { Text = "--- Izaberite termin ---", Value = "0" });
+            ViewBag.VremePregleda = new SelectList(izbor, "Value", "Text");
+            ViewBag.DatumPregleda = DateTime.Now.Date.AddDays(1).ToString("yyyy-MM-dd");
+            ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<LekarOpstePrakse>(), "ID", "ImePrezime", zakazivanjePregleda.IDLekara);
+            ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>().Where(p => p.ID == zakazivanjePregleda.IDPacijenta), "ID", "ImePrezime");
             return View(zakazivanjePregleda);
         }
 
@@ -155,6 +188,11 @@ namespace EvidencijaPacijenata.Controllers
         {
             if (ModelState.IsValid)
             {
+                DateTime dt = DateTime.Now;
+                DateTime dateOnly = dt.Date;
+                zakazivanjePregleda.DatumZakazivanja = dateOnly;
+                zakazivanjePregleda.IDPacijenta = Convert.ToInt32(Session["IDPacijenta"]);
+                zakazivanjePregleda.ZavrsenPregled = 0;
                 db.Entry(zakazivanjePregleda).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
