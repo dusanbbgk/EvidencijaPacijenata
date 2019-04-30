@@ -1,5 +1,6 @@
 ﻿using EvidencijaPacijenata.Models;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -45,9 +46,23 @@ namespace EvidencijaPacijenata.Controllers
         {
             if (Session["IDAdmina"] != null)
             {
+                ViewBag.IDUstanove = new SelectList(db.Ustanovas.ToList(), "ID", "Naziv");
+                List<SelectListItem> izbor = new List<SelectListItem>();
+                izbor.Add(new SelectListItem { Text = "--- Izaberite odeljenje ---", Value = "0" });
+                ViewBag.IDOdeljenja = new SelectList(izbor, "Value", "Text");
                 return View();
             }
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult Odeljenja(string IDUstanove)
+        {
+            int idUstanove = Convert.ToInt32(IDUstanove);
+            SelectList IDOdeljenja = new SelectList(from od in db.Odeljenjes
+                                                    where od.IDUstanove == idUstanove
+                                                    select od, "ID", "Naziv");
+            return Json(IDOdeljenja);
         }
 
         // POST: LekarSpecijalistas/Create
@@ -63,7 +78,10 @@ namespace EvidencijaPacijenata.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            ViewBag.IDUstanove = new SelectList(db.Ustanovas.ToList(), "ID", "Naziv");
+            List<SelectListItem> izbor = new List<SelectListItem>();
+            izbor.Add(new SelectListItem { Text = "--- Izaberite odeljenje ---", Value = "0" });
+            ViewBag.IDOdeljenja = new SelectList(izbor, "Value", "Text");
             return View(lekarSpecijalista);
         }
 
