@@ -43,7 +43,12 @@
                     </td>
                     <td>
                         @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        <a href="@Url.Action("OtpustiSaOdeljenja", "Pacijents", new { id = item.ID })">Otpusti pacijenta sa odeljenju</a>
+                        @if (Session["Specijalizacija"] != null)
+                        {
+                            <text><a href="@Url.Action("OtpustiSaOdeljenja", "Pacijents", new { id = item.ID })">Otpusti pacijenta sa odeljenju</a> | </text>
+                        }
+                        <a href="@Url.Action("Details", "Kartons", new { id = item.ID })">Karton pacijenta</a> |
+                        <a href="@Url.Action("Index", "Izvestajs", new { id = item.ID })">Istorija lečenja pacijenta</a>
                     </td>
                 </tr>
             }

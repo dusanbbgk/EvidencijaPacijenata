@@ -44,8 +44,9 @@ namespace EvidencijaPacijenata.Controllers
                 Karton karton = db.Kartons.SingleOrDefault(k => k.IDPacijenta == id);
                 if (karton == null)
                 {
-                    Session["NemaKarton"] = "Ne postoji karton za pacijenta!";
-                    return RedirectToAction("Index", "Home");
+                    //Session["NemaKarton"] = "Ne postoji karton za pacijenta!";
+                    //return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Create");
                 }
                 return View(karton);
             }
@@ -67,6 +68,9 @@ namespace EvidencijaPacijenata.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,IDPacijenta,IDLekara,DatumVremeNalaza,Disanje,Puls,TelesnaTemperatura,KrvniPritisak,Mokraca,Stolica,KrvaSlika,SpecificniPregled")] Karton karton)
         {
+            DateTime dt = DateTime.Now;
+            DateTime dateOnly = dt.Date;
+            karton.DatumVremeNalaza = dateOnly;
             if (ModelState.IsValid)
             {
                 db.Kartons.Add(karton);
@@ -108,8 +112,6 @@ namespace EvidencijaPacijenata.Controllers
             karton.DatumVremeNalaza = dateOnly;
             if (ModelState.IsValid)
             {
-                karton.ID = Convert.ToInt32(Session["IDKartona"]);
-                Session["IDKartona"] = null;
                 db.Entry(karton).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
