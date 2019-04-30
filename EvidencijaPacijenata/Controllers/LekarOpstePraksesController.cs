@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using EvidencijaPacijenata.Models;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using EvidencijaPacijenata.Models;
 
 namespace EvidencijaPacijenata.Controllers
 {
@@ -17,7 +14,11 @@ namespace EvidencijaPacijenata.Controllers
         // GET: LekarOpstePrakses
         public ActionResult Index()
         {
-            return View(db.Korisniks.OfType<LekarOpstePrakse>().ToList());
+            if (Session["IDAdmina"] != null)
+            {
+                return View(db.Korisniks.OfType<LekarOpstePrakse>().ToList());
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: LekarOpstePrakses/Details/5
@@ -27,18 +28,27 @@ namespace EvidencijaPacijenata.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LekarOpstePrakse lekarOpstePrakse = db.Korisniks.OfType<LekarOpstePrakse>().SingleOrDefault(l => l.ID == id);
-            if (lekarOpstePrakse == null)
+            if (Session["IDAdmina"] != null || id == Convert.ToInt32(Session["IDLekara"]))
             {
-                return HttpNotFound();
+                LekarOpstePrakse lekarOpstePrakse = db.Korisniks.OfType<LekarOpstePrakse>().SingleOrDefault(l => l.ID == id);
+                if (lekarOpstePrakse == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(lekarOpstePrakse);
             }
-            return View(lekarOpstePrakse);
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: LekarOpstePrakses/Create
         public ActionResult Create()
         {
-            return View();
+            if (Session["IDAdmina"] != null)
+            {
+                ViewBag.IDUstanove = new SelectList(db.Ustanovas.ToList(), "ID", "Naziv");
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: LekarOpstePrakses/Create
@@ -54,7 +64,6 @@ namespace EvidencijaPacijenata.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             return View(lekarOpstePrakse);
         }
 
@@ -65,12 +74,16 @@ namespace EvidencijaPacijenata.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LekarOpstePrakse lekarOpstePrakse = db.Korisniks.OfType<LekarOpstePrakse>().SingleOrDefault(l => l.ID == id);
-            if (lekarOpstePrakse == null)
+            if (Session["IDAdmina"] != null || id == Convert.ToInt32(Session["IDLekara"]))
             {
-                return HttpNotFound();
+                LekarOpstePrakse lekarOpstePrakse = db.Korisniks.OfType<LekarOpstePrakse>().SingleOrDefault(l => l.ID == id);
+                if (lekarOpstePrakse == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(lekarOpstePrakse);
             }
-            return View(lekarOpstePrakse);
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: LekarOpstePrakses/Edit/5
@@ -82,6 +95,8 @@ namespace EvidencijaPacijenata.Controllers
         {
             if (ModelState.IsValid)
             {
+                ModelState.Remove("Lozinka");
+                ModelState.Remove("IDOdeljenja");
                 db.Entry(lekarOpstePrakse).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

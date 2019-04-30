@@ -1,4 +1,4 @@
-﻿@model EvidencijaPacijenata.Models.Odeljenje
+﻿@model EvidencijaPacijenata.Models.Ustanova
 
 @{
     ViewBag.Title = "Details";
@@ -8,7 +8,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Odeljenje</h4>
+    <h4>Ustanova</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -20,19 +20,35 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.SlobodnihMesta)
+            @Html.DisplayNameFor(model => model.Adresa)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.SlobodnihMesta)
+            @Html.DisplayFor(model => model.Adresa)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Ustanova.Naziv)
+            @Html.DisplayNameFor(model => model.Telefon)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Ustanova.Naziv)
+            @Html.DisplayFor(model => model.Telefon)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Slika)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Slika)
         </dd>
 
     </dl>

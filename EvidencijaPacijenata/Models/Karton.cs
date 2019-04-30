@@ -33,6 +33,7 @@ namespace EvidencijaPacijenata.Models
         public string Stolica { get; set; }
         [DisplayName("Krvna slika")]
         public string KrvaSlika { get; set; }
+        [DisplayName("Specifični pregled")]
         public string SpecificniPregled { get; set; }
         [DisplayName("Lekar koji je poslednji menjao rezultate")]
         public virtual Korisnik Korisnik { get; set; }

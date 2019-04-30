@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using EvidencijaPacijenata.Models;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using EvidencijaPacijenata.Models;
 
 namespace EvidencijaPacijenata.Controllers
 {
@@ -17,7 +14,11 @@ namespace EvidencijaPacijenata.Controllers
         // GET: LekarSpecijalistas
         public ActionResult Index()
         {
-            return View(db.Korisniks.OfType<LekarSpecijalista>().ToList());
+            if (Session["IDAdmina"] != null)
+            {
+                return View(db.Korisniks.OfType<LekarSpecijalista>().ToList());
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: LekarSpecijalistas/Details/5
@@ -27,18 +28,26 @@ namespace EvidencijaPacijenata.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LekarSpecijalista lekarSpecijalista = db.Korisniks.OfType<LekarSpecijalista>().SingleOrDefault(l => l.ID == id);
-            if (lekarSpecijalista == null)
+            if (Session["IDAdmina"] != null || id == Convert.ToInt32(Session["IDLekara"]))
             {
-                return HttpNotFound();
+                LekarSpecijalista lekarSpecijalista = db.Korisniks.OfType<LekarSpecijalista>().SingleOrDefault(l => l.ID == id);
+                if (lekarSpecijalista == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(lekarSpecijalista);
             }
-            return View(lekarSpecijalista);
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: LekarSpecijalistas/Create
         public ActionResult Create()
         {
-            return View();
+            if (Session["IDAdmina"] != null)
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: LekarSpecijalistas/Create
@@ -65,12 +74,16 @@ namespace EvidencijaPacijenata.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LekarSpecijalista lekarSpecijalista = db.Korisniks.OfType<LekarSpecijalista>().SingleOrDefault(l => l.ID == id);
-            if (lekarSpecijalista == null)
+            if (Session["IDAdmina"] != null || id == Convert.ToInt32(Session["IDLekara"]))
             {
-                return HttpNotFound();
+                LekarSpecijalista lekarSpecijalista = db.Korisniks.OfType<LekarSpecijalista>().SingleOrDefault(l => l.ID == id);
+                if (lekarSpecijalista == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(lekarSpecijalista);
             }
-            return View(lekarSpecijalista);
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: LekarSpecijalistas/Edit/5
@@ -82,7 +95,8 @@ namespace EvidencijaPacijenata.Controllers
         {
             if (ModelState.IsValid)
             {
-                //ModelState.Remove("Lozinka");
+                ModelState.Remove("Lozinka");
+                ModelState.Remove("IDOdeljenja");
                 db.Entry(lekarSpecijalista).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

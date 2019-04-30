@@ -43,22 +43,27 @@ namespace EvidencijaPacijenata.Controllers
             {
                 Karton karton = db.Kartons.SingleOrDefault(k => k.IDPacijenta == id);
                 if (karton == null)
-                {
-                    //Session["NemaKarton"] = "Ne postoji karton za pacijenta!";
-                    //return RedirectToAction("Index", "Home");
-                    return RedirectToAction("Create");
-                }
+                    return RedirectToAction("Create", new { id = id });
                 return View(karton);
             }
             return RedirectToAction("Index", "Home");
         }
 
         // GET: Kartons/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<Lekar>(), "ID", "ImePrezime");
-            ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>(), "ID", "ImePrezime");
-            return View();
+            if (Session["IDLekara"] != null || Session["IDAdmina"] != null)
+            {
+                var IDLekara = Convert.ToInt32(Session["IDLekara"]);
+                ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<Lekar>().Where(l => l.ID == IDLekara), "ID", "ImePrezime");
+                if (id.HasValue)
+                {
+                    ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>().Where(p => p.ID == id), "ID", "ImePrezime");
+                }
+                else ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>(), "ID", "ImePrezime");
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: Kartons/Create
@@ -90,14 +95,19 @@ namespace EvidencijaPacijenata.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Karton karton = db.Kartons.Find(id);
-            if (karton == null)
+            if (Session["IDLekara"] != null || Session["IDAdmina"] != null)
             {
-                return HttpNotFound();
+                Karton karton = db.Kartons.Find(id);
+                if (karton == null)
+                {
+                    return HttpNotFound();
+                }
+                var IDLekara = Convert.ToInt32(Session["IDLekara"]);
+                ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<Lekar>().Where(l => l.ID == IDLekara), "ID", "ImePrezime");
+                ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>().Where(p => p.ID == karton.IDPacijenta), "ID", "ImePrezime", karton.IDPacijenta);
+                return View(karton);
             }
-            ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<Lekar>(), "ID", "ImePrezime", karton.IDLekara);
-            ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>(), "ID", "ImePrezime", karton.IDPacijenta);
-            return View(karton);
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: Kartons/Edit/5

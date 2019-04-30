@@ -104,7 +104,10 @@
 @if (Session["IDLekara"] != null || Session["IDAdmina"] != null)
 {
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
+        @if (Session["IDAdmina"] != null)
+        {
+            <text> | </text>@Html.ActionLink("Back to List", "Index")
+        }
     </p>
 }

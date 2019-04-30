@@ -11,7 +11,8 @@ namespace EvidencijaPacijenata.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class Odeljenje
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -24,7 +25,9 @@ namespace EvidencijaPacijenata.Models
     
         public int ID { get; set; }
         public int IDUstanove { get; set; }
+        [DisplayName("Naziv odeljenja")]
         public string Naziv { get; set; }
+        [DisplayName("Slobodnih mesta na odeljenju")]
         public int SlobodnihMesta { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -11,7 +11,8 @@ namespace EvidencijaPacijenata.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class Ustanova
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,6 +23,8 @@ namespace EvidencijaPacijenata.Models
         }
     
         public int ID { get; set; }
+        [DisplayName("Naziv ustanove")]
+
         public string Naziv { get; set; }
         public string Adresa { get; set; }
         public string Telefon { get; set; }

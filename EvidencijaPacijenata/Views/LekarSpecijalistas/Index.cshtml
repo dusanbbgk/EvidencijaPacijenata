@@ -19,13 +19,13 @@
             @Html.DisplayNameFor(model => model.Prezime)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.KorisnickoIme)
+            Korisničko ima
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Lozinka)
+            @Html.DisplayNameFor(model => model.Odeljenje.Ustanova.Naziv)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IDOdeljenja)
+            @Html.DisplayNameFor(model => model.Odeljenje.Naziv)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Licenca)
@@ -48,10 +48,10 @@
             @Html.DisplayFor(modelItem => item.KorisnickoIme)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Lozinka)
+            @Html.DisplayFor(modelItem => item.Odeljenje.Ustanova.Naziv)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.IDOdeljenja)
+            @Html.DisplayFor(modelItem => item.Odeljenje.Naziv)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Licenca)
@@ -60,9 +60,9 @@
             @Html.DisplayFor(modelItem => item.Specijalizacija)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
         </td>
     </tr>
 }

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using EvidencijaPacijenata.Models;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using EvidencijaPacijenata.Models;
 
 namespace EvidencijaPacijenata.Controllers
 {
@@ -38,7 +34,7 @@ namespace EvidencijaPacijenata.Controllers
         // GET: Ustanovas/Create
         public ActionResult Create()
         {
-            return View();
+            return Session["IDAdmina"] != null ? View() : (ActionResult)RedirectToAction("Index", "Home");
         }
 
         // POST: Ustanovas/Create
@@ -54,7 +50,6 @@ namespace EvidencijaPacijenata.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             return View(ustanova);
         }
 
@@ -65,12 +60,16 @@ namespace EvidencijaPacijenata.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ustanova ustanova = db.Ustanovas.Find(id);
-            if (ustanova == null)
+            if (Session["IDAdmina"] != null)
             {
-                return HttpNotFound();
+                Ustanova ustanova = db.Ustanovas.Find(id);
+                if (ustanova == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(ustanova);
             }
-            return View(ustanova);
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: Ustanovas/Edit/5
@@ -96,12 +95,16 @@ namespace EvidencijaPacijenata.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ustanova ustanova = db.Ustanovas.Find(id);
-            if (ustanova == null)
+            if (Session["IDAdmina"] != null)
             {
-                return HttpNotFound();
+                Ustanova ustanova = db.Ustanovas.Find(id);
+                if (ustanova == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(ustanova);
             }
-            return View(ustanova);
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: Ustanovas/Delete/5

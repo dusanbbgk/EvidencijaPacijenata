@@ -31,14 +31,6 @@
             </div>
         </div>
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.DatumVremeNalaza, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DatumVremeNalaza, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DatumVremeNalaza, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
         <div class="form-group">
             @Html.LabelFor(model => model.Disanje, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -98,7 +90,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SpecificniPregled, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.SpecificniPregled, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.SpecificniPregled, new { @class = "form-control", @rows = "5" })
                 @Html.ValidationMessageFor(model => model.SpecificniPregled, "", new { @class = "text-danger" })
             </div>
         </div>

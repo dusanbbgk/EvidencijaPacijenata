@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using EvidencijaPacijenata.Models;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using EvidencijaPacijenata.Models;
 
 namespace EvidencijaPacijenata.Controllers
 {
@@ -39,8 +35,12 @@ namespace EvidencijaPacijenata.Controllers
         // GET: Odeljenjes/Create
         public ActionResult Create()
         {
-            ViewBag.IDUstanove = new SelectList(db.Ustanovas, "ID", "Naziv");
-            return View();
+            if (Session["IDAdmina"] != null)
+            {
+                ViewBag.IDUstanove = new SelectList(db.Ustanovas, "ID", "Naziv");
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: Odeljenjes/Create
@@ -68,13 +68,17 @@ namespace EvidencijaPacijenata.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Odeljenje odeljenje = db.Odeljenjes.Find(id);
-            if (odeljenje == null)
+            if (Session["IDAdmina"] != null)
             {
-                return HttpNotFound();
+                Odeljenje odeljenje = db.Odeljenjes.Find(id);
+                if (odeljenje == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.IDUstanove = new SelectList(db.Ustanovas, "ID", "Naziv", odeljenje.IDUstanove);
+                return View(odeljenje);
             }
-            ViewBag.IDUstanove = new SelectList(db.Ustanovas, "ID", "Naziv", odeljenje.IDUstanove);
-            return View(odeljenje);
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: Odeljenjes/Edit/5
@@ -101,12 +105,16 @@ namespace EvidencijaPacijenata.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Odeljenje odeljenje = db.Odeljenjes.Find(id);
-            if (odeljenje == null)
+            if (Session["IDAdmina"] != null)
             {
-                return HttpNotFound();
+                Odeljenje odeljenje = db.Odeljenjes.Find(id);
+                if (odeljenje == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(odeljenje);
             }
-            return View(odeljenje);
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: Odeljenjes/Delete/5

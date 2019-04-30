@@ -20,7 +20,7 @@
             <div class="collapse navbar-collapse" id="exCollapsingNavbar">
                 <ul class="nav navbar-nav">
                     <li class="nav-item"><a href="#" class="nav-link">Početna</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">Ustanove</a></li>
+                    <li class="nav-item"><a href="@Url.Action("Index", "Ustanovas")" class="nav-link">Ustanove</a></li>
                     <li class="nav-item"><a href="@Url.Action("Index", "Vestis")" class="nav-link">Vesti</a></li>
                     <li class="nav-item"><a href="#" class="nav-link">O nama</a></li>
                     <li class="nav-item"><a href="#" class="nav-link">Kontakt</a></li>
@@ -37,7 +37,7 @@
                                             <input placeholder="Broj zdravstvene knjižice" class="form-control form-control-sm" name="KorisnickoIme" type="text" required="">
                                         </div>
                                         <div class="form-group">
-                                            <input placeholder="Lozinka" class="form-control form-control-sm" name="Lozinka" type="text" required="">
+                                            <input placeholder="Lozinka" class="form-control form-control-sm" name="Lozinka" type="password" required="">
                                         </div>
                                         <div class="form-group">
                                             <input type="submit" class="btn btn-primary btn-block" value="Login" onclick="return proveriLoginPacijent();" />

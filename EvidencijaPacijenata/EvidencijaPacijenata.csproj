@@ -352,12 +352,16 @@
     <Content Include="Views\Admin\Login.cshtml" />
     <Content Include="Views\Admin\Prikaz.cshtml" />
     <Content Include="Views\Shared\_CPanel.cshtml" />
+    <Content Include="Views\Ustanovas\Create.cshtml" />
+    <Content Include="Views\Ustanovas\Delete.cshtml" />
+    <Content Include="Views\Ustanovas\Details.cshtml" />
+    <Content Include="Views\Ustanovas\Edit.cshtml" />
+    <Content Include="Views\Ustanovas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Imgs\Lekari\" />
     <Folder Include="Imgs\Vesti\" />
-    <Folder Include="Views\Ustanovas\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
