@@ -55,17 +55,18 @@
                 @Html.DisplayFor(modelItem => item.Korisnik2.Ime)
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                <a href="@Url.Action("Create", "Izvestajs", new { id = item.IDPacijenta })">Napiši izveštaj</a> |
-                <a href="@Url.Action("Create", "Uputs", new { id = item.IDPacijenta })">Napiši uput</a> |
-                <a href="@Url.Action("Edit", "Kartons", new { id = item.IDPacijenta })">Karton Pacijenta</a>
+                @Html.ActionLink("Details", "Details", new { id = item.ID })
+                @if (Session["IDAdmina"] != null)
+                {
+                    <text> | </text>@Html.ActionLink("Edit", "Edit", new { id = item.ID })<text> | </text>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                }
                 @if (Session["Specijalizacija"] != null)
                 {
-                    <text> |
-                        <a href="@Url.Action("ZadrziNaOdeljenju", "Pacijents", new { id = item.IDPacijenta })">
-                            Zadrži pacijenta na odeljenju
-                        </a>
-                    </text>
+                    <text> | <a href="@Url.Action("Create", "Izvestajs", new { id = item.IDPacijenta })">Napiši izveštaj</a> | </text>
+                    <text><a href="@Url.Action("Create", "Uputs", new { id = item.IDPacijenta })">Napiši uput</a> | </text>
+                    <text><a href="@Url.Action("Details", "Kartons", new { id = item.IDPacijenta })">Karton Pacijenta</a> | </text>
+                    <text><a href="@Url.Action("ZadrziNaOdeljenju", "Pacijents", new { id = item.IDPacijenta })">Zadrži pacijenta na odeljenju</a></text>
                 }
             </td>
         </tr>

@@ -22,28 +22,25 @@ namespace EvidencijaPacijenata.Controllers
                     if (id == Convert.ToInt32(Session["IDPacijenta"]))
                     {
                         return View((from u in db.Uputs
-                                    where u.IDPacijenta == id
-                                    orderby u.DatumPregleda
-                                    select u).ToList());
+                                     where u.IDPacijenta == id
+                                     orderby u.DatumPregleda
+                                     select u).ToList());
                     }
-                        return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home");
                 }
                 if (Session["Specijalizacija"] != null && id == Convert.ToInt32(Session["IDLekara"]))
                 {
                     DateTime danas = DateTime.Now.Date;
                     return View(db.Uputs.Where(u => u.IDLekaraKome == id && u.DatumPregleda == danas).ToList());
                 }
-                else
-                {
-                    var uputs = db.Uputs.Include(u => u.Korisnik).Include(u => u.Korisnik1).Include(u => u.Odeljenje).Include(u => u.Korisnik2);
-                    return View(uputs.ToList());
-                }
+                return RedirectToAction("Index", "Home");
             }
-            else
+            if (Session["IDAdmina"] != null)
             {
                 var uputs = db.Uputs.Include(u => u.Korisnik).Include(u => u.Korisnik1).Include(u => u.Odeljenje).Include(u => u.Korisnik2);
                 return View(uputs.ToList());
             }
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Uputs/Details/5
