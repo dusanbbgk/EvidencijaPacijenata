@@ -28,24 +28,31 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Korisnik.Ime)
+            @Html.DisplayNameFor(model => model.Korisnik)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Korisnik.Ime)
+            @Html.DisplayFor(model => model.Korisnik.Ime) @Html.DisplayFor(model => model.Korisnik.Prezime)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Korisnik1.Ime)
+            @Html.DisplayNameFor(model => model.Korisnik1)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Korisnik1.Ime)
+            @Html.DisplayFor(model => model.Korisnik1.Ime) @Html.DisplayFor(model => model.Korisnik1.Prezime)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @if (Session["IDAdmina"] != null || (Session["IDLekara"] != null && Convert.ToInt32(Session["IDLekara"]) == Model.IDLekara))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
+        <text> |</text>
+    }
+    @if (Session["IDPacijenta"] != null || Session["IDAdmina"] != null || Session["IDLekara"] != null)
+    {
+        @Html.ActionLink("Back to List", "Index", new { id = Model.IDPacijenta })
+    }
 </p>

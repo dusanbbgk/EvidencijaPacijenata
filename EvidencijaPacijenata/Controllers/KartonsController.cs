@@ -14,8 +14,12 @@ namespace EvidencijaPacijenata.Controllers
         // GET: Kartons
         public ActionResult Index()
         {
-            var kartons = db.Kartons.Include(k => k.Korisnik).Include(k => k.Korisnik1);
-            return View(kartons.ToList());
+            if (Session["IDAdmina"] != null)
+            {
+                var kartons = db.Kartons.Include(k => k.Korisnik).Include(k => k.Korisnik1);
+                return View(kartons.ToList());
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Kartons/Details/5
@@ -23,22 +27,36 @@ namespace EvidencijaPacijenata.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            Karton karton = db.Kartons.SingleOrDefault(k => k.IDPacijenta == id);
-            if (karton == null)
+            if (Session["IDPacijenta"] != null)
             {
-                Session["NemaKarton"] = "Nemate karton!";
-                return RedirectToAction("Index", "Home");
+                if (id != Convert.ToInt32(Session["IDPacijenta"]))
+                    return RedirectToAction("Index", "Home");
+                Karton karton = db.Kartons.SingleOrDefault(k => k.IDPacijenta == id);
+                if (karton == null)
+                {
+                    Session["NemaKarton"] = "Ne postoji karton za pacijenta!";
+                    return RedirectToAction("Index", "Home");
+                }
+                return View(karton);
             }
-            else if (karton.IDPacijenta != Convert.ToInt32(Session["IDPacijenta"]))
-                return RedirectToAction("Index", "Home");
-            else return View(karton);
+            else if (Session["IDLekara"] != null || Session["IDAdmina"] != null)
+            {
+                Karton karton = db.Kartons.SingleOrDefault(k => k.IDPacijenta == id);
+                if (karton == null)
+                {
+                    Session["NemaKarton"] = "Ne postoji karton za pacijenta!";
+                    return RedirectToAction("Index", "Home");
+                }
+                return View(karton);
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Kartons/Create
         public ActionResult Create()
         {
-            ViewBag.IDLekara = new SelectList(db.Korisniks, "ID", "Ime");
-            ViewBag.IDPacijenta = new SelectList(db.Korisniks, "ID", "Ime");
+            ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<Lekar>(), "ID", "ImePrezime");
+            ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>(), "ID", "ImePrezime");
             return View();
         }
 
@@ -56,8 +74,8 @@ namespace EvidencijaPacijenata.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IDLekara = new SelectList(db.Korisniks, "ID", "Ime", karton.IDLekara);
-            ViewBag.IDPacijenta = new SelectList(db.Korisniks, "ID", "Ime", karton.IDPacijenta);
+            ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<Lekar>(), "ID", "ImePrezime", karton.IDLekara);
+            ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>(), "ID", "ImePrezime", karton.IDPacijenta);
             return View(karton);
         }
 
@@ -68,14 +86,13 @@ namespace EvidencijaPacijenata.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Karton karton = db.Kartons.SingleOrDefault(k => k.IDPacijenta == id);
+            Karton karton = db.Kartons.Find(id);
             if (karton == null)
             {
                 return HttpNotFound();
             }
-            Session["IDKartona"] = karton.ID;
-            ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<Lekar>(), "ID", "Ime", karton.IDLekara);
-            ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>(), "ID", "Ime", karton.IDPacijenta);
+            ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<Lekar>(), "ID", "ImePrezime", karton.IDLekara);
+            ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>(), "ID", "ImePrezime", karton.IDPacijenta);
             return View(karton);
         }
 
@@ -86,6 +103,9 @@ namespace EvidencijaPacijenata.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,IDPacijenta,IDLekara,DatumVremeNalaza,Disanje,Puls,TelesnaTemperatura,KrvniPritisak,Mokraca,Stolica,KrvaSlika,SpecificniPregled")] Karton karton)
         {
+            DateTime dt = DateTime.Now;
+            DateTime dateOnly = dt.Date;
+            karton.DatumVremeNalaza = dateOnly;
             if (ModelState.IsValid)
             {
                 karton.ID = Convert.ToInt32(Session["IDKartona"]);
@@ -94,8 +114,8 @@ namespace EvidencijaPacijenata.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IDLekara = new SelectList(db.Korisniks, "ID", "Ime", karton.IDLekara);
-            ViewBag.IDPacijenta = new SelectList(db.Korisniks, "ID", "Ime", karton.IDPacijenta);
+            ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<Lekar>(), "ID", "ImePrezime", karton.IDLekara);
+            ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>(), "ID", "ImePrezime", karton.IDPacijenta);
             return View(karton);
         }
 
@@ -106,7 +126,7 @@ namespace EvidencijaPacijenata.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Karton karton = db.Kartons.SingleOrDefault(k => k.IDPacijenta == id);
+            Karton karton = db.Kartons.Find(id);
             if (karton == null)
             {
                 return HttpNotFound();
@@ -119,7 +139,7 @@ namespace EvidencijaPacijenata.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Karton karton = db.Kartons.SingleOrDefault(k => k.IDPacijenta == id);
+            Karton karton = db.Kartons.Find(id);
             db.Kartons.Remove(karton);
             db.SaveChanges();
             return RedirectToAction("Index");

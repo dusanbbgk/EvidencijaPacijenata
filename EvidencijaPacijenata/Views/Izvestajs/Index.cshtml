@@ -6,10 +6,12 @@
 }
 
 <h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@if (Session["IDAdmina"] != null)
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
 <table class="table">
     <tr>
         <th>
@@ -19,34 +21,40 @@
             @Html.DisplayNameFor(model => model.Dijagnoza)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Korisnik.Ime)
+            @Html.DisplayNameFor(model => model.Korisnik)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Korisnik1.Ime)
+            @Html.DisplayNameFor(model => model.Korisnik1)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.DatumPregleda)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dijagnoza)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Korisnik.Ime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Korisnik1.Ime)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatumPregleda.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dijagnoza)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Korisnik.Ime) @Html.DisplayFor(modelItem => item.Korisnik.Prezime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Korisnik1.Ime) @Html.DisplayFor(modelItem => item.Korisnik1.Prezime)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.ID })
+                @if (Session["IDAdmina"] != null || (Session["IDLekara"] != null && Convert.ToInt32(Session["IDLekara"]) == item.IDLekara))
+                {
+                    <text> | </text>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID })<text> | </text>
+
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                }
+            </td>
+        </tr>
+    }
 
 </table>

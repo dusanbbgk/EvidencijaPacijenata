@@ -40,10 +40,10 @@
             @Html.DisplayNameFor(model => model.SpecificniPregled)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Korisnik.Ime)
+            @Html.DisplayNameFor(model => model.Korisnik)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Korisnik1.Ime)
+            @Html.DisplayNameFor(model => model.Korisnik1)
         </th>
         <th></th>
     </tr>
@@ -78,10 +78,10 @@
             @Html.DisplayFor(modelItem => item.SpecificniPregled)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Korisnik.Ime)
+            @Html.DisplayFor(modelItem => item.Korisnik.Ime) @Html.DisplayFor(modelItem => item.Korisnik.Prezime)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Korisnik1.Ime)
+            @Html.DisplayFor(modelItem => item.Korisnik1.Ime) @Html.DisplayFor(modelItem => item.Korisnik1.Prezime)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |

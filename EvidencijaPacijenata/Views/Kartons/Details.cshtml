@@ -84,24 +84,27 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Korisnik.Ime)
+            @Html.DisplayNameFor(model => model.Korisnik)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Korisnik.Ime)
+            @Html.DisplayFor(model => model.Korisnik.Ime) @Html.DisplayFor(model => model.Korisnik.Prezime)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Korisnik1.Ime)
+            @Html.DisplayNameFor(model => model.Korisnik1)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Korisnik1.Ime)
+            @Html.DisplayFor(model => model.Korisnik1.Ime) @Html.DisplayFor(model => model.Korisnik1.Prezime)
         </dd>
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@if (Session["IDLekara"] != null || Session["IDAdmina"] != null)
+{
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

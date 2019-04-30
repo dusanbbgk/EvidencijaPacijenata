@@ -16,7 +16,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.IDPacijenta, "IDPacijenta", htmlAttributes: new { @class = "control-label col-md-2"})
+            @Html.LabelFor(model => model.IDPacijenta, htmlAttributes: new { @class = "control-label col-md-2"})
             <div class="col-md-10">
                 @Html.DropDownList("IDPacijenta", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IDPacijenta, "", new { @class = "text-danger" })
@@ -24,26 +24,17 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.IDLekara, "IDLekara", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.IDLekara, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("IDLekara", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IDLekara, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.DatumPregleda, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DatumPregleda, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @value = ViewBag.DatumPregleda } })
-                @Html.ValidationMessageFor(model => model.DatumPregleda, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
         <div class="form-group">
             @Html.LabelFor(model => model.Dijagnoza, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextAreaFor(model => model.Dijagnoza, new { @class = "form-control", @rows = "5" })
-                @*@Html.EditorFor(model => model.Dijagnoza, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.Dijagnoza, "", new { @class = "text-danger" })
             </div>
         </div>

@@ -13,6 +13,7 @@ namespace EvidencijaPacijenata.Models
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Web.Mvc;
 
     public partial class Pacijent : Korisnik
@@ -48,5 +49,13 @@ namespace EvidencijaPacijenata.Models
     
         public virtual Odeljenje Odeljenje { get; set; }
         public virtual Ustanova Ustanova { get; set; }
+        [NotMapped]
+        public string ImePrezime
+        {
+            get
+            {
+                return Ime + " " + Prezime;
+            }
+        }
     }
 }
