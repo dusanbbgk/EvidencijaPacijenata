@@ -10,12 +10,16 @@ namespace EvidencijaPacijenata.Controllers
         // GET: ResetPassword
         public ActionResult Index()
         {
-            if (TempData["info"] != null)
+            if (Session["IDPacijenta"] == null && Session["IDLekara"] == null && Session["IDAdmina"] == null)
             {
-                ViewBag.info = TempData["info"];
-                TempData["info"] = null;
+                if (TempData["info"] != null)
+                {
+                    ViewBag.info = TempData["info"];
+                    TempData["info"] = null;
+                }
+                return View();
             }
-            return View();
+            return RedirectToAction("Index", "Home");
         }
         [HttpPost]
         public ActionResult CheckForm(Pacijent pacijent)
@@ -28,7 +32,8 @@ namespace EvidencijaPacijenata.Controllers
                     TempData["info"] = "Korisničko ime i/ili Email adresa nisu pronađeni u bazi!";
                     return RedirectToAction("Index");
                 }
-                else {
+                else
+                {
                     proveraPodataka.Lozinka = pacijent.Lozinka;
                     if (ModelState.IsValid)
                     {

@@ -38,7 +38,7 @@ namespace EvidencijaPacijenata.Controllers
         // GET: Vestis/Create
         public ActionResult Create()
         {
-            return View();
+            return Session["IDAdmina"] != null ? View() : (ActionResult)RedirectToAction("Index", "Home");
         }
 
         // POST: Vestis/Create
@@ -65,12 +65,16 @@ namespace EvidencijaPacijenata.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vesti vesti = db.Vestis.Find(id);
-            if (vesti == null)
+            if (Session["IDAdmina"] != null)
             {
-                return HttpNotFound();
+                Vesti vesti = db.Vestis.Find(id);
+                if (vesti == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(vesti);
             }
-            return View(vesti);
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: Vestis/Edit/5
@@ -96,12 +100,16 @@ namespace EvidencijaPacijenata.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vesti vesti = db.Vestis.Find(id);
-            if (vesti == null)
+            if (Session["IDAdmina"] != null)
             {
-                return HttpNotFound();
+                Vesti vesti = db.Vestis.Find(id);
+                if (vesti == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(vesti);
             }
-            return View(vesti);
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: Vestis/Delete/5

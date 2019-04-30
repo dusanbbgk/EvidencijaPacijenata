@@ -46,6 +46,9 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @if (Session["IDAdmina"] != null)
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID })<text> | </text>
+    }
     @Html.ActionLink("Back to List", "Index")
 </p>
