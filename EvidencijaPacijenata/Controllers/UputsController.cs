@@ -70,10 +70,10 @@ namespace EvidencijaPacijenata.Controllers
                         int IDLekaraOd = Convert.ToInt32(Session["IDLekara"]);
                         ViewBag.IDPacijenta = new SelectList(from p in db.Korisniks.OfType<Pacijent>()
                                                              where p.ID == id
-                                                             select p, "ID", "Ime");
+                                                             select p, "ID", "ImePrezime");
                         ViewBag.IDLekaraOD = new SelectList(from lop in db.Korisniks.OfType<LekarOpstePrakse>()
                                                             where lop.ID == IDLekaraOd
-                                                            select lop, "ID", "Ime");
+                                                            select lop, "ID", "ImePrezime");
                         ViewBag.IDUstanove = new SelectList(db.Ustanovas, "ID", "Naziv");
                         List<SelectListItem> izbor = new List<SelectListItem>();
                         izbor.Add(new SelectListItem { Text = "--- Izaberite odeljenje ---", Value = "0" });
@@ -88,10 +88,10 @@ namespace EvidencijaPacijenata.Controllers
                         int IDLekaraOd = Convert.ToInt32(Session["IDLekara"]);
                         ViewBag.IDPacijenta = new SelectList(from p in db.Korisniks.OfType<Pacijent>()
                                                              where p.ID == id
-                                                             select p, "ID", "Ime");
+                                                             select p, "ID", "ImePrezime");
                         ViewBag.IDLekaraOD = new SelectList(from lop in db.Korisniks.OfType<LekarSpecijalista>()
                                                             where lop.ID == IDLekaraOd
-                                                            select lop, "ID", "Ime");
+                                                            select lop, "ID", "ImePrezime");
                         ViewBag.IDUstanove = new SelectList(db.Ustanovas, "ID", "Naziv");
                         List<SelectListItem> izbor = new List<SelectListItem>();
                         izbor.Add(new SelectListItem { Text = "--- Izaberite odeljenje ---", Value = "0" });
