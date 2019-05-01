@@ -26,7 +26,7 @@ namespace EvidencijaPacijenata.Models
         public System.TimeSpan VremePregleda { get; set; }
         [DisplayName("Datum zakazivanja pregleda")]
         public System.DateTime DatumZakazivanja { get; set; }
-        public int ZavrsenPregled { get; set; }
+        public Nullable<int> ZavrsenPregled { get; set; }
         [DisplayName("Lekar")]
         public virtual Korisnik Korisnik { get; set; }
         [DisplayName("Pacijent")]

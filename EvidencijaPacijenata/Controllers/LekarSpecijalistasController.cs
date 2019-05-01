@@ -10,7 +10,7 @@ namespace EvidencijaPacijenata.Controllers
 {
     public class LekarSpecijalistasController : Controller
     {
-        private DBZUstanovaEntities db = new DBZUstanovaEntities();
+        private DBZUstanovaBetaEntities db = new DBZUstanovaBetaEntities();
 
         // GET: LekarSpecijalistas
         public ActionResult Index()
@@ -66,7 +66,7 @@ namespace EvidencijaPacijenata.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Ime,Prezime,KorisnickoIme,Lozinka,IDOdeljenja,Licenca,Specijalizacija")] LekarSpecijalista lekarSpecijalista)
+        public ActionResult Create([Bind(Include = "ID,Ime,Prezime,KorisnickoIme,Lozinka,DatumRodjenja,IDOdeljenja,Licenca,Slika,Specijalizacija")] LekarSpecijalista lekarSpecijalista)
         {
             if (ModelState.IsValid)
             {
@@ -105,7 +105,7 @@ namespace EvidencijaPacijenata.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Ime,Prezime,KorisnickoIme,Lozinka,IDOdeljenja,Licenca,Specijalizacija")] LekarSpecijalista lekarSpecijalista)
+        public ActionResult Edit([Bind(Include = "ID,Ime,Prezime,KorisnickoIme,Lozinka,DatumRodjenja,IDOdeljenja,Licenca,Slika,Specijalizacija")] LekarSpecijalista lekarSpecijalista)
         {
             if (ModelState.IsValid)
             {

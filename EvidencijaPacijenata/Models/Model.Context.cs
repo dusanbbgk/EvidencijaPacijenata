@@ -15,10 +15,10 @@ namespace EvidencijaPacijenata.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class DBZUstanovaEntities : DbContext
+    public partial class DBZUstanovaBetaEntities : DbContext
     {
-        public DBZUstanovaEntities()
-            : base("name=DBZUstanovaEntities")
+        public DBZUstanovaBetaEntities()
+            : base("name=DBZUstanovaBetaEntities")
         {
         }
     
@@ -31,28 +31,11 @@ namespace EvidencijaPacijenata.Models
         public virtual DbSet<Karton> Kartons { get; set; }
         public virtual DbSet<Korisnik> Korisniks { get; set; }
         public virtual DbSet<Odeljenje> Odeljenjes { get; set; }
-        public virtual DbSet<RadnoVremeLekara> RadnoVremeLekaras { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Uput> Uputs { get; set; }
         public virtual DbSet<Ustanova> Ustanovas { get; set; }
         public virtual DbSet<Vesti> Vestis { get; set; }
         public virtual DbSet<ZakazivanjePregleda> ZakazivanjePregledas { get; set; }
-    
-        public virtual ObjectResult<slobodniTermini_Result> slobodniTermini(Nullable<int> lekarId, Nullable<System.DateTime> datum, Nullable<System.TimeSpan> vreme)
-        {
-            var lekarIdParameter = lekarId.HasValue ?
-                new ObjectParameter("lekarId", lekarId) :
-                new ObjectParameter("lekarId", typeof(int));
-    
-            var datumParameter = datum.HasValue ?
-                new ObjectParameter("datum", datum) :
-                new ObjectParameter("datum", typeof(System.DateTime));
-    
-            var vremeParameter = vreme.HasValue ?
-                new ObjectParameter("vreme", vreme) :
-                new ObjectParameter("vreme", typeof(System.TimeSpan));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<slobodniTermini_Result>("slobodniTermini", lekarIdParameter, datumParameter, vremeParameter);
-        }
     
         public virtual ObjectResult<pretragaPacijenata_Result> pretragaPacijenata(string pretraga, Nullable<int> iDLekara, Nullable<int> uslov)
         {
@@ -69,6 +52,23 @@ namespace EvidencijaPacijenata.Models
                 new ObjectParameter("Uslov", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<pretragaPacijenata_Result>("pretragaPacijenata", pretragaParameter, iDLekaraParameter, uslovParameter);
+        }
+    
+        public virtual ObjectResult<slobodniTermini_Result> slobodniTermini(Nullable<int> lekarId, Nullable<System.DateTime> datum, Nullable<System.TimeSpan> vreme)
+        {
+            var lekarIdParameter = lekarId.HasValue ?
+                new ObjectParameter("lekarId", lekarId) :
+                new ObjectParameter("lekarId", typeof(int));
+    
+            var datumParameter = datum.HasValue ?
+                new ObjectParameter("datum", datum) :
+                new ObjectParameter("datum", typeof(System.DateTime));
+    
+            var vremeParameter = vreme.HasValue ?
+                new ObjectParameter("vreme", vreme) :
+                new ObjectParameter("vreme", typeof(System.TimeSpan));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<slobodniTermini_Result>("slobodniTermini", lekarIdParameter, datumParameter, vremeParameter);
         }
     }
 }

@@ -4,41 +4,40 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="11472f2546794ac080ecc9517be0676a" Name="Diagram1">
-        <EntityTypeShape EntityType="DBZUstanovaModel.Administrator" Width="1.5" PointX="11.375" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBZUstanovaModel.Izvestaj" Width="1.5" PointX="3" PointY="10.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBZUstanovaModel.Karton" Width="1.5" PointX="3" PointY="13.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBZUstanovaModel.Korisnik" Width="1.5" PointX="12" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBZUstanovaModel.Lekar" Width="1.5" PointX="16.5" PointY="13.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBZUstanovaModel.Odeljenje" Width="1.5" PointX="3.75" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBZUstanovaModel.Pacijent" Width="1.5" PointX="16.625" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBZUstanovaModel.RadnoVremeLekara" Width="1.5" PointX="3" PointY="26.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBZUstanovaModel.Uput" Width="1.5" PointX="6" PointY="10.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBZUstanovaModel.Ustanova" Width="1.5" PointX="1.5" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBZUstanovaModel.Vesti" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBZUstanovaModel.ZakazivanjePregleda" Width="1.5" PointX="3" PointY="32.75" IsExpanded="true" />
-        <AssociationConnector Association="DBZUstanovaModel.FK_IzvestajLekar" ManuallyRouted="false" />
-        <AssociationConnector Association="DBZUstanovaModel.FK_IzvestajPacijent" ManuallyRouted="false" />
-        <AssociationConnector Association="DBZUstanovaModel.FK_KartonLekar" ManuallyRouted="false" />
-        <AssociationConnector Association="DBZUstanovaModel.FK_KartonPacijent" ManuallyRouted="false" />
-        <AssociationConnector Association="DBZUstanovaModel.FK_RadnoVremeLekaraLekar" ManuallyRouted="false" />
-        <AssociationConnector Association="DBZUstanovaModel.FK_UputLekarKome" ManuallyRouted="false" />
-        <AssociationConnector Association="DBZUstanovaModel.FK_UputLekarOd" ManuallyRouted="false" />
-        <AssociationConnector Association="DBZUstanovaModel.FK_UputPacijent" ManuallyRouted="false" />
-        <AssociationConnector Association="DBZUstanovaModel.FK_ZakazivanjePregledaLekar" ManuallyRouted="false" />
-        <AssociationConnector Association="DBZUstanovaModel.FK_ZakazivanjePregledaPacijent" ManuallyRouted="false" />
-        <AssociationConnector Association="DBZUstanovaModel.FK_LekarOdeljenje" ManuallyRouted="false" />
-        <AssociationConnector Association="DBZUstanovaModel.FK_OdeljenjeUstanova" ManuallyRouted="false" />
-        <AssociationConnector Association="DBZUstanovaModel.FK_PacijentOdeljenje" ManuallyRouted="false" />
-        <AssociationConnector Association="DBZUstanovaModel.FK_UputOdeljenje" ManuallyRouted="false" />
-        <AssociationConnector Association="DBZUstanovaModel.FK_PacijentUstanova" ManuallyRouted="false" />
-        <InheritanceConnector EntityType="DBZUstanovaModel.Administrator" />
-        <InheritanceConnector EntityType="DBZUstanovaModel.Lekar" />
-        <InheritanceConnector EntityType="DBZUstanovaModel.Pacijent" />
-        <EntityTypeShape EntityType="DBZUstanovaModel.LekarOpstePrakse" Width="1.5" PointX="13.875" PointY="16" />
-        <InheritanceConnector EntityType="DBZUstanovaModel.LekarOpstePrakse" />
-        <EntityTypeShape EntityType="DBZUstanovaModel.LekarSpecijalista" Width="1.5" PointX="16.625" PointY="17.25" />
-        <InheritanceConnector EntityType="DBZUstanovaModel.LekarSpecijalista" />
+      <Diagram DiagramId="cb7ae65ceed44c15bdbec281da26ad80" Name="Diagram1">
+        <EntityTypeShape EntityType="DBZUstanovaBetaModel.Administrator" Width="1.5" PointX="14.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBZUstanovaBetaModel.Izvestaj" Width="1.5" PointX="2.5" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBZUstanovaBetaModel.Karton" Width="1.5" PointX="3" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBZUstanovaBetaModel.Korisnik" Width="1.5" PointX="13.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBZUstanovaBetaModel.Lekar" Width="1.5" PointX="17.25" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBZUstanovaBetaModel.Odeljenje" Width="1.5" PointX="3.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBZUstanovaBetaModel.Pacijent" Width="1.5" PointX="17" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBZUstanovaBetaModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBZUstanovaBetaModel.Uput" Width="1.5" PointX="6" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBZUstanovaBetaModel.Ustanova" Width="1.5" PointX="1.5" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBZUstanovaBetaModel.Vesti" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBZUstanovaBetaModel.ZakazivanjePregleda" Width="1.5" PointX="3" PointY="29.875" IsExpanded="true" />
+        <AssociationConnector Association="DBZUstanovaBetaModel.FK_IzvestajLekar" ManuallyRouted="false" />
+        <AssociationConnector Association="DBZUstanovaBetaModel.FK_IzvestajPacijent" ManuallyRouted="false" />
+        <AssociationConnector Association="DBZUstanovaBetaModel.FK_KartonLekar" ManuallyRouted="false" />
+        <AssociationConnector Association="DBZUstanovaBetaModel.FK_KartonPacijent" ManuallyRouted="false" />
+        <AssociationConnector Association="DBZUstanovaBetaModel.FK_UputLekarKome" ManuallyRouted="false" />
+        <AssociationConnector Association="DBZUstanovaBetaModel.FK_UputLekarOd" ManuallyRouted="false" />
+        <AssociationConnector Association="DBZUstanovaBetaModel.FK_UputPacijent" ManuallyRouted="false" />
+        <AssociationConnector Association="DBZUstanovaBetaModel.FK_ZakazivanjePregledaLekar" ManuallyRouted="false" />
+        <AssociationConnector Association="DBZUstanovaBetaModel.FK_ZakazivanjePregledaPacijent" ManuallyRouted="false" />
+        <AssociationConnector Association="DBZUstanovaBetaModel.FK_LekarOdeljenje" ManuallyRouted="false" />
+        <AssociationConnector Association="DBZUstanovaBetaModel.FK_OdeljenjeUstanova" ManuallyRouted="false" />
+        <AssociationConnector Association="DBZUstanovaBetaModel.FK_PacijentOdeljenje" ManuallyRouted="false" />
+        <AssociationConnector Association="DBZUstanovaBetaModel.FK_UputOdeljenje" ManuallyRouted="false" />
+        <AssociationConnector Association="DBZUstanovaBetaModel.FK_PacijentUstanova" ManuallyRouted="false" />
+        <InheritanceConnector EntityType="DBZUstanovaBetaModel.Administrator" />
+        <InheritanceConnector EntityType="DBZUstanovaBetaModel.Pacijent" />
+        <InheritanceConnector EntityType="DBZUstanovaBetaModel.Lekar" />
+        <EntityTypeShape EntityType="DBZUstanovaBetaModel.LekarOpstePrakse" Width="1.5" PointX="15.375" PointY="12" />
+        <InheritanceConnector EntityType="DBZUstanovaBetaModel.LekarOpstePrakse" />
+        <EntityTypeShape EntityType="DBZUstanovaBetaModel.LekarSpecijalista" Width="1.5" PointX="18.125" PointY="12.25" />
+        <InheritanceConnector EntityType="DBZUstanovaBetaModel.LekarSpecijalista" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

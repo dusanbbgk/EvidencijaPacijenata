@@ -9,12 +9,12 @@
 
 namespace EvidencijaPacijenata.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Web.Mvc;
-    using System.Web.Security;
-    using CompareAttribute = System.ComponentModel.DataAnnotations.CompareAttribute;
 
     public abstract partial class Korisnik
     {
@@ -25,7 +25,6 @@ namespace EvidencijaPacijenata.Models
             this.Izvestajs1 = new HashSet<Izvestaj>();
             this.Kartons = new HashSet<Karton>();
             this.Kartons1 = new HashSet<Karton>();
-            this.RadnoVremeLekaras = new HashSet<RadnoVremeLekara>();
             this.Uputs = new HashSet<Uput>();
             this.Uputs1 = new HashSet<Uput>();
             this.Uputs2 = new HashSet<Uput>();
@@ -46,6 +45,17 @@ namespace EvidencijaPacijenata.Models
         [Required(ErrorMessage = "Polje je obavezno")]
         [DataType(DataType.Password)]
         public string Lozinka { get; set; }
+        [DisplayName("Datum rođenja")]
+        public System.DateTime DatumRodjenja { get; set; }
+
+        [NotMapped]
+        public string ImePrezime
+        {
+            get
+            {
+                return Ime + " " + Prezime;
+            }
+        }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Izvestaj> Izvestajs { get; set; }
@@ -55,8 +65,6 @@ namespace EvidencijaPacijenata.Models
         public virtual ICollection<Karton> Kartons { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Karton> Kartons1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RadnoVremeLekara> RadnoVremeLekaras { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Uput> Uputs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

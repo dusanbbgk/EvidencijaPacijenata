@@ -1,5 +1,6 @@
 ﻿using EvidencijaPacijenata.Models;
 using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -7,7 +8,8 @@ namespace EvidencijaPacijenata.Controllers
 {
     public class HomeController : Controller
     {
-        private DBZUstanovaEntities db = new DBZUstanovaEntities();
+        private DBZUstanovaBetaEntities db = new DBZUstanovaBetaEntities();
+
         public ActionResult Index()
         {
             if (TempData["NemaPregleda"] != null)
@@ -37,76 +39,6 @@ namespace EvidencijaPacijenata.Controllers
             }
             return View(db.Vestis.Take(3).OrderBy(v => v.DatumObjave).ToList());
         }
-        [HttpPost]
-        public ActionResult PacijentLogin(string KorisnickoIme, string Lozinka)
-        {
-            DateTime dt = DateTime.Now;
-            DateTime dateOnly = dt.Date;
-            using (DBZUstanovaEntities model = new DBZUstanovaEntities())
-            {
-                var pacijent = model.Korisniks.OfType<Pacijent>().SingleOrDefault(p => p.KorisnickoIme == KorisnickoIme && p.Lozinka == Lozinka);
-                if (pacijent != null)
-                {
-                    if (pacijent.Odobren == 0)
-                    {
-                        TempData["info"] = "Nalog Vam nije odobren!";
-                        return RedirectToAction("Index");
-                    }
-                    else if (string.Compare(dateOnly.ToString("yyyy-MM-dd"), pacijent.IstekOsiguranja.ToString("yyyy-MM-dd")) > 0)
-                    {
-                        TempData["info"] = "Osiguranje Vam je isteklo!";
-                        return RedirectToAction("Index");
-                    }
-                    else
-                    {
-                        Session["IDPacijenta"] = pacijent.ID;
-                        Session["ImePrezime"] = pacijent.Ime + " " + pacijent.Prezime;
-                        return RedirectToAction("Index");
-                    }
-                }
-                else
-                {
-                    TempData["info"] = "Pacijent nije pronađen u bazi!";
-                    return RedirectToAction("Index");
-                }
-            }
-        }
-        [HttpPost]
-        public ActionResult LekarLogin(string KorisnickoIme, string Lozinka)
-        {
-            using (DBZUstanovaEntities model = new DBZUstanovaEntities())
-            {
-                LekarOpstePrakse LOP = model.Korisniks.OfType<LekarOpstePrakse>().SingleOrDefault(k => k.KorisnickoIme == KorisnickoIme && k.Lozinka == Lozinka);
-                if (LOP != null)
-                {
-                    Session["IDLekara"] = LOP.ID;
-                    Session["ImePrezime"] = LOP.Ime + " " + LOP.Prezime;
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    LekarSpecijalista LS = model.Korisniks.OfType<LekarSpecijalista>().SingleOrDefault(k => k.KorisnickoIme == KorisnickoIme && k.Lozinka == Lozinka);
-                    if (LS != null)
-                    {
-                        Session["IDLekara"] = LS.ID;
-                        Session["ImePrezime"] = LS.Ime + " " + LS.Prezime;
-                        Session["Specijalizacija"] = LS.Specijalizacija;
-                        Session["IDOdeljenjaLekara"] = LS.IDOdeljenja;
-                        return RedirectToAction("Index");
-                    }
-                    else
-                    {
-                        TempData["info"] = "Lekar nije pronađen u bazi!";
-                        return RedirectToAction("Index");
-                    }
-                }
-            }
-        }
-        public ActionResult Logout()
-        {
-            Session.Abandon();
-            return RedirectToAction("Index");
-        }
 
         public ActionResult About()
         {
@@ -120,6 +52,133 @@ namespace EvidencijaPacijenata.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+        [HttpPost]
+        public ActionResult PacijentLogin(string KorisnickoIme, string Lozinka)
+        {
+            DateTime dt = DateTime.Now;
+            DateTime dateOnly = dt.Date;
+
+            var pacijent = db.Korisniks.OfType<Pacijent>().SingleOrDefault(p => p.KorisnickoIme == KorisnickoIme && p.Lozinka == Lozinka);
+            if (pacijent != null)
+            {
+                if (pacijent.Odobren == 0)
+                {
+                    TempData["info"] = "Nalog Vam nije odobren!";
+                    return RedirectToAction("Index");
+                }
+                else if (string.Compare(dateOnly.ToString("yyyy-MM-dd"), pacijent.IstekOsiguranja.ToString("yyyy-MM-dd")) > 0)
+                {
+                    TempData["info"] = "Osiguranje Vam je isteklo!";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    Session["IDPacijenta"] = pacijent.ID;
+                    Session["ImePrezime"] = pacijent.Ime + " " + pacijent.Prezime;
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                TempData["info"] = "Pacijent nije pronađen u bazi!";
+                return RedirectToAction("Index");
+            }
+        }
+        [HttpPost]
+        public ActionResult LekarLogin(string KorisnickoIme, string Lozinka)
+        {
+            LekarOpstePrakse LOP = db.Korisniks.OfType<LekarOpstePrakse>().SingleOrDefault(k => k.KorisnickoIme == KorisnickoIme && k.Lozinka == Lozinka);
+            if (LOP != null)
+            {
+                Session["IDLekara"] = LOP.ID;
+                Session["ImePrezime"] = LOP.Ime + " " + LOP.Prezime;
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                LekarSpecijalista LS = db.Korisniks.OfType<LekarSpecijalista>().SingleOrDefault(k => k.KorisnickoIme == KorisnickoIme && k.Lozinka == Lozinka);
+                if (LS != null)
+                {
+                    Session["IDLekara"] = LS.ID;
+                    Session["ImePrezime"] = LS.Ime + " " + LS.Prezime;
+                    Session["Specijalizacija"] = LS.Specijalizacija;
+                    Session["IDOdeljenjaLekara"] = LS.IDOdeljenja;
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["info"] = "Lekar nije pronađen u bazi!";
+                    return RedirectToAction("Index");
+                }
+            }
+        }
+        public ActionResult Logout()
+        {
+            Session.Abandon();
+            return RedirectToAction("Index");
+        }
+        public ActionResult ResetPassword()
+        {
+            if (Session["IDPacijenta"] == null && Session["IDLekara"] == null && Session["IDAdmina"] == null)
+            {
+                if (TempData["info"] != null)
+                {
+                    ViewBag.info = TempData["info"];
+                    TempData["info"] = null;
+                }
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult ResetPass(Pacijent pacijent)
+        {
+            Pacijent proveraPodataka = db.Korisniks.OfType<Pacijent>().SingleOrDefault(p => p.KorisnickoIme == pacijent.KorisnickoIme && p.Email == pacijent.Email);
+            if (proveraPodataka == null)
+            {
+                TempData["info"] = "Korisničko ime i/ili Email adresa nisu pronađeni u bazi!";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                proveraPodataka.Lozinka = pacijent.Lozinka;
+                if (ModelState.IsValid)
+                {
+                    db.Entry(proveraPodataka).State = EntityState.Modified;
+                    db.SaveChanges();
+                    Session["resetPass"] = "Uspešno promenjena lozinka!";
+                    return RedirectToAction("Index", "Home");
+                }
+                TempData["info"] = "Greška prilikom ažuriranja pacijenta!";
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        public ActionResult Admin()
+        {
+            if (Session["IDAdmina"] == null)
+                return View();
+            else
+                return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult AdminLogin(string KorisnickoIme, string Lozinka)
+        {
+            Administrator admin = db.Korisniks.OfType<Administrator>().SingleOrDefault(k => k.KorisnickoIme == KorisnickoIme && k.Lozinka == Lozinka);
+            if (admin != null)
+            {
+                Session["IDAdmina"] = admin.ID;
+                Session["ImePrezime"] = admin.Ime + " " + admin.Prezime;
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                TempData["info"] = "Admin nije pronađen u bazi!";
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

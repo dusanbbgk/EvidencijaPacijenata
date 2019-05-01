@@ -10,12 +10,12 @@ namespace EvidencijaPacijenata.Controllers
 {
     public class PacijentsController : Controller
     {
-        private DBZUstanovaEntities db = new DBZUstanovaEntities();
+        private DBZUstanovaBetaEntities db = new DBZUstanovaBetaEntities();
 
         // GET: Pacijents
         public ActionResult Index()
         {
-            return View(db.Korisniks.OfType<Pacijent>().ToList());
+            return Session["IDAdmina"] != null ? View(db.Korisniks.OfType<Pacijent>().ToList()) : (ActionResult)RedirectToAction("Index", "Home");
         }
         public ActionResult Pretraga(string pretraga)
         {
@@ -38,7 +38,6 @@ namespace EvidencijaPacijenata.Controllers
                         return View(db.pretragaPacijenata(pretraga, IDLekara, 0).ToList());
                 }
             }
-            else
                 return RedirectToAction("Index", "Home");
         }
         public ActionResult ZadrziNaOdeljenju(int id)
@@ -180,7 +179,7 @@ namespace EvidencijaPacijenata.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Ime,Prezime,KorisnickoIme,Lozinka,JMBG,NosilacOsiguranja,SrodstvoSaNosiocem,IDOdeljenja,IDUstanove,KrvnaGrupa,Pol,Adresa,Telefon,Email,IstekOsiguranja,Odobren")] Pacijent pacijent)
+        public ActionResult Create([Bind(Include = "ID,Ime,Prezime,KorisnickoIme,Lozinka,DatumRodjenja,JMBG,NosilacOsiguranja,SrodstvoSaNosiocem,IDOdeljenja,IDUstanove,KrvnaGrupa,Pol,Adresa,Telefon,Email,IstekOsiguranja,Odobren")] Pacijent pacijent)
         {
             DateTime dt = DateTime.Now;
             DateTime dateOnly = dt.Date;
@@ -236,7 +235,7 @@ namespace EvidencijaPacijenata.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Ime,Prezime,KorisnickoIme,Lozinka,JMBG,NosilacOsiguranja,SrodstvoSaNosiocem,IDOdeljenja,IDUstanove,KrvnaGrupa,Pol,Adresa,Telefon,Email,IstekOsiguranja,Odobren")] Pacijent pacijent)
+        public ActionResult Edit([Bind(Include = "ID,Ime,Prezime,KorisnickoIme,Lozinka,DatumRodjenja,JMBG,NosilacOsiguranja,SrodstvoSaNosiocem,IDOdeljenja,IDUstanove,KrvnaGrupa,Pol,Adresa,Telefon,Email,IstekOsiguranja,Odobren")] Pacijent pacijent)
         {
             if (ModelState.IsValid)
             {

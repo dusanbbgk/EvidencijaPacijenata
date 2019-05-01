@@ -26,7 +26,7 @@ namespace EvidencijaPacijenata.Models
         public System.DateTime DatumPregleda { get; set; }
         [DisplayName("Odeljenje")]
         public int IDOdeljenja { get; set; }
-        public int ZavrsenPregled { get; set; }
+        public Nullable<int> ZavrsenPregled { get; set; }
         [DisplayName("Za lekara")]
         public virtual Korisnik Korisnik { get; set; }
         [DisplayName("Od lekara")]

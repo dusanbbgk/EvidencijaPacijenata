@@ -19,6 +19,6 @@ namespace EvidencijaPacijenata.Models
         public System.DateTime DatumPregleda { get; set; }
         public System.TimeSpan VremePregleda { get; set; }
         public System.DateTime DatumZakazivanja { get; set; }
-        public int ZavrsenPregled { get; set; }
+        public Nullable<int> ZavrsenPregled { get; set; }
     }
 }

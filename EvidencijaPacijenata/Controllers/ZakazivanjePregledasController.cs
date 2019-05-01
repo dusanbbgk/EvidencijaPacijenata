@@ -11,7 +11,7 @@ namespace EvidencijaPacijenata.Controllers
 {
     public class ZakazivanjePregledasController : Controller
     {
-        private DBZUstanovaEntities db = new DBZUstanovaEntities();
+        private DBZUstanovaBetaEntities db = new DBZUstanovaBetaEntities();
 
         // GET: ZakazivanjePregledas
         public ActionResult Index(int? id)
@@ -137,7 +137,7 @@ namespace EvidencijaPacijenata.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,IDPacijenta,IDLekara,DatumPregleda,DatumZakazivanja,VremePregleda")] ZakazivanjePregleda zakazivanjePregleda)
+        public ActionResult Create([Bind(Include = "ID,IDPacijenta,IDLekara,DatumPregleda,VremePregleda,DatumZakazivanja,ZavrsenPregled")] ZakazivanjePregleda zakazivanjePregleda)
         {
             DateTime dt = DateTime.Now;
             DateTime dateOnly = dt.Date;
@@ -182,7 +182,7 @@ namespace EvidencijaPacijenata.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,IDPacijenta,IDLekara,DatumPregleda,DatumZakazivanja,VremePregleda")] ZakazivanjePregleda zakazivanjePregleda)
+        public ActionResult Edit([Bind(Include = "ID,IDPacijenta,IDLekara,DatumPregleda,VremePregleda,DatumZakazivanja,ZavrsenPregled")] ZakazivanjePregleda zakazivanjePregleda)
         {
             if (ModelState.IsValid)
             {

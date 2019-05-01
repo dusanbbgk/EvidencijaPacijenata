@@ -12,13 +12,12 @@ namespace EvidencijaPacijenata.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class RadnoVremeLekara
+    public partial class sysdiagram
     {
-        public int ID { get; set; }
-        public int IDLekara { get; set; }
-        public System.TimeSpan Pocetak { get; set; }
-        public System.TimeSpan Kraj { get; set; }
-    
-        public virtual Korisnik Korisnik { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

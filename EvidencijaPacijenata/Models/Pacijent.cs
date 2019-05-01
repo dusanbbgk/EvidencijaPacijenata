@@ -13,19 +13,16 @@ namespace EvidencijaPacijenata.Models
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
     using System.Web.Mvc;
 
     public partial class Pacijent : Korisnik
     {
-        [Required(ErrorMessage ="Polje je obavezno")]
+        [Required(ErrorMessage = "Polje je obavezno")]
         [RegularExpression(@"^\d{13}$", ErrorMessage = "Nije u dobrom formatu")]
         [Remote("ProveriJMBG", "Pacijents", HttpMethod = "POST", ErrorMessage = "Postoji u bazi")]
         public string JMBG { get; set; }
-        [Required(ErrorMessage = "Polje je obavezno")]
         [DisplayName("Nosilac osiguranja")]
         public string NosilacOsiguranja { get; set; }
-        [Required(ErrorMessage = "Polje je obavezno")]
         [DisplayName("Srodstvo sa nosiocem osiguranja")]
         public string SrodstvoSaNosiocem { get; set; }
         public Nullable<int> IDOdeljenja { get; set; }
@@ -38,7 +35,7 @@ namespace EvidencijaPacijenata.Models
         [Required(ErrorMessage = "Polje je obavezno")]
         public string Adresa { get; set; }
         [Required(ErrorMessage = "Polje je obavezno")]
-        [RegularExpression(@"^06(\d{7,8})|(\d\/\d{6,7})|(\d\/\d{3}-\d{3,4})|(\d-\d{6,7})|(\d\-\d{3}-\d{3,4})$", ErrorMessage ="Nije dobar format")]
+        [RegularExpression(@"^06(\d{7,8})|(\d\/\d{6,7})|(\d\/\d{3}-\d{3,4})|(\d-\d{6,7})|(\d\-\d{3}-\d{3,4})$", ErrorMessage = "Nije dobar format")]
         public string Telefon { get; set; }
         [Required(ErrorMessage = "Polje je obavezno")]
         [EmailAddress(ErrorMessage = "E-mail adresa nije validna")]
@@ -46,16 +43,8 @@ namespace EvidencijaPacijenata.Models
         public string Email { get; set; }
         public System.DateTime IstekOsiguranja { get; set; }
         public int Odobren { get; set; }
-    
+
         public virtual Odeljenje Odeljenje { get; set; }
         public virtual Ustanova Ustanova { get; set; }
-        [NotMapped]
-        public string ImePrezime
-        {
-            get
-            {
-                return Ime + " " + Prezime;
-            }
-        }
     }
 }

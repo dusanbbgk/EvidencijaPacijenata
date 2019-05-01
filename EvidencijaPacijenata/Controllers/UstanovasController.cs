@@ -8,7 +8,7 @@ namespace EvidencijaPacijenata.Controllers
 {
     public class UstanovasController : Controller
     {
-        private DBZUstanovaEntities db = new DBZUstanovaEntities();
+        private DBZUstanovaBetaEntities db = new DBZUstanovaBetaEntities();
 
         // GET: Ustanovas
         public ActionResult Index()
@@ -50,6 +50,7 @@ namespace EvidencijaPacijenata.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             return View(ustanova);
         }
 

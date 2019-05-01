@@ -24,7 +24,6 @@ namespace EvidencijaPacijenata.Models
     
         public int ID { get; set; }
         [DisplayName("Naziv ustanove")]
-
         public string Naziv { get; set; }
         public string Adresa { get; set; }
         public string Telefon { get; set; }

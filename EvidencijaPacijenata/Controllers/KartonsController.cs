@@ -9,7 +9,7 @@ namespace EvidencijaPacijenata.Controllers
 {
     public class KartonsController : Controller
     {
-        private DBZUstanovaEntities db = new DBZUstanovaEntities();
+        private DBZUstanovaBetaEntities db = new DBZUstanovaBetaEntities();
 
         // GET: Kartons
         public ActionResult Index()
@@ -43,7 +43,7 @@ namespace EvidencijaPacijenata.Controllers
             {
                 Karton karton = db.Kartons.SingleOrDefault(k => k.IDPacijenta == id);
                 if (karton == null)
-                    return RedirectToAction("Create", new { id = id });
+                    return RedirectToAction("Create", new { id });
                 return View(karton);
             }
             return RedirectToAction("Index", "Home");

@@ -8,7 +8,7 @@ namespace EvidencijaPacijenata.Controllers
 {
     public class OdeljenjesController : Controller
     {
-        private DBZUstanovaEntities db = new DBZUstanovaEntities();
+        private DBZUstanovaBetaEntities db = new DBZUstanovaBetaEntities();
 
         // GET: Odeljenjes
         public ActionResult Index()

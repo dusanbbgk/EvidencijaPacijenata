@@ -10,7 +10,7 @@ namespace EvidencijaPacijenata.Controllers
 {
     public class IzvestajsController : Controller
     {
-        private DBZUstanovaEntities db = new DBZUstanovaEntities();
+        private DBZUstanovaBetaEntities db = new DBZUstanovaBetaEntities();
 
         // GET: Izvestajs
         public ActionResult Index(int? id)
@@ -67,7 +67,6 @@ namespace EvidencijaPacijenata.Controllers
                 }
                 return RedirectToAction("Index", "Home");
             }
-
         }
 
         // GET: Izvestajs/Details/5
@@ -138,19 +137,20 @@ namespace EvidencijaPacijenata.Controllers
         // GET: Izvestajs/Edit/5
         public ActionResult Edit(int? id)
         {
-            if(Session["IDAdmina"] != null || Session["IDLekara"] != null) { 
-            if (id == null)
+            if (Session["IDAdmina"] != null || Session["IDLekara"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Izvestaj izvestaj = db.Izvestajs.Find(id);
-            if (izvestaj == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<Lekar>(), "ID", "ImePrezime", izvestaj.IDLekara);
-            ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>(), "ID", "ImePrezime", izvestaj.IDPacijenta);
-            return View(izvestaj);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Izvestaj izvestaj = db.Izvestajs.Find(id);
+                if (izvestaj == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<Lekar>(), "ID", "ImePrezime", izvestaj.IDLekara);
+                ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>(), "ID", "ImePrezime", izvestaj.IDPacijenta);
+                return View(izvestaj);
             }
             return RedirectToAction("Index", "Home");
         }

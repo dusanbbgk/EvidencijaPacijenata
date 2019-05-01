@@ -10,7 +10,7 @@ namespace EvidencijaPacijenata.Controllers
 {
     public class UputsController : Controller
     {
-        private DBZUstanovaEntities db = new DBZUstanovaEntities();
+        private DBZUstanovaBetaEntities db = new DBZUstanovaBetaEntities();
 
         // GET: Uputs
         public ActionResult Index(int? id)
@@ -61,7 +61,6 @@ namespace EvidencijaPacijenata.Controllers
         // GET: Uputs/Create
         public ActionResult Create(int? id)
         {
-            //ViewBag.IDLekara = new SelectList(db.Korisniks, "ID", "Ime");
             if (id != null)
             {
                 if (Session["IDLekara"] != null)
@@ -105,8 +104,8 @@ namespace EvidencijaPacijenata.Controllers
                 return View();
             }
             return RedirectToAction("Index", "Home");
-
         }
+
         [HttpPost]
         public ActionResult Odeljenja(string IDUstanove)
         {
@@ -116,6 +115,7 @@ namespace EvidencijaPacijenata.Controllers
                                                     select od, "ID", "Naziv");
             return Json(IDOdeljenja);
         }
+
         [HttpPost]
         public ActionResult Lekari(string IDOdeljenja)
         {
@@ -126,6 +126,7 @@ namespace EvidencijaPacijenata.Controllers
                                                      select od, "ID", "Ime");
             return Json(IDLekaraKome);
         }
+
         // POST: Uputs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -140,7 +141,6 @@ namespace EvidencijaPacijenata.Controllers
                 return RedirectToAction("Index");
             }
 
-            //ViewBag.IDLekara = new SelectList(db.Korisniks, "ID", "Ime", uput.IDLekara);
             ViewBag.IDPacijenta = new SelectList(db.Korisniks, "ID", "Ime", uput.IDPacijenta);
             ViewBag.IDOdeljenja = new SelectList(db.Odeljenjes, "ID", "Naziv", uput.IDOdeljenja);
             ViewBag.IDLekaraKome = new SelectList(db.Korisniks, "ID", "Ime", uput.IDLekaraKome);
@@ -160,7 +160,6 @@ namespace EvidencijaPacijenata.Controllers
             {
                 return HttpNotFound();
             }
-            //ViewBag.IDLekara = new SelectList(db.Korisniks, "ID", "Ime", uput.IDLekara);
             ViewBag.IDPacijenta = new SelectList(db.Korisniks, "ID", "Ime", uput.IDPacijenta);
             ViewBag.IDOdeljenja = new SelectList(db.Odeljenjes, "ID", "Naziv", uput.IDOdeljenja);
             ViewBag.IDLekaraKome = new SelectList(db.Korisniks, "ID", "Ime", uput.IDLekaraKome);
@@ -173,7 +172,7 @@ namespace EvidencijaPacijenata.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,IDPacijenta,IDLekara,DatumPregleda,IDOdeljenja,ZavrsenPregled,IDLekaraOd,IDLekaraKome")] Uput uput)
+        public ActionResult Edit([Bind(Include = "ID,IDPacijenta,IDLekaraOd,IDLekaraKome,DatumPregleda,IDOdeljenja,ZavrsenPregled")] Uput uput)
         {
             if (ModelState.IsValid)
             {
@@ -181,7 +180,6 @@ namespace EvidencijaPacijenata.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //ViewBag.IDLekara = new SelectList(db.Korisniks, "ID", "Ime", uput.IDLekara);
             ViewBag.IDPacijenta = new SelectList(db.Korisniks, "ID", "Ime", uput.IDPacijenta);
             ViewBag.IDOdeljenja = new SelectList(db.Odeljenjes, "ID", "Naziv", uput.IDOdeljenja);
             ViewBag.IDLekaraKome = new SelectList(db.Korisniks, "ID", "Ime", uput.IDLekaraKome);

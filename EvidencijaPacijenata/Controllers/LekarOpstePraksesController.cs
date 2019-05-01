@@ -10,12 +10,13 @@ namespace EvidencijaPacijenata.Controllers
 {
     public class LekarOpstePraksesController : Controller
     {
-        private DBZUstanovaEntities db = new DBZUstanovaEntities();
+        private DBZUstanovaBetaEntities db = new DBZUstanovaBetaEntities();
 
         // GET: LekarOpstePrakses
         public ActionResult Index()
         {
             return Session["IDAdmina"] != null ? View(db.Korisniks.OfType<LekarOpstePrakse>().ToList()) : (ActionResult)RedirectToAction("Index", "Home");
+
         }
 
         // GET: LekarOpstePrakses/Details/5
@@ -66,7 +67,7 @@ namespace EvidencijaPacijenata.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Ime,Prezime,KorisnickoIme,Lozinka,IDOdeljenja,Licenca")] LekarOpstePrakse lekarOpstePrakse)
+        public ActionResult Create([Bind(Include = "ID,Ime,Prezime,KorisnickoIme,Lozinka,DatumRodjenja,IDOdeljenja,Licenca,Slika")] LekarOpstePrakse lekarOpstePrakse)
         {
             if (ModelState.IsValid)
             {
@@ -105,7 +106,7 @@ namespace EvidencijaPacijenata.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Ime,Prezime,KorisnickoIme,Lozinka,IDOdeljenja,Licenca")] LekarOpstePrakse lekarOpstePrakse)
+        public ActionResult Edit([Bind(Include = "ID,Ime,Prezime,KorisnickoIme,Lozinka,DatumRodjenja,IDOdeljenja,Licenca,Slika")] LekarOpstePrakse lekarOpstePrakse)
         {
             if (ModelState.IsValid)
             {

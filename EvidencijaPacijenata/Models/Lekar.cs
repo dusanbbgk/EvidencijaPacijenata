@@ -12,7 +12,6 @@ namespace EvidencijaPacijenata.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     public abstract partial class Lekar : Korisnik
     {
@@ -22,13 +21,5 @@ namespace EvidencijaPacijenata.Models
         public string Slika { get; set; }
     
         public virtual Odeljenje Odeljenje { get; set; }
-        [NotMapped]
-        public string ImePrezime
-        {
-            get
-            {
-                return Ime + " " + Prezime;
-            }
-        }
     }
 }

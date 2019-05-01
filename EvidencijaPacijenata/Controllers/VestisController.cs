@@ -12,7 +12,7 @@ namespace EvidencijaPacijenata.Controllers
 {
     public class VestisController : Controller
     {
-        private DBZUstanovaEntities db = new DBZUstanovaEntities();
+        private DBZUstanovaBetaEntities db = new DBZUstanovaBetaEntities();
 
         // GET: Vestis
         public ActionResult Index()
