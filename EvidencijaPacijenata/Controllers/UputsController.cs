@@ -102,12 +102,10 @@ namespace EvidencijaPacijenata.Controllers
                         ViewBag.IDLekaraKome = new SelectList(izbor2, "Value", "Text");
                     }
                 }
+                return View();
             }
-            //ViewBag.IDPacijenta = new SelectList(db.Korisniks, "ID", "Ime");
-            //ViewBag.IDOdeljenja = new SelectList(db.Odeljenjes, "ID", "Naziv");
-            //ViewBag.IDLekaraKome = new SelectList(db.Korisniks, "ID", "Ime");
-            //ViewBag.IDLekaraOd = new SelectList(db.Korisniks, "ID", "Ime");
-            return View();
+            return RedirectToAction("Index", "Home");
+
         }
         [HttpPost]
         public ActionResult Odeljenja(string IDUstanove)

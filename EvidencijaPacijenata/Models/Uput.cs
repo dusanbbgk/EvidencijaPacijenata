@@ -11,20 +11,29 @@ namespace EvidencijaPacijenata.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class Uput
     {
         public int ID { get; set; }
+        [DisplayName("Pacijent")]
         public int IDPacijenta { get; set; }
+        [DisplayName("Od lekara")]
         public int IDLekaraOd { get; set; }
+        [DisplayName("Za lekara")]
         public int IDLekaraKome { get; set; }
+        [DisplayName("Datum pregleda")]
         public System.DateTime DatumPregleda { get; set; }
+        [DisplayName("Odeljenje")]
         public int IDOdeljenja { get; set; }
         public int ZavrsenPregled { get; set; }
-    
+        [DisplayName("Za lekara")]
         public virtual Korisnik Korisnik { get; set; }
+        [DisplayName("Od lekara")]
         public virtual Korisnik Korisnik1 { get; set; }
+        [DisplayName("Pacijent")]
         public virtual Korisnik Korisnik2 { get; set; }
+        [DisplayName("Naziv odeljenja")]
         public virtual Odeljenje Odeljenje { get; set; }
     }
 }

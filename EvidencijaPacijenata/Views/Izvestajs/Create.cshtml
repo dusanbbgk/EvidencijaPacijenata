@@ -47,6 +47,18 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <div>
+        @if (Session["IDAdmina"] != null)
+        {
+            @Html.ActionLink("Back to List", "Index")
+        }
+        else if (Session["Specijalizacija"] != null)
+        {
+            <a href="@Url.Action("Index", "Uputs", new { id = Convert.ToInt32(Session["IDLekara"]) })">Pristigli uputi</a>
+        }
+        else
+        {
+            <a href="@Url.Action("Index", "ZakazivanjePregledas", new { id = Convert.ToInt32(Session["IDLekara"]) })">Zakazani pregledi</a>
+
+        }
+    </div>
