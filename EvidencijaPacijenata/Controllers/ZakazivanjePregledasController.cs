@@ -75,7 +75,6 @@ namespace EvidencijaPacijenata.Controllers
         // GET: ZakazivanjePregledas/Create
         public ActionResult Create()
         {
-            
             if (Session["IDPacijenta"] != null)
             {
                 var id = Convert.ToInt32(Session["IDPacijenta"]);
@@ -104,6 +103,7 @@ namespace EvidencijaPacijenata.Controllers
             else
                 return RedirectToAction("Index", "Home");
         }
+
         [HttpPost]
         public ActionResult Termini(string IDLekara, string DatumPregleda)
         {
@@ -127,13 +127,11 @@ namespace EvidencijaPacijenata.Controllers
                 int termin = db.slobodniTermini(idLekara, datumPregleda, vreme).Count();
                 if (termin == 0)
                     slobodniTermini.Add(termini[i]);
-                //var termin = db.ZakazivanjePregledas.SingleOrDefault(zp => zp.IDLekara == idLekara && zp.VremePregleda == vreme && zp.DatumPregleda == datumPregleda);
-                //if(termin == null)
-                //    slobodniTermini.Add(termini[i]);
             }
             SelectList slobodniTerminiLista = new SelectList(slobodniTermini, "Value", "Text");
             return Json(slobodniTerminiLista);
         }
+
         // POST: ZakazivanjePregledas/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.

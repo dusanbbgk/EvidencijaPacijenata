@@ -41,7 +41,6 @@ namespace EvidencijaPacijenata.Controllers
             else
                 return RedirectToAction("Index", "Home");
         }
-
         public ActionResult ZadrziNaOdeljenju(int id)
         {
             int IDLekara = Convert.ToInt32(Session["IDLekara"]);
@@ -74,7 +73,6 @@ namespace EvidencijaPacijenata.Controllers
             }
             return RedirectToAction("Pretraga", "Pacijents");
         }
-
         public ActionResult OtpustiSaOdeljenja(int id)
         {
             var pacijent = db.Korisniks.OfType<Pacijent>().SingleOrDefault(p => p.ID == id);
@@ -94,11 +92,6 @@ namespace EvidencijaPacijenata.Controllers
             }
             return RedirectToAction("Pretraga", "Pacijents");
         }
-
-
-
-
-
 
         // GET: Pacijents/Details/5
         public ActionResult Details(int? id)
@@ -181,7 +174,6 @@ namespace EvidencijaPacijenata.Controllers
                 return Json(false);
             }
         }
-
 
         // POST: Pacijents/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 

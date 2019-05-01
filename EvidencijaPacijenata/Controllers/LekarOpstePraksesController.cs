@@ -15,11 +15,7 @@ namespace EvidencijaPacijenata.Controllers
         // GET: LekarOpstePrakses
         public ActionResult Index()
         {
-            if (Session["IDAdmina"] != null)
-            {
-                return View(db.Korisniks.OfType<LekarOpstePrakse>().ToList());
-            }
-            return RedirectToAction("Index", "Home");
+            return Session["IDAdmina"] != null ? View(db.Korisniks.OfType<LekarOpstePrakse>().ToList()) : (ActionResult)RedirectToAction("Index", "Home");
         }
 
         // GET: LekarOpstePrakses/Details/5
