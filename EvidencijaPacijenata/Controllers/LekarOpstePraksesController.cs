@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 
 namespace EvidencijaPacijenata.Controllers
@@ -67,8 +69,20 @@ namespace EvidencijaPacijenata.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Ime,Prezime,KorisnickoIme,Lozinka,DatumRodjenja,IDOdeljenja,Licenca,Slika")] LekarOpstePrakse lekarOpstePrakse)
+        public ActionResult Create([Bind(Include = "ID,Ime,Prezime,KorisnickoIme,Lozinka,DatumRodjenja,IDOdeljenja,Licenca,Slika")] LekarOpstePrakse lekarOpstePrakse, HttpPostedFileBase file)
         {
+            if (file != null && file.ContentLength > 0)
+                try
+                {
+                    Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Imgs/Lekari"), lekarOpstePrakse.KorisnickoIme));
+                    string path = Path.Combine(Server.MapPath("~/Imgs/Lekari/" + lekarOpstePrakse.KorisnickoIme),
+                                               Path.GetFileName(file.FileName));
+                    file.SaveAs(path);
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                }
             if (ModelState.IsValid)
             {
                 db.Korisniks.Add(lekarOpstePrakse);
