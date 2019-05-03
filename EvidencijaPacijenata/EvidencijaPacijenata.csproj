@@ -354,10 +354,15 @@
     <Content Include="Views\Ustanovas\Index.cshtml" />
     <Content Include="Views\Home\Admin.cshtml" />
     <Content Include="Views\Home\ResetPassword.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Shared\_LekarLogin.cshtml" />
+    <Content Include="Views\Shared\_PacijentLogin.cshtml" />
+    <Content Include="Views\Shared\_Navbar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Imgs\Lekari\" />
+    <Folder Include="Imgs\NewFolder1\" />
     <Folder Include="Imgs\Vesti\" />
   </ItemGroup>
   <ItemGroup>

@@ -5,60 +5,41 @@
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Zdravstvene ustanove</h2>
+<hr />
+@if (Session["IDAdmina"] != null)
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+<section class="details-card">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="card col-md-4" style="width: 18rem;">
+                    @if (item.Slika == "Default.jpg")
+                    {
+                        <img class="card-img-top" src="~/Imgs/Ustanove/Default.jpg" alt="@item.Naziv">
+                    }
+                    else
+                    {
+                        <img class="card-img-top" src="~/Imgs/Ustanove/@item.Naziv/@item.Slika" alt="@item.Naziv">
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Naziv</h5>
+                        @*<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>*@
+                        <a href="@Url.Action("Details", "Ustanovas", new { id = item.ID })" class="btn btn-primary">Detalji</a>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Naziv)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Adresa)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Telefon)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Slika)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Naziv)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Adresa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefon)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Slika)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.ID })
-                @if (Session["IDAdmina"] != null)
-                {
-                    <text> | </text>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID })
-                    <text> | </text>
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                }
-            </td>
-        </tr>
-    }
-
-</table>
+                        @if (Session["IDAdmina"] != null)
+                        {
+                            <a href="@Url.Action("Edit", "Ustanovas", new { id = item.ID })" class="btn btn-primary">Edit</a>
+                            <a href="@Url.Action("Delete", "Ustanovas", new { id = item.ID })" class="btn btn-primary">Obriši</a>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

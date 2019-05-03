@@ -48,11 +48,10 @@ function proveriLoginLekar() {
 }
 
 function resetPassword() {
-
-    var KorisnickoIme = $("#korisnickoIme").val();
-    var email = $("#email").val();
-    var Lozinka = $("#lozinka").val();
-    var Lozinka2 = document.getElementById("lozinka2").value;
+    var KorisnickoIme = document.formaResetPass.bzk.value;
+    var email = document.formaResetPass.email.value;
+    var Lozinka = document.formaResetPass.Lozinka.value;
+    var Lozinka2 = document.formaResetPass.lozinka2.value;
     if (KorisnickoIme == "" || email == "" || Lozinka == "" || Lozinka2 == "") {
         alert("Morate popuniti sva polja!");
         return false;

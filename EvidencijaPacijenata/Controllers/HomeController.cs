@@ -133,27 +133,31 @@ namespace EvidencijaPacijenata.Controllers
         }
 
         [HttpPost]
-        public ActionResult ResetPass(Pacijent pacijent)
+        public ActionResult ResetPass(string KorisnickoIme, string Email, string Lozinka)
         {
-            Pacijent proveraPodataka = db.Korisniks.OfType<Pacijent>().SingleOrDefault(p => p.KorisnickoIme == pacijent.KorisnickoIme && p.Email == pacijent.Email);
+            Pacijent proveraPodataka = db.Korisniks.OfType<Pacijent>().SingleOrDefault(p => p.KorisnickoIme == KorisnickoIme && p.Email == Email);
             if (proveraPodataka == null)
             {
                 TempData["info"] = "Korisničko ime i/ili Email adresa nisu pronađeni u bazi!";
                 return RedirectToAction("Index");
             }
-            else
-            {
-                proveraPodataka.Lozinka = pacijent.Lozinka;
-                if (ModelState.IsValid)
-                {
-                    db.Entry(proveraPodataka).State = EntityState.Modified;
-                    db.SaveChanges();
-                    Session["resetPass"] = "Uspešno promenjena lozinka!";
-                    return RedirectToAction("Index", "Home");
-                }
-                TempData["info"] = "Greška prilikom ažuriranja pacijenta!";
-                return RedirectToAction("Index", "Home");
-            }
+            proveraPodataka.Lozinka = Lozinka;
+            db.Entry(proveraPodataka).State = EntityState.Modified;
+            db.SaveChanges();
+            //if (ModelState.IsValid)
+            //{
+            //    db.Entry(proveraPodataka).State = EntityState.Modified;
+            //    db.SaveChanges();
+            //    Session["resetPass"] = "Uspešno promenjena lozinka!";
+            //    return RedirectToAction("Index", "Home");
+            //}
+            //else {
+            //    var errors = ModelState.SelectMany(x => x.Value.Errors.Select(z => z.Exception));
+            //    TempData["info"] = errors;
+            //    return RedirectToAction("Index", "Home");
+            //}
+            Session["resetPass"] = "Uspešno promenjena lozinka!";
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Admin()
