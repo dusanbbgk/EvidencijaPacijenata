@@ -17,7 +17,8 @@ namespace EvidencijaPacijenata.Controllers
         // GET: LekarSpecijalistas
         public ActionResult Index()
         {
-            return Session["IDAdmina"] != null ? View(db.Korisniks.OfType<LekarSpecijalista>().ToList()) : (ActionResult)RedirectToAction("Index", "Home");
+            //return Session["IDAdmina"] != null ? View(db.Korisniks.OfType<LekarSpecijalista>().ToList()) : (ActionResult)RedirectToAction("Index", "Home");
+            return View(db.Korisniks.OfType<LekarSpecijalista>().ToList());
         }
 
         // GET: LekarSpecijalistas/Details/5
@@ -27,16 +28,12 @@ namespace EvidencijaPacijenata.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            if (Session["IDAdmina"] != null || id == Convert.ToInt32(Session["IDLekara"]))
-            {
                 LekarSpecijalista lekarSpecijalista = db.Korisniks.OfType<LekarSpecijalista>().SingleOrDefault(l => l.ID == id);
                 if (lekarSpecijalista == null)
                 {
                     return HttpNotFound();
                 }
                 return View(lekarSpecijalista);
-            }
-            return RedirectToAction("Index", "Home");
         }
 
         // GET: LekarSpecijalistas/Create

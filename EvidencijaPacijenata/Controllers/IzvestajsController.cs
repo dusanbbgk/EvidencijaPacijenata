@@ -105,7 +105,7 @@ namespace EvidencijaPacijenata.Controllers
             {
                 if (Session["IDAdmina"] != null)
                 {
-                    ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<Lekar>(), "ID", "ImePrezime");
+                    ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<LekarSpecijalista>(), "ID", "ImePrezime");
                     ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>(), "ID", "ImePrezime");
                     return View();
                 }
@@ -129,7 +129,7 @@ namespace EvidencijaPacijenata.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<Lekar>().Where(l => l.ID == izvestaj.IDLekara), "ID", "ImePrezime");
+            ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<LekarSpecijalista>().Where(l => l.ID == izvestaj.IDLekara), "ID", "ImePrezime");
             ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>().Where(p => p.ID == izvestaj.IDPacijenta), "ID", "ImePrezime");
             return View(izvestaj);
         }
@@ -148,7 +148,7 @@ namespace EvidencijaPacijenata.Controllers
                 {
                     return HttpNotFound();
                 }
-                ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<Lekar>(), "ID", "ImePrezime", izvestaj.IDLekara);
+                ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<LekarSpecijalista>(), "ID", "ImePrezime", izvestaj.IDLekara);
                 ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>(), "ID", "ImePrezime", izvestaj.IDPacijenta);
                 return View(izvestaj);
             }
@@ -171,7 +171,7 @@ namespace EvidencijaPacijenata.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<Lekar>(), "ID", "ImePrezime", izvestaj.IDLekara);
+            ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<LekarSpecijalista>(), "ID", "ImePrezime", izvestaj.IDLekara);
             ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>(), "ID", "ImePrezime", izvestaj.IDPacijenta);
             return View(izvestaj);
         }

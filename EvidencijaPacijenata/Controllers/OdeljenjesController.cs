@@ -29,6 +29,8 @@ namespace EvidencijaPacijenata.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.listaLekaraOP = new SelectList(db.Korisniks.OfType<LekarOpstePrakse>().Where(l => l.IDOdeljenja == id).ToList(), "ID", "ImePrezime");
+            ViewBag.listaLekaraS = new SelectList(db.Korisniks.OfType<LekarSpecijalista>().Where(l => l.IDOdeljenja == id).ToList(), "ID", "ImePrezimeSpec");
             return View(odeljenje);
         }
 

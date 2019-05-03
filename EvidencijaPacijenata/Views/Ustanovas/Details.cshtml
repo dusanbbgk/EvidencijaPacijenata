@@ -50,7 +50,15 @@
         <dd>
             @Html.DisplayFor(model => model.Slika)
         </dd>
-
+        <dt>
+            Odeljenja
+        </dt>
+        @foreach (var o in ViewBag.listaOdeljenja as SelectList)
+        {
+            <dd>
+                <a href="@Url.Action("Details", "Odeljenjes", new { id = o.Value })">@o.Text</a>
+            </dd>
+        }
     </dl>
 </div>
 <p>

@@ -17,8 +17,8 @@ namespace EvidencijaPacijenata.Controllers
         // GET: LekarOpstePrakses
         public ActionResult Index()
         {
-            return Session["IDAdmina"] != null ? View(db.Korisniks.OfType<LekarOpstePrakse>().ToList()) : (ActionResult)RedirectToAction("Index", "Home");
-
+            //return Session["IDAdmina"] != null ? View(db.Korisniks.OfType<LekarOpstePrakse>().ToList()) : (ActionResult)RedirectToAction("Index", "Home");
+            return View(db.Korisniks.OfType<LekarOpstePrakse>().ToList());
         }
 
         // GET: LekarOpstePrakses/Details/5
@@ -28,16 +28,12 @@ namespace EvidencijaPacijenata.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            if (Session["IDAdmina"] != null || id == Convert.ToInt32(Session["IDLekara"]))
+            LekarOpstePrakse lekarOpstePrakse = db.Korisniks.OfType<LekarOpstePrakse>().SingleOrDefault(l => l.ID == id);
+            if (lekarOpstePrakse == null)
             {
-                LekarOpstePrakse lekarOpstePrakse = db.Korisniks.OfType<LekarOpstePrakse>().SingleOrDefault(l => l.ID == id);
-                if (lekarOpstePrakse == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(lekarOpstePrakse);
+                return HttpNotFound();
             }
-            return RedirectToAction("Index", "Home");
+            return View(lekarOpstePrakse);
         }
 
         // GET: LekarOpstePrakses/Create

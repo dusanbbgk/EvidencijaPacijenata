@@ -31,6 +31,7 @@ namespace EvidencijaPacijenata.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.listaOdeljenja = new SelectList(db.Odeljenjes.Where(o => o.IDUstanove == id).ToList(), "ID", "Naziv");
             return View(ustanova);
         }
 

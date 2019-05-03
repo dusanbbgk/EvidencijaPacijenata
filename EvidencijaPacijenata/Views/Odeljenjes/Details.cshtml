@@ -32,9 +32,26 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Ustanova.Naziv)
+            <a href="@Url.Action("Details", "Ustanovas", new { id = Model.IDUstanove })">@Html.DisplayFor(model => model.Ustanova.Naziv)</a>
         </dd>
-
+        <dt>
+            Lista lekara opšte prakse
+        </dt>
+        @foreach (var lop in ViewBag.listaLekaraOP as SelectList)
+        {
+            <dd>
+                <a href="@Url.Action("Details", "LekarOpstePrakses", new { id = lop.Value })">@lop.Text</a>
+            </dd>
+        }
+        <dt>
+            Lista lekara specijalista
+        </dt>
+        @foreach (var ls in ViewBag.listaLekaraS as SelectList)
+        {
+            <dd>
+                <a href="@Url.Action("Details", "LekarSpecijalistas", new { id = ls.Value })">@ls.Text</a>
+            </dd>
+        }
     </dl>
 </div>
 <p>
