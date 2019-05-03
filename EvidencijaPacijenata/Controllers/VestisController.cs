@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using EvidencijaPacijenata.Models;
+using System;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using EvidencijaPacijenata.Models;
 
 namespace EvidencijaPacijenata.Controllers
 {
@@ -46,8 +45,21 @@ namespace EvidencijaPacijenata.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Naslov,Tekst,DatumObjave,Slika")] Vesti vesti)
+        public ActionResult Create([Bind(Include = "ID,Naslov,Tekst,DatumObjave,Slika")] Vesti vesti, HttpPostedFileBase file)
         {
+            if (file != null && file.ContentLength > 0)
+                try
+                {
+                    Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Imgs/Vesti"), vesti.Naslov));
+                    string path = Path.Combine(Server.MapPath("~/Imgs/Vesti/" + vesti.Naslov),
+                                               Path.GetFileName(file.FileName));
+                    file.SaveAs(path);
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                }
+
             if (ModelState.IsValid)
             {
                 db.Vestis.Add(vesti);

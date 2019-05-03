@@ -37,7 +37,7 @@ namespace EvidencijaPacijenata.Controllers
                 ViewBag.NemaKarton = Session["NemaKarton"];
                 Session["NemaKarton"] = null;
             }
-            return View(db.Vestis.Take(3).OrderBy(v => v.DatumObjave).ToList());
+            return View(db.Vestis.Take(3).OrderByDescending(v => v.DatumObjave).ToList());
         }
 
         public ActionResult About()
