@@ -7,6 +7,14 @@
 
 <h2>@Model.Naziv</h2>
 <hr />
+<p class="mb-4">
+    @if (Session["IDAdmina"] != null)
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID })<text> | </text>
+    }
+
+    @Html.ActionLink("Nazad na listu ustanova", "Index")
+</p>
 @if (Model.Slika == "Default.jpg")
 {
     <img class="img-thumbnail float-right" src="~/Imgs/Ustanove/Default.jpg" alt="@Model.Naziv">
@@ -32,64 +40,3 @@ else
         }
     </div>
 }
-@*<div>
-        <h4>Ustanova</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Naziv)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Naziv)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Adresa)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Adresa)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Telefon)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Telefon)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Email)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Email)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Slika)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Slika)
-            </dd>
-            <dt>
-                Odeljenja
-            </dt>
-            @foreach (var o in ViewBag.listaOdeljenja as SelectList)
-            {
-                <dd>
-                    <a href="@Url.Action("Details", "Odeljenjes", new { id = o.Value })">@o.Text</a>
-                </dd>
-            }
-        </dl>
-    </div>
-    <p>
-        @if (Session["IDAdmina"] != null)
-        {
-            @Html.ActionLink("Edit", "Edit", new { id = Model.ID })<text> | </text>
-        }
-        @Html.ActionLink("Back to List", "Index")
-    </p>*@

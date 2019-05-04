@@ -5,59 +5,32 @@
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Odeljenje</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Naziv)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Naziv)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SlobodnihMesta)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SlobodnihMesta)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Ustanova.Naziv)
-        </dt>
-
-        <dd>
-            <a href="@Url.Action("Details", "Ustanovas", new { id = Model.IDUstanove })">@Html.DisplayFor(model => model.Ustanova.Naziv)</a>
-        </dd>
-        <dt>
-            Lista lekara opšte prakse
-        </dt>
-        @foreach (var lop in ViewBag.listaLekaraOP as SelectList)
-        {
-            <dd>
-                <a href="@Url.Action("Details", "LekarOpstePrakses", new { id = lop.Value })">@lop.Text</a>
-            </dd>
-        }
-        <dt>
-            Lista lekara specijalista
-        </dt>
-        @foreach (var ls in ViewBag.listaLekaraS as SelectList)
-        {
-            <dd>
-                <a href="@Url.Action("Details", "LekarSpecijalistas", new { id = ls.Value })">@ls.Text</a>
-            </dd>
-        }
-    </dl>
-</div>
-<p>
+<h2>@Model.Ustanova.Naziv</h2>
+<hr />
+<p class="mb-4">
     @if (Session["IDAdmina"] != null)
     {
         @Html.ActionLink("Edit", "Edit", new { id = Model.ID })<text> | </text>
     }
-    @Html.ActionLink("Back to List", "Index")
+    <a href="@Url.Action("Details", "Ustanovas", new { id = Model.Ustanova.ID })">Nazad na ustanovu</a>
 </p>
+<h4>@Model.Naziv</h4>
+<p><b>Slobodnih mesta:</b> @Model.SlobodnihMesta</p>
+<p><b>Lista lekara:</b></p>
+@if (((SelectList)ViewBag.listaLekaraOP).Count() == 0 && ((SelectList)ViewBag.listaLekaraS).Count() == 0)
+{
+    <text>Nema lekara na odeljenju</text>
+}
+else
+{
+    <div class="list-group col-md-4">
+        @foreach (var lop in ViewBag.listaLekaraOP as SelectList)
+        {
+        <a href="@Url.Action("Details", "LekarOpstePrakses", new { id = lop.Value })" class="list-group-item list-group-item-action list-group-item-primary">@lop.Text</a>
+        }
+        @foreach (var ls in ViewBag.listaLekaraS as SelectList)
+        {
+        <a href="@Url.Action("Details", "LekarSpecijalistas", new { id = ls.Value })" class="list-group-item list-group-item-action list-group-item-primary">@ls.Text</a>
+        }
+    </div>
+}
