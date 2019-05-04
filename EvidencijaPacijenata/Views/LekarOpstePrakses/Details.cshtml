@@ -5,58 +5,22 @@
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>LekarOpstePrakse</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Ime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Ime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Prezime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Prezime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Odeljenje.Ustanova.Naziv)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Odeljenje.Ustanova.Naziv)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Odeljenje.Naziv)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Odeljenje.Naziv)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Licenca)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Licenca)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @if ((Session["IDLekara"] != null && Convert.ToInt32(Session["IDLekara"]) == Model.ID) || Session["IDAdmina"] != null)
+<h2>@Model.Odeljenje.Ustanova.Naziv - @Model.Odeljenje.Naziv</h2>
+<hr />
+<p class="mb-4">
+    @if (Convert.ToInt32(Session["IDLekara"]) == Model.ID || Session["IDAdmina"] != null)
     {
         @Html.ActionLink("Edit", "Edit", new { id = Model.ID })<text> | </text>
     }
-    @Html.ActionLink("Back to List", "Index")
+    <a href="@Url.Action("Details", "Odeljenjes", new { id = Model.Odeljenje.ID })">Nazad na odeljenje</a>
 </p>
+<h4>@Model.ImePrezime - Opšta praksa</h4>
+@if (Model.Slika == "Default.jpg")
+{
+    <img class="img-thumbnail float-right" src="~/Imgs/Lekari/Default.jpg" alt="@Model.ImePrezime">
+}
+else
+{
+    <img class="img-thumbnail float-right" src="~/Imgs/Lekari/@Model.KorisnickoIme/@Model.Slika" alt="@Model.ImePrezime">
+}
+<p><b>Licenca lekara:</b> @Model.Licenca</p>
