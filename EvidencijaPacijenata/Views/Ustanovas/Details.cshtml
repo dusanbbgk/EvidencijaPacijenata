@@ -5,66 +5,91 @@
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Ustanova</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Naziv)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Naziv)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Adresa)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Adresa)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Telefon)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Telefon)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Slika)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Slika)
-        </dd>
-        <dt>
-            Odeljenja
-        </dt>
+<h2>@Model.Naziv</h2>
+<hr />
+@if (Model.Slika == "Default.jpg")
+{
+    <img class="img-thumbnail float-right" src="~/Imgs/Ustanove/Default.jpg" alt="@Model.Naziv">
+}
+else
+{
+    <img class="img-thumbnail float-right" src="~/Imgs/Ustanove/@Model.Naziv/@Model.Slika" alt="@Model.Naziv">
+}
+<p><b>Adresa:</b> @Model.Adresa</p>
+<p><b>Telefon:</b> @Model.Telefon</p>
+<p><b>E-mail adresa:</b> @Model.Email</p>
+<p><b>Lista odeljenja:</b></p>
+@if (((SelectList)ViewBag.listaOdeljenja).Count() == 0)
+{
+    <text>Nema odeljenja</text>
+}
+else
+{
+    <div class="list-group col-md-4">
         @foreach (var o in ViewBag.listaOdeljenja as SelectList)
         {
-            <dd>
-                <a href="@Url.Action("Details", "Odeljenjes", new { id = o.Value })">@o.Text</a>
-            </dd>
+            <a href="@Url.Action("Details", "Odeljenjes", new { id = o.Value })" class="list-group-item list-group-item-action list-group-item-primary">@o.Text</a>
         }
-    </dl>
-</div>
-<p>
-    @if (Session["IDAdmina"] != null)
-    {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ID })<text> | </text>
-    }
-    @Html.ActionLink("Back to List", "Index")
-</p>
+    </div>
+}
+@*<div>
+        <h4>Ustanova</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Naziv)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Naziv)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Adresa)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Adresa)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Telefon)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Telefon)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Slika)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Slika)
+            </dd>
+            <dt>
+                Odeljenja
+            </dt>
+            @foreach (var o in ViewBag.listaOdeljenja as SelectList)
+            {
+                <dd>
+                    <a href="@Url.Action("Details", "Odeljenjes", new { id = o.Value })">@o.Text</a>
+                </dd>
+            }
+        </dl>
+    </div>
+    <p>
+        @if (Session["IDAdmina"] != null)
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ID })<text> | </text>
+        }
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@

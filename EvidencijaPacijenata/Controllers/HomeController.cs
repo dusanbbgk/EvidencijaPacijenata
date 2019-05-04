@@ -144,18 +144,6 @@ namespace EvidencijaPacijenata.Controllers
             proveraPodataka.Lozinka = Lozinka;
             db.Entry(proveraPodataka).State = EntityState.Modified;
             db.SaveChanges();
-            //if (ModelState.IsValid)
-            //{
-            //    db.Entry(proveraPodataka).State = EntityState.Modified;
-            //    db.SaveChanges();
-            //    Session["resetPass"] = "Uspešno promenjena lozinka!";
-            //    return RedirectToAction("Index", "Home");
-            //}
-            //else {
-            //    var errors = ModelState.SelectMany(x => x.Value.Errors.Select(z => z.Exception));
-            //    TempData["info"] = errors;
-            //    return RedirectToAction("Index", "Home");
-            //}
             Session["resetPass"] = "Uspešno promenjena lozinka!";
             return RedirectToAction("Index", "Home");
         }
