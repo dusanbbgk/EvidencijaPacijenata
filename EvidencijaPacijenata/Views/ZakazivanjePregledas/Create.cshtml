@@ -10,7 +10,7 @@
     });
 
     function PrikaziTermine() {
-        var procemessage = "<option value='0'> Please wait...</option>";
+        var procemessage = "<option value='0'>Molimo sačekajte...</option>";
         $("#divTermini").html(procemessage).show();
         var url = "/ZakazivanjePregledas/Termini/";
         $.ajax({
@@ -32,26 +32,17 @@
     }
 </script>
 
-<h2>Create</h2>
-
+<h2>Zakazivanje pregleda</h2>
+<hr />
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>ZakazivanjePregleda</h4>
-        <hr />
+    <div class="form-horizontal col-md-6">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.IDPacijenta, "IDPacijenta", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("IDPacijenta", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.IDPacijenta, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
 
         <div class="form-group">
-            @Html.LabelFor(model => model.IDLekara, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.IDLekara, htmlAttributes: new { @class = "control-label col-md-4" })
             <div class="col-md-10">
                 @Html.DropDownList("IDLekara", null, htmlAttributes: new { @id = "idLekara", @class = "form-control", @onchange = "javascript:PrikaziTermine();" })
                 @Html.ValidationMessageFor(model => model.IDLekara, "", new { @class = "text-danger" })
@@ -59,23 +50,15 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DatumPregleda, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.DatumPregleda, htmlAttributes: new { @class = "control-label col-md-4" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.DatumPregleda, new { htmlAttributes = new { @id = "datumPregleda", @type = "date", @class = "form-control", @Value = ViewBag.DatumPregleda, @onchange = "javascript:PrikaziTermine();" } })
                 @Html.ValidationMessageFor(model => model.DatumPregleda, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.VremePregleda, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.VremePregleda, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.VremePregleda, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-
         <div class="form-group">
-            @Html.LabelFor(model => model.VremePregleda, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.VremePregleda, htmlAttributes: new { @class = "control-label col-md-4" })
             <div class="col-md-10">
                 @Html.DropDownList("VremePregleda", null, htmlAttributes: new { @id = "divTermini", @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.VremePregleda, "", new { @class = "text-danger" })
@@ -83,14 +66,16 @@
         </div>
 
 
-        <div class="form-group">
+        <div class="form-group text-right">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Zakaži" class="btn btn-primary" />
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+@if (Session["IDAdmina"] != null)
+{
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+}

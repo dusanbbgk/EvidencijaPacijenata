@@ -8,54 +8,44 @@
     {
     @ViewBag.PostojiZakazanPregled
 }
-<h2>Details</h2>
-
-<div>
-    <h4>ZakazivanjePregleda</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.DatumPregleda)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DatumPregleda)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DatumZakazivanja)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DatumZakazivanja)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.VremePregleda)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.VremePregleda)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Korisnik)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Korisnik.Ime) @Html.DisplayFor(model => model.Korisnik.Prezime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Korisnik1)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Korisnik1.Ime) @Html.DisplayFor(model => model.Korisnik1.Prezime)
-        </dd>
-
-    </dl>
-</div>
+<h2>Detalji o zakazanom pregledu</h2>
+<hr />
+<p>
+    <b>
+        Pacijent:
+    </b>
+    <a href="@Url.Action("Details", "Pacijents", new { id = Model.IDPacijenta})">@Model.Korisnik1.ImePrezime</a>
+</p>
+<p>
+    <b>
+        Lekar:
+    </b>
+    <a href="@Url.Action("Details", "LekarOpstePrakses", new { id = Model.IDLekara})">@Model.Korisnik.ImePrezime</a>
+</p>
+<p>
+    <b>
+        Datum i vreme pregleda:
+    </b>
+    @Model.DatumPregleda.ToShortDateString() u @Model.VremePregleda
+</p>
+<p>
+    <b>
+        Datum zakazivanja pregleda:
+    </b>
+    @Model.DatumZakazivanja.ToShortDateString()
+</p>
+<p>
+    <b>
+        Ustanova:
+    </b>
+    <a href="@Url.Action("Details", "Ustanovas", new { id = ViewBag.Ustanova})">@ViewBag.Ustanova</a>
+</p>
+<p>
+    <b>
+        Odeljenje:
+    </b>
+    <a href="@Url.Action("Details", "Odeljenjes", new { id = ViewBag.Odeljenje})">@ViewBag.Odeljenje</a>
+</p>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
     @if (Session["IDAdmina"] != null)

@@ -32,28 +32,18 @@
 
     }
 </script>
-<h2>Edit</h2>
-
+<h2>Zakazivanje pregleda - izmena</h2>
+<hr />
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>ZakazivanjePregleda</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ID)
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.IDPacijenta, "IDPacijenta", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IDPacijenta", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IDPacijenta, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
         <div class="form-group">
-            @Html.LabelFor(model => model.IDLekara, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.IDLekara, htmlAttributes: new { @class = "control-label col-md-4" })
             <div class="col-md-10">
                 @Html.DropDownList("IDLekara", null, htmlAttributes: new { @id = "idLekara", @class = "form-control", @onchange = "javascript:PrikaziTermine();" })
                 @Html.ValidationMessageFor(model => model.IDLekara, "", new { @class = "text-danger" })
@@ -61,37 +51,31 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DatumPregleda, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.DatumPregleda, htmlAttributes: new { @class = "control-label col-md-4" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.DatumPregleda, new { htmlAttributes = new { @id = "datumPregleda", @type = "date", @class = "form-control", @Value = ViewBag.DatumPregleda, @onchange = "javascript:PrikaziTermine();" } })
                 @Html.ValidationMessageFor(model => model.DatumPregleda, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.DatumZakazivanja, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DatumZakazivanja, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DatumZakazivanja, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
         <div class="form-group">
-            @Html.LabelFor(model => model.VremePregleda, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.VremePregleda, htmlAttributes: new { @class = "control-label col-md-4" })
             <div class="col-md-10">
                 @Html.DropDownList("VremePregleda", null, htmlAttributes: new { @id = "divTermini", @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.VremePregleda, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group text-right">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Sačuvaj" class="btn btn-primary" />
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+@if (Session["IDAdmina"] != null)
+{
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+}

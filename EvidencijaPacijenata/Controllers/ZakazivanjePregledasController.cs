@@ -64,8 +64,18 @@ namespace EvidencijaPacijenata.Controllers
                     DateTime dt = DateTime.Now;
                     DateTime dateOnly = dt.Date;
                     var pregled = db.ZakazivanjePregledas.Where(z => z.IDPacijenta == id && z.DatumPregleda >= dateOnly).First();
-                    if (pregled != null)
+                    if (pregled != null) {
+                        ViewBag.Ustanova = (from l in db.Korisniks.OfType<LekarOpstePrakse>()
+                                            join o in db.Odeljenjes on l.IDOdeljenja equals o.ID
+                                            join u in db.Ustanovas on o.IDUstanove equals u.ID
+                                            where l.ID == pregled.IDLekara
+                                            select new { u.Naziv} ).First();
+                        ViewBag.Odeljenje = (from l in db.Korisniks.OfType<LekarOpstePrakse>()
+                                            join o in db.Odeljenjes on l.IDOdeljenja equals o.ID
+                                            where l.ID == pregled.IDLekara
+                                            select o.Naziv).First();
                         return View(pregled);
+                    }
                     TempData["NemaPregleda"] = "Nemate zakazanih pregleda";
                 }
             }
