@@ -11,19 +11,9 @@ namespace EvidencijaPacijenata.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
-
+    
     public partial class LekarSpecijalista : Lekar
     {
         public string Specijalizacija { get; set; }
-        [NotMapped]
-        public string ImePrezimeSpec
-        {
-            get
-            {
-                return ImePrezime + " - " + Specijalizacija;
-            }
-        }
     }
-    
 }

@@ -1,17 +1,43 @@
-﻿@{
-    ViewBag.Title = "Contact";
+﻿@model EvidencijaPacijenata.Models.ONamaPodaci
+@{
+    ViewBag.Title = "Kontakt";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<style>
+    .mapouter {
+        position: relative;
+        text-align: right;
+        height: 500px;
+        width: 600px;
+    }
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+    .gmap_canvas {
+        overflow: hidden;
+        background: none !important;
+        height: 500px;
+        width: 600px;
+    }
+</style>
+<h2>@ViewBag.Title</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <address>
+            <b>Adresa: </b>@Model.Adresa<br />
+            <abbr title="Phone"><b>P: </b></abbr>
+            @Model.Telefon
+        </address>
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+        <address>
+            <strong>Support: </strong><a href="mailto:@Model.Email">@Model.Email</a><br />
+        </address>
+    </div>
+    <div class="col-md-6">
+        <div class="mapouter">
+            <div class="gmap_canvas">
+                <iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=Po%C5%BEe%C5%A1ka%2052&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                Google Maps Generator by <a href="https://www.embedgooglemap.net">embedgooglemap.net</a>
+            </div>
+        </div>
+    </div>
+</div>

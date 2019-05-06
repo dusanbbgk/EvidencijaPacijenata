@@ -36,6 +36,7 @@ namespace EvidencijaPacijenata.Models
         public virtual DbSet<Ustanova> Ustanovas { get; set; }
         public virtual DbSet<Vesti> Vestis { get; set; }
         public virtual DbSet<ZakazivanjePregleda> ZakazivanjePregledas { get; set; }
+        public virtual DbSet<ONamaPodaci> ONamaPodacis { get; set; }
     
         public virtual ObjectResult<pretragaPacijenata_Result> pretragaPacijenata(string pretraga, Nullable<int> iDLekara, Nullable<int> uslov)
         {

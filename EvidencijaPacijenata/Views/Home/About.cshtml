@@ -1,7 +1,10 @@
-﻿@{
-    ViewBag.Title = "About";
-}
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+﻿@model EvidencijaPacijenata.Models.ONamaPodaci
 
-<p>Use this area to provide additional information.</p>
+@{
+    ViewBag.Title = "O nama";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+<p>@Model.ONama</p>

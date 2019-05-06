@@ -12,12 +12,12 @@ namespace EvidencijaPacijenata.Models
     using System;
     using System.Collections.Generic;
     
-    public abstract partial class Lekar : Korisnik
+    public partial class ONamaPodaci
     {
-        public int IDOdeljenja { get; set; }
-        public string Licenca { get; set; }
-        public string Slika { get; set; }
-    
-        public virtual Odeljenje Odeljenje { get; set; }
+        public int ID { get; set; }
+        public string ONama { get; set; }
+        public string Adresa { get; set; }
+        public string Telefon { get; set; }
+        public string Email { get; set; }
     }
 }

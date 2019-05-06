@@ -38,6 +38,7 @@
         <InheritanceConnector EntityType="DBZUstanovaBetaModel.LekarOpstePrakse" />
         <EntityTypeShape EntityType="DBZUstanovaBetaModel.LekarSpecijalista" Width="1.5" PointX="18.125" PointY="12.25" />
         <InheritanceConnector EntityType="DBZUstanovaBetaModel.LekarSpecijalista" />
+        <EntityTypeShape EntityType="DBZUstanovaBetaModel.ONamaPodaci" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

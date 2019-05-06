@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DBZUstanovaBetaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DBZUstanovaBetaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Administrator">
           <Key>
             <PropertyRef Name="ID" />
@@ -68,6 +68,16 @@
           <Property Name="IDUstanove" Type="int" Nullable="false" />
           <Property Name="Naziv" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="SlobodnihMesta" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ONamaPodaci">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ONama" Type="text" />
+          <Property Name="Adresa" Type="nvarchar" MaxLength="50" />
+          <Property Name="Telefon" Type="varchar" MaxLength="20" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Pacijent">
           <Key>
@@ -363,6 +373,7 @@
           <EntitySet Name="Korisnik" EntityType="Self.Korisnik" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Lekar" EntityType="Self.Lekar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Odeljenje" EntityType="Self.Odeljenje" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ONamaPodaci" EntityType="Self.ONamaPodaci" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pacijent" EntityType="Self.Pacijent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Uput" EntityType="Self.Uput" Schema="dbo" store:Type="Tables" />
@@ -438,8 +449,7 @@
             <End Role="ZakazivanjePregleda" EntitySet="ZakazivanjePregleda" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DBZUstanovaBetaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -838,6 +848,7 @@
             <Parameter Name="datum" Mode="In" Type="DateTime" />
             <Parameter Name="vreme" Mode="In" Type="Time" />
           </FunctionImport>
+          <EntitySet Name="ONamaPodacis" EntityType="DBZUstanovaBetaModel.ONamaPodaci" />
         </EntityContainer>
         <ComplexType Name="pretragaPacijenata_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -857,6 +868,16 @@
         <EntityType Name="LekarOpstePrakse" BaseType="DBZUstanovaBetaModel.Lekar" />
         <EntityType Name="LekarSpecijalista" BaseType="DBZUstanovaBetaModel.Lekar" >
           <Property Name="Specijalizacija" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ONamaPodaci">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ONama" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Adresa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Telefon" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1041,6 +1062,17 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="ONamaPodacis">
+            <EntityTypeMapping TypeName="DBZUstanovaBetaModel.ONamaPodaci">
+              <MappingFragment StoreEntitySet="ONamaPodaci">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="ONama" ColumnName="ONama" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

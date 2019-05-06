@@ -47,16 +47,12 @@ namespace EvidencijaPacijenata.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            return View(db.ONamaPodacis.First());
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return View(db.ONamaPodacis.First());
         }
         [HttpPost]
         public ActionResult PacijentLogin(string KorisnickoIme, string Lozinka)
