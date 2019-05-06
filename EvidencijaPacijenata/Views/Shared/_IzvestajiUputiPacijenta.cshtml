@@ -1,0 +1,8 @@
+﻿<ul class="nav nav-pills flex-column">
+    <li class="nav-item">
+        <a class="nav-link h4" href="@Url.Action("Index", "Izvestajs", new { id = Convert.ToInt64(Session["IDPacijenta"]) })">Istorija lečenja</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link h4" href="@Url.Action("Index", "Uputs", new { id = Convert.ToInt64(Session["IDPacijenta"]) })">Moji uputi</a>
+    </li>
+</ul>

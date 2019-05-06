@@ -24,10 +24,15 @@
                 @RenderBody()
             </div>
             <div class="col-2">
+                <h3>Obaveštenja i prečice</h3>
                 @RenderSection("Obavestenja", required: false)
                 @if (Session["IDAdmina"] != null)
                 {
                     @Html.Partial("_CPanel")
+                }
+                else if (Session["IDPacijenta"] != null)
+                {
+                    @Html.Partial("_IzvestajiUputiPacijenta")
                 }
             </div>
         </div>

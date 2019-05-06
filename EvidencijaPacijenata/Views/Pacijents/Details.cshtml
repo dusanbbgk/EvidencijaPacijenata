@@ -34,6 +34,14 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.DatumRodjenja)
+        </dt>
+
+        <dd>
+            @Model.DatumRodjenja.ToShortDateString()
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.JMBG)
         </dt>
 
@@ -129,8 +137,10 @@
     </dl>
 </div>
 <p>
-    <a href="@Url.Action("Index", "Izvestajs", new { id = Model.ID})">Istorija lečenja</a> |
-    <a href="@Url.Action("Index", "Uputs", new { id = Model.ID})">Moji uputi</a> |
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Izmeni podatke", "Edit", new { id = Model.ID }, new { @class = "btn btn-primary" })
+    @if (Session["IDAdmina"] != null)
+    {
+        <text> | </text>
+        @Html.ActionLink("Lista pacijenata", "Index")
+    }
 </p>

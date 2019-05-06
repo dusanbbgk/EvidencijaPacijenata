@@ -227,6 +227,26 @@ namespace EvidencijaPacijenata.Controllers
             {
                 return HttpNotFound();
             }
+            var KrvnaGrupa = new SelectList(
+                    new List<SelectListItem>
+                    {
+                        new SelectListItem { Text = "A+", Value = "A+" },
+                        new SelectListItem { Text = "A-", Value = "A-" },
+                        new SelectListItem { Text = "B+", Value = "B+" },
+                        new SelectListItem { Text = "B-", Value = "B-" },
+                        new SelectListItem { Text = "AB+", Value = "AB+" },
+                        new SelectListItem { Text = "AB-", Value = "AB-" },
+                        new SelectListItem { Text = "0+", Value = "0+" },
+                        new SelectListItem { Text = "0-", Value = "0-" }
+                    }, "Value", "Text");
+            ViewData["KrvnaGrupa"] = KrvnaGrupa;
+            var Pol = new SelectList(
+                new List<SelectListItem>
+                {
+                        new SelectListItem { Text = "M", Value = "M" },
+                        new SelectListItem { Text = "Ž", Value = "Ž" },
+                }, "Value", "Text");
+            ViewData["Pol"] = Pol;
             return View(pacijent);
         }
 

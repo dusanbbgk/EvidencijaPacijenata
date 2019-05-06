@@ -46,6 +46,8 @@ namespace EvidencijaPacijenata.Models
         [DataType(DataType.Password)]
         public string Lozinka { get; set; }
         [DisplayName("Datum rođenja")]
+        [DataType(DataType.Date), Required]
+        [DisplayFormat(DataFormatString = "{0:dd/mm/yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime DatumRodjenja { get; set; }
 
         [NotMapped]
