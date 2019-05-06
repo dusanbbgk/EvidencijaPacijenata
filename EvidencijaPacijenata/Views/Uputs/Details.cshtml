@@ -60,7 +60,7 @@
             @Html.DisplayNameFor(model => model.Korisnik2)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Korisnik2.ImePrezime)
+            <a href="@Url.Action("Details", "Pacijents", new { id = Model.IDPacijenta })">@Html.DisplayFor(model => model.Korisnik2.ImePrezime)</a>
         </dd>
 
     </dl>

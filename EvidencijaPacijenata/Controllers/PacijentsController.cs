@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web.Mvc;
 
 namespace EvidencijaPacijenata.Controllers
@@ -11,6 +12,7 @@ namespace EvidencijaPacijenata.Controllers
     public class PacijentsController : Controller
     {
         private DBZUstanovaBetaEntities db = new DBZUstanovaBetaEntities();
+        string encryptpw;
 
         // GET: Pacijents
         public ActionResult Index()
@@ -181,6 +183,8 @@ namespace EvidencijaPacijenata.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Ime,Prezime,KorisnickoIme,Lozinka,DatumRodjenja,JMBG,NosilacOsiguranja,SrodstvoSaNosiocem,IDOdeljenja,IDUstanove,KrvnaGrupa,Pol,Adresa,Telefon,Email,IstekOsiguranja,Odobren")] Pacijent pacijent)
         {
+            encryption(pacijent.Lozinka);
+            pacijent.Lozinka = encryptpw;
             DateTime dt = DateTime.Now;
             DateTime dateOnly = dt.Date;
             pacijent.IstekOsiguranja = dateOnly.AddMonths(6);
@@ -212,6 +216,16 @@ namespace EvidencijaPacijenata.Controllers
                 }, "Value", "Text");
             ViewData["Pol"] = Pol;
             return View(pacijent);
+        }
+
+        private void encryption(string lozinka)
+        {
+            string strmsg = String.Empty;
+            byte[] encode = new byte[lozinka.Length];
+            encode = Encoding.UTF8.GetBytes(lozinka);
+            strmsg = Convert.ToBase64String(encode);
+            encryptpw = strmsg;
+
         }
 
         // GET: Pacijents/Edit/5

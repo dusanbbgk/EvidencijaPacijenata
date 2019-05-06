@@ -55,7 +55,9 @@
                         @Html.ActionLink("Detalji", "Details", new { id = item.ID }) |
                         @if (Session["Specijalizacija"] != null)
                         {
-                            <text><a href="@Url.Action("OtpustiSaOdeljenja", "Pacijents", new { id = item.ID })">Otpusti pacijenta sa odeljenju</a> | </text>
+                            <text> <a href="@Url.Action("OtpustiSaOdeljenja", "Pacijents", new { id = item.ID })">Otpusti pacijenta sa odeljenja</a> | </text>
+                            <text><a href="@Url.Action("Create", "Izvestajs", new { id = item.ID })">Napiši izveštaj</a> | </text>
+                            <text><a href="@Url.Action("Create", "Uputs", new { id = item.ID })">Napiši uput</a> | </text>
                         }
                         <a href="@Url.Action("Details", "Kartons", new { id = item.ID })">Karton pacijenta</a> |
                         <a href="@Url.Action("Index", "Izvestajs", new { id = item.ID })">Istorija lečenja pacijenta</a>

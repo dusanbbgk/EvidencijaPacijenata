@@ -8,13 +8,15 @@
 <h2>@Model.Naslov</h2>
 <hr />
 <p>
+    @Html.ActionLink("<-- Nazad na sve vesti", "Index")
     @if (Session["IDAdmina"] != null)
     {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ID })<text> | </text>
+        <text> | </text>@Html.ActionLink("Izmeni", "Edit", new { id = Model.ID })<text> | </text>
+        @Html.ActionLink("Obriši", "Delete", new { id = Model.ID })
     }
-    @Html.ActionLink("<-- Nazad na sve vesti", "Index")
+
 </p>
-<p>Objavljeno: @Model.DatumObjave.ToShortDateString()</p>
+<p class="text-secondary">Objavljeno: @Model.DatumObjave.ToShortDateString()</p>
 <div class="row">
     <div class="col-md-6">
         <p>@Model.Tekst</p>

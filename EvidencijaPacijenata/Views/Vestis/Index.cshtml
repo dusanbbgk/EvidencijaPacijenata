@@ -4,41 +4,45 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
-
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Naslov)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DatumObjave)
-        </th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Naslov)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DatumObjave)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id = item.ID })
-            @if (Session["IDAdmina"] != null)
-            {
-                <text> | </text>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID })
-                <text> | </text>
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-            }
-        </td>
-    </tr>
+<link href="~/Content/VestiCSS.css" rel="stylesheet" />
+<h2>Vesti</h2>
+<hr />
+@if (Session["IDAdmina"] != null)
+{
+    <p>
+        @Html.ActionLink("Dodaj novu vest", "Create")
+    </p>
 }
-
-</table>
+<section class="details-card">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                string text = item.Tekst.Substring(0, 50);
+                <div class="col-md-4 mb-2">
+                    <div class="card-content">
+                        <a href="@Url.Action("Details", "Vestis", new { id = item.ID})">
+                            <div class="card-img">
+                                @if (item.Slika == "Default.jpg")
+                                {
+                                    <img src="~/Imgs/Vesti/@item.Slika" class="img-thumbnail" alt="@item.Naslov">
+                                }
+                                else
+                                {
+                                    <img src="~/Imgs/Vesti/@item.Naslov/@item.Slika" class="img-thumbnail" alt="@item.Naslov">
+                                }
+                            </div>
+                        </a>
+                        <div class="card-desc">
+                            <a href="@Url.Action("Details", "Vestis", new { id = item.ID})"><h3>@item.Naslov</h3></a>
+                            <p>
+                                @text
+                            </p>
+                            <a href="@Url.Action("Details", "Vestis", new { id = item.ID})" class="btn-card bg-primary">Procitaj vest</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

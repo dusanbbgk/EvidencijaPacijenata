@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -13,12 +14,11 @@ namespace EvidencijaPacijenata.Controllers
     public class LekarSpecijalistasController : Controller
     {
         private DBZUstanovaBetaEntities db = new DBZUstanovaBetaEntities();
-
+        string encryptpw;
         // GET: LekarSpecijalistas
         public ActionResult Index()
         {
             return Session["IDAdmina"] != null ? View(db.Korisniks.OfType<LekarSpecijalista>().ToList()) : (ActionResult)RedirectToAction("Index", "Home");
-            //return View(db.Korisniks.OfType<LekarSpecijalista>().ToList());
         }
 
         // GET: LekarSpecijalistas/Details/5
@@ -67,6 +67,8 @@ namespace EvidencijaPacijenata.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Ime,Prezime,KorisnickoIme,Lozinka,DatumRodjenja,IDOdeljenja,Licenca,Slika,Specijalizacija")] LekarSpecijalista lekarSpecijalista, HttpPostedFileBase file)
         {
+            encryption(lekarSpecijalista.Lozinka);
+            lekarSpecijalista.Lozinka = encryptpw;
             if (file != null && file.ContentLength > 0)
                 try
                 {
@@ -90,6 +92,16 @@ namespace EvidencijaPacijenata.Controllers
             izbor.Add(new SelectListItem { Text = "--- Izaberite odeljenje ---", Value = "0" });
             ViewBag.IDOdeljenja = new SelectList(izbor, "Value", "Text");
             return View(lekarSpecijalista);
+        }
+
+        private void encryption(string lozinka)
+        {
+            string strmsg = String.Empty;
+            byte[] encode = new byte[lozinka.Length];
+            encode = Encoding.UTF8.GetBytes(lozinka);
+            strmsg = Convert.ToBase64String(encode);
+            encryptpw = strmsg;
+
         }
 
         // GET: LekarSpecijalistas/Edit/5

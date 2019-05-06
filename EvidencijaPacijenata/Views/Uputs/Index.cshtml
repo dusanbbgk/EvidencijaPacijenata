@@ -34,7 +34,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.DatumPregleda)
+                @item.DatumPregleda.ToShortDateString()
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Odeljenje.Ustanova.Naziv)

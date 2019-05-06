@@ -86,7 +86,7 @@ namespace EvidencijaPacijenata.Controllers
                                 join u in db.Ustanovas on o.IDUstanove equals u.ID
                                 where l.ID == izvestaj.IDLekara
                                 select u.Naziv).First();
-            ViewBag.Odeljenje = (from l in db.Korisniks.OfType<LekarOpstePrakse>()
+            ViewBag.Odeljenje = (from l in db.Korisniks.OfType<Lekar>()
                                  join o in db.Odeljenjes on l.IDOdeljenja equals o.ID
                                  where l.ID == izvestaj.IDLekara
                                  select o.Naziv).First();
