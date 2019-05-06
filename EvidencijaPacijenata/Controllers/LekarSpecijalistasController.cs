@@ -17,8 +17,8 @@ namespace EvidencijaPacijenata.Controllers
         // GET: LekarSpecijalistas
         public ActionResult Index()
         {
-            //return Session["IDAdmina"] != null ? View(db.Korisniks.OfType<LekarSpecijalista>().ToList()) : (ActionResult)RedirectToAction("Index", "Home");
-            return View(db.Korisniks.OfType<LekarSpecijalista>().ToList());
+            return Session["IDAdmina"] != null ? View(db.Korisniks.OfType<LekarSpecijalista>().ToList()) : (ActionResult)RedirectToAction("Index", "Home");
+            //return View(db.Korisniks.OfType<LekarSpecijalista>().ToList());
         }
 
         // GET: LekarSpecijalistas/Details/5
@@ -150,6 +150,8 @@ namespace EvidencijaPacijenata.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             LekarSpecijalista lekarSpecijalista = db.Korisniks.OfType<LekarSpecijalista>().SingleOrDefault(l => l.ID == id);
+            string path = Server.MapPath(@"~/Imgs/Lekari/" + lekarSpecijalista.KorisnickoIme);
+            Directory.Delete(path, true);
             db.Korisniks.Remove(lekarSpecijalista);
             db.SaveChanges();
             return RedirectToAction("Index");

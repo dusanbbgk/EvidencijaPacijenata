@@ -16,15 +16,8 @@
             @Html.DisplayNameFor(model => model.Naslov)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Tekst)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.DatumObjave)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Slika)
-        </th>
-        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -33,13 +26,7 @@
             @Html.DisplayFor(modelItem => item.Naslov)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Tekst)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.DatumObjave)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Slika)
         </td>
         <td>
             @Html.ActionLink("Details", "Details", new { id = item.ID })

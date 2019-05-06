@@ -26,6 +26,7 @@ namespace EvidencijaPacijenata.Models
         [DisplayName("Srodstvo sa nosiocem osiguranja")]
         public string SrodstvoSaNosiocem { get; set; }
         public Nullable<int> IDOdeljenja { get; set; }
+        [DisplayName("Ustanova")]
         public Nullable<int> IDUstanove { get; set; }
         [Required(ErrorMessage = "Polje je obavezno")]
         [DisplayName("Krvna grupa")]

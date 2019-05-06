@@ -19,10 +19,7 @@
     @Html.HiddenFor(model => model.Lozinka)
     @Html.HiddenFor(model => model.JMBG)
     @Html.HiddenFor(model => model.IDOdeljenja)
-    @Html.HiddenFor(model => model.IDUstanove)
     @Html.HiddenFor(model => model.Email)
-    @Html.HiddenFor(model => model.IstekOsiguranja)
-    @Html.HiddenFor(model => model.Odobren)
 
     <div class="form-group">
         @Html.LabelFor(model => model.Ime, htmlAttributes: new { @class = "control-label col-md-4" })
@@ -39,15 +36,20 @@
             @Html.ValidationMessageFor(model => model.Prezime, "", new { @class = "text-danger" })
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.DatumRodjenja, htmlAttributes: new { @class = "control-label col-md-4" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.DatumRodjenja, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DatumRodjenja, "", new { @class = "text-danger" })
+    @if (Session["IDPacijenta"] != null)
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.DatumRodjenja, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DatumRodjenja, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DatumRodjenja, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-
+    }
+    else if (Session["IDAdmina"] != null)
+    {
+        @Html.HiddenFor(model => model.DatumRodjenja)
+    }
     <div class="form-group">
         @Html.LabelFor(model => model.NosilacOsiguranja, htmlAttributes: new { @class = "control-label col-md-4" })
         <div class="col-md-10">
@@ -67,7 +69,6 @@
     <div class="form-group">
         @Html.LabelFor(model => model.KrvnaGrupa, htmlAttributes: new { @class = "control-label col-md-4" })
         <div class="col-md-10">
-            @*@Html.EditorFor(model => model.KrvnaGrupa, new { htmlAttributes = new { @class = "form-control" } })*@
             @Html.DropDownList("KrvnaGrupa", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.KrvnaGrupa, "", new { @class = "text-danger" })
         </div>
@@ -77,7 +78,6 @@
         @Html.LabelFor(model => model.Pol, htmlAttributes: new { @class = "control-label col-md-4" })
         <div class="col-md-10">
             @Html.DropDownList("Pol", null, htmlAttributes: new { @class = "form-control" })
-            @*@Html.EditorFor(model => model.Pol, new { htmlAttributes = new { @class = "form-control" } })*@
             @Html.ValidationMessageFor(model => model.Pol, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -97,6 +97,36 @@
             @Html.ValidationMessageFor(model => model.Telefon, "", new { @class = "text-danger" })
         </div>
     </div>
+    @if (Session["IDPacijenta"] != null)
+    {
+        @Html.HiddenFor(model => model.IDUstanove)
+        @Html.HiddenFor(model => model.IstekOsiguranja)
+        @Html.HiddenFor(model => model.Odobren)
+    }
+    else if (Session["IDAdmina"] != null)
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.IDUstanove, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-10">
+                @Html.DropDownList("IDUstanove", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IDUstanove, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Odobren, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-10">
+                @Html.DropDownList("Odobren", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Odobren, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.IstekOsiguranja, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IstekOsiguranja, new { htmlAttributes = new { @type = "date", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.IDUstanove, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    }
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">

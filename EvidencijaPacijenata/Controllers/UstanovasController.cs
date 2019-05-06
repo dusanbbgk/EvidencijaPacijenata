@@ -130,6 +130,8 @@ namespace EvidencijaPacijenata.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Ustanova ustanova = db.Ustanovas.Find(id);
+            string path = Server.MapPath(@"~/Imgs/Ustanove/" + ustanova.Naziv);
+            Directory.Delete(path, true);
             db.Ustanovas.Remove(ustanova);
             db.SaveChanges();
             return RedirectToAction("Index");

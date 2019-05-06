@@ -130,6 +130,8 @@ namespace EvidencijaPacijenata.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Vesti vesti = db.Vestis.Find(id);
+            string path = Server.MapPath(@"~/Imgs/Vesti/" + vesti.Naslov);
+            Directory.Delete(path, true);
             db.Vestis.Remove(vesti);
             db.SaveChanges();
             return RedirectToAction("Index");

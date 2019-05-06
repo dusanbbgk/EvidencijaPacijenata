@@ -17,8 +17,8 @@ namespace EvidencijaPacijenata.Controllers
         // GET: LekarOpstePrakses
         public ActionResult Index()
         {
-            //return Session["IDAdmina"] != null ? View(db.Korisniks.OfType<LekarOpstePrakse>().ToList()) : (ActionResult)RedirectToAction("Index", "Home");
-            return View(db.Korisniks.OfType<LekarOpstePrakse>().ToList());
+            return Session["IDAdmina"] != null ? View(db.Korisniks.OfType<LekarOpstePrakse>().ToList()) : (ActionResult)RedirectToAction("Index", "Home");
+            //return View(db.Korisniks.OfType<LekarOpstePrakse>().ToList());
         }
 
         // GET: LekarOpstePrakses/Details/5
@@ -150,6 +150,8 @@ namespace EvidencijaPacijenata.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             LekarOpstePrakse lekarOpstePrakse = db.Korisniks.OfType<LekarOpstePrakse>().SingleOrDefault(l => l.ID == id);
+            string path = Server.MapPath(@"~/Imgs/Lekari/" + lekarOpstePrakse.KorisnickoIme);
+            Directory.Delete(path, true);
             db.Korisniks.Remove(lekarOpstePrakse);
             db.SaveChanges();
             return RedirectToAction("Index");

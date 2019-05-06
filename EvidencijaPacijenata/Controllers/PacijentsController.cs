@@ -15,7 +15,7 @@ namespace EvidencijaPacijenata.Controllers
         // GET: Pacijents
         public ActionResult Index()
         {
-            return Session["IDAdmina"] != null ? View(db.Korisniks.OfType<Pacijent>().ToList()) : (ActionResult)RedirectToAction("Index", "Home");
+            return Session["IDAdmina"] != null ? View(db.Korisniks.OfType<Pacijent>().OrderByDescending(p => p.ID).ToList()) : (ActionResult)RedirectToAction("Index", "Home");
         }
         public ActionResult Pretraga(string pretraga)
         {
@@ -38,7 +38,7 @@ namespace EvidencijaPacijenata.Controllers
                         return View(db.pretragaPacijenata(pretraga, IDLekara, 0).ToList());
                 }
             }
-                return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home");
         }
         public ActionResult ZadrziNaOdeljenju(int id)
         {
@@ -225,6 +225,18 @@ namespace EvidencijaPacijenata.Controllers
             if (pacijent == null)
             {
                 return HttpNotFound();
+            }
+            if (Session["IDAdmina"] != null)
+            {
+                var Odobren = new SelectList(
+                    new List<SelectListItem>
+                    {
+                    new SelectListItem { Text="Da", Value="1" },
+                    new SelectListItem { Text="Ne", Value="0" }
+                    }, "Value", "Text");
+                ViewData["Odobren"] = Odobren;
+                ViewData["IDUstanove"] = new SelectList(from u in db.Ustanovas
+                                                        select u, "ID", "Naziv").ToList();
             }
             var KrvnaGrupa = new SelectList(
                     new List<SelectListItem>
