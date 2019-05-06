@@ -188,9 +188,8 @@ namespace EvidencijaPacijenata.Controllers
             {
                 db.Korisniks.Add(pacijent);
                 db.SaveChanges();
-                if (Session["IDPacijenta"] == null)
-                    return RedirectToAction("Index", "Home");
-                return RedirectToAction("Index");
+                Session["UspesnaRegistracija"] = "Uspesno ste se registrovali";
+                return Session["IDPacijenta"] == null ? RedirectToAction("Index", "Home") : RedirectToAction("Index");
             }
             var KrvnaGrupa = new SelectList(
                     new List<SelectListItem>

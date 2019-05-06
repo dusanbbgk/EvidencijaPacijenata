@@ -12,6 +12,10 @@ namespace EvidencijaPacijenata.Controllers
 
         public ActionResult Index()
         {
+            if (Session["UspesnaRegistracija"] != null) {
+                ViewBag.registracija = Session["UspesnaRegistracija"];
+                Session["UspesnaRegistracija"] = null;
+            }
             if (TempData["NemaPregleda"] != null)
             {
                 ViewBag.NemaPregleda = TempData["NemaPregleda"];

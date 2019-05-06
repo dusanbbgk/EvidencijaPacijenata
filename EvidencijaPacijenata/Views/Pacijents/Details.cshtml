@@ -137,7 +137,10 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Izmeni podatke", "Edit", new { id = Model.ID }, new { @class = "btn btn-primary" })
+    @if (Session["IDPacijenta"] != null && Model.ID == Convert.ToInt32(Session["IDPacijenta"]) || Session["IDAdmina"] != null)
+    {
+        @Html.ActionLink("Izmeni podatke", "Edit", new { id = Model.ID }, new { @class = "btn btn-primary" })
+    }
     @if (Session["IDAdmina"] != null)
     {
         <text> | </text>

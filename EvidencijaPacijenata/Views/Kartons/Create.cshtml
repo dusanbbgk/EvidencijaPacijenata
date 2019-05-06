@@ -5,12 +5,16 @@
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
-<h2>Create</h2>
-
-@using (Html.BeginForm()) 
+<h2>Pravljenje kartona pacijenta</h2>
+<hr />
+@if (Session["IDLekara"] != null)
+{
+    <p class="pb-2"><a href="@Url.Action("Pretraga", "Pacijents", new { id = Convert.ToInt32(Session["IDLekara"]) })">Nazad na listu pacijenata</a></p>
+}
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Karton</h4>
         <hr />
@@ -97,12 +101,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+@if (Session["IDAdmina"] != null)
+{
+    <div>
+        @Html.ActionLink("Lista kartona pacijenata", "Index")
+    </div>
+}

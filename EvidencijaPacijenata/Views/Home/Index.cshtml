@@ -6,10 +6,22 @@
 }
 @section Obavestenja
     {
-    @ViewBag.info@ViewBag.resetPass@ViewBag.NemaKarton@ViewBag.OdeljenjePuno@ViewBag.NemaPregleda@ViewBag.PostojiZakazanPregled
+    @if (@ViewBag.info != null || @ViewBag.resetPass != null || @ViewBag.NemaKarton != null ||
+        @ViewBag.OdeljenjePuno != null || @ViewBag.NemaPregleda != null || @ViewBag.PostojiZakazanPregled != null ||
+            @ViewBag.registracija != null)
+{
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <p id="a1">@ViewBag.info</p><p id="a2">@ViewBag.resetPass</p><p id="a3">@ViewBag.NemaKarton</p>
+    <p id="a4">@ViewBag.OdeljenjePuno</p><p id="a5">@ViewBag.NemaPregleda</p><p id="a6">@ViewBag.PostojiZakazanPregled</p>
+    <p id="a7">@ViewBag.registracija</p>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+}
 }
 <link href="~/Content/VestiCSS.css" rel="stylesheet" />
-<h3>Poslednje vesti</h3>
+<h2>Poslednje vesti</h2>
 <hr />
 <section class="details-card">
     <div class="container">
