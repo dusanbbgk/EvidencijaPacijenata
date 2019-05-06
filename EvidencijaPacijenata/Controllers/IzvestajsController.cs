@@ -211,6 +211,11 @@ namespace EvidencijaPacijenata.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult GeneratePDF(int id)
+        {
+            return new Rotativa.ActionAsPdf("Details", new { id });
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

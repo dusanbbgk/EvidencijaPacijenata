@@ -18,6 +18,7 @@
     {
         @Html.ActionLink("Nazad na listu izveštaja", "Index", new { id = Model.IDPacijenta })
     }
+     | @Html.ActionLink("PDF fajl", "GeneratePDF", new { id = Model.ID })
 </p>
 <div>
     <dl class="dl-horizontal">
