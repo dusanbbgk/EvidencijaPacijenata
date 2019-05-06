@@ -32,15 +32,13 @@
 
     }
     function proveriZakazivanje() {
-        alert("u f-ji");
         var datum = new Date(document.getElementById("datumPregleda").value);
         var isWeekend = (datum.getDay() === 6) || (datum.getDay() === 0); 
-        alert(isWeekend);
         if (isWeekend) {
             alert("Morate izabrati radni dan");
             return false;
         }
-        else return true;
+        return true;
     }
 </script>
 <h2>Zakazivanje pregleda - izmena</h2>
