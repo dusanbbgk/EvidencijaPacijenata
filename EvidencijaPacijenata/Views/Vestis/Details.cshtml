@@ -5,50 +5,28 @@
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Vesti</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Naslov)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Naslov)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Tekst)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Tekst)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DatumObjave)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DatumObjave)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Slika)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Slika)
-        </dd>
-
-    </dl>
-</div>
+<h2>@Model.Naslov</h2>
+<hr />
 <p>
     @if (Session["IDAdmina"] != null)
     {
         @Html.ActionLink("Edit", "Edit", new { id = Model.ID })<text> | </text>
     }
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("<-- Nazad na sve vesti", "Index")
 </p>
+<p>Objavljeno: @Model.DatumObjave.ToShortDateString()</p>
+<div class="row">
+    <div class="col-md-6">
+        <p>@Model.Tekst</p>
+    </div>
+    <div class="col-md-6">
+        @if (Model.Slika != "Default.jpg")
+        {
+            <img class="img-thumbnail" src="~/Imgs/Vesti/@Model.Naslov/@Model.Slika" alt="@Model.Naslov" />
+        }
+        else
+        {
+            <img class="img-thumbnail" src="~/Imgs/Vesti/@Model.Slika" alt="@Model.Naslov" />
+        }
+    </div>
+</div>
