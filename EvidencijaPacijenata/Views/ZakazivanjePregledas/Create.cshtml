@@ -30,6 +30,15 @@
             }
         });
     }
+    function proveriZakazivanje() {
+        var datum = new Date(document.getElementById("datumPregleda").value);
+        var isWeekend = (datum.getDay() === 6) || (datum.getDay() === 0);
+        if (isWeekend) {
+            alert("Morate izabrati radni dan");
+            return false;
+        }
+        return true;
+    }
 </script>
 
 <h2>Zakazivanje pregleda</h2>
@@ -68,7 +77,7 @@
 
         <div class="form-group text-right">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Zakaži" class="btn btn-primary" />
+                <input type="submit" value="Zakaži" class="btn btn-primary" onclick="return proveriZakazivanje();" />
             </div>
         </div>
     </div>

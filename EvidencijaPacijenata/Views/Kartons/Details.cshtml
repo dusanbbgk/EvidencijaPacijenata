@@ -5,19 +5,33 @@
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
-<h2>Details</h2>
-
+<h2><a href="@Url.Action("Details", "Pacijents", new { id = Model.Korisnik1.ID})">@Model.Korisnik1.ImePrezime</a> - Karton</h2>
+<hr />
 <div>
-    <h4>Karton</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.DatumVremeNalaza)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DatumVremeNalaza)
+            @Model.DatumVremeNalaza.ToShortDateString()
         </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Korisnik)
+        </dt>
+        @if (Model.Korisnik.GetType() == typeof(EvidencijaPacijenata.Models.LekarSpecijalista))
+        {
+            <dd>
+                <a href="@Url.Action("Details", "LekarSpecijalistas", new { id = Model.Korisnik.ID })">@Html.DisplayFor(model => model.Korisnik.ImePrezime)</a>
+            </dd>
+        }
+        else
+        {
+            <dd>
+                <a href="@Url.Action("Details", "LekarOpstePrakses", new { id = Model.Korisnik.ID })">@Html.DisplayFor(model => model.Korisnik.ImePrezime)</a>
+            </dd>
+        }
 
         <dt>
             @Html.DisplayNameFor(model => model.Disanje)
@@ -74,7 +88,6 @@
         <dd>
             @Html.DisplayFor(model => model.KrvaSlika)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.SpecificniPregled)
         </dt>
@@ -82,23 +95,6 @@
         <dd>
             @Html.DisplayFor(model => model.SpecificniPregled)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Korisnik)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Korisnik.Ime) @Html.DisplayFor(model => model.Korisnik.Prezime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Korisnik1)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Korisnik1.Ime) @Html.DisplayFor(model => model.Korisnik1.Prezime)
-        </dd>
-
     </dl>
 </div>
 @if (Session["IDLekara"] != null || Session["IDAdmina"] != null)

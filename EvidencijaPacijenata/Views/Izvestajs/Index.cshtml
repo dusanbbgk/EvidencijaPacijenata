@@ -5,7 +5,8 @@
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Istorija lečenja/izveštaji</h2>
+<hr />
 @if (Session["IDAdmina"] != null)
 {
     <p>
@@ -16,9 +17,6 @@
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.DatumPregleda)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dijagnoza)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Korisnik)
@@ -33,19 +31,16 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.DatumPregleda.Date)
+                @item.DatumPregleda.ToShortDateString()
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Dijagnoza)
+                @Html.DisplayFor(modelItem => item.Korisnik.ImePrezime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Korisnik.Ime) @Html.DisplayFor(modelItem => item.Korisnik.Prezime)
+                @Html.DisplayFor(modelItem => item.Korisnik1.ImePrezime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Korisnik1.Ime) @Html.DisplayFor(modelItem => item.Korisnik1.Prezime)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.ID })
+                @Html.ActionLink("Detalji", "Details", new { id = item.ID })
                 @if (Session["IDAdmina"] != null || (Session["IDLekara"] != null && Convert.ToInt32(Session["IDLekara"]) == item.IDLekara))
                 {
                     <text> | </text>

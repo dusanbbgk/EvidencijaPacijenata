@@ -5,63 +5,64 @@
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
-<h2>Details</h2>
-
+<h2>Uput</h2>
+<hr />
+<p class="pb-2">
+    @if (Session["IDAdmina"] != null || (Session["IDLekara"] != null && Convert.ToInt32(Session["IDLekara"]) == Model.IDLekaraOd))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
+        <text> |</text>
+    }
+    @if (Session["IDPacijenta"] != null || Session["IDAdmina"] != null || Session["IDLekara"] != null)
+    {
+        @Html.ActionLink("Nazad na listu uputi", "Index", new { id = Model.IDPacijenta })
+    }
+</p>
 <div>
-    <h4>Uput</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.DatumPregleda)
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.DatumPregleda)
+            @Model.DatumPregleda.ToShortDateString()
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ZavrsenPregled)
+            Lekar opšte prakse
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.ZavrsenPregled)
+            <a href="@Url.Action("Details", "LekarOpsteprakses", new { id = Model.IDLekaraOd })">@Html.DisplayFor(model => model.Korisnik1.ImePrezime)</a>
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Korisnik.Ime)
+            @Html.DisplayNameFor(model => model.Odeljenje.Ustanova.Naziv)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Korisnik.Ime)
+            <a href="@Url.Action("Details", "Ustanovas", new { id = Model.Odeljenje.Ustanova.ID })">@Html.DisplayFor(model => model.Odeljenje.Ustanova.Naziv)</a>
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Korisnik1.Ime)
+            @Html.DisplayNameFor(model => model.Odeljenje)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Korisnik1.Ime)
+            <a href="@Url.Action("Details", "Odeljenjes", new { id = Model.IDOdeljenja })">@Html.DisplayFor(model => model.Odeljenje.Naziv)</a>
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Odeljenje.Naziv)
+            Lekar specijalista
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.Odeljenje.Naziv)
+            <a href="@Url.Action("Details", "LekarSpecijalistas", new { id = Model.IDLekaraKome })">@Html.DisplayFor(model => model.Korisnik.ImePrezime)</a>
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.Korisnik2.Ime)
+            @Html.DisplayNameFor(model => model.Korisnik2)
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.Korisnik2.Ime)
+            @Html.DisplayFor(model => model.Korisnik2.ImePrezime)
         </dd>
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+

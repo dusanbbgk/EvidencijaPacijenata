@@ -4,10 +4,6 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
-@section Obavestenja
-    {
-    @ViewBag.PostojiZakazanPregled
-}
 <h2>Detalji o zakazanom pregledu</h2>
 <hr />
 <p>
@@ -38,13 +34,13 @@
     <b>
         Ustanova:
     </b>
-    <a href="@Url.Action("Details", "Ustanovas", new { id = ViewBag.Ustanova})">@ViewBag.Ustanova</a>
+    @ViewBag.Ustanova
 </p>
 <p>
     <b>
         Odeljenje:
     </b>
-    <a href="@Url.Action("Details", "Odeljenjes", new { id = ViewBag.Odeljenje})">@ViewBag.Odeljenje</a>
+    @ViewBag.Odeljenje
 </p>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID })

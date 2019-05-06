@@ -64,16 +64,17 @@ namespace EvidencijaPacijenata.Controllers
                     DateTime dt = DateTime.Now;
                     DateTime dateOnly = dt.Date;
                     var pregled = db.ZakazivanjePregledas.Where(z => z.IDPacijenta == id && z.DatumPregleda >= dateOnly).First();
-                    if (pregled != null) {
+                    if (pregled != null)
+                    {
                         ViewBag.Ustanova = (from l in db.Korisniks.OfType<LekarOpstePrakse>()
                                             join o in db.Odeljenjes on l.IDOdeljenja equals o.ID
                                             join u in db.Ustanovas on o.IDUstanove equals u.ID
                                             where l.ID == pregled.IDLekara
-                                            select new { u.Naziv} ).First();
+                                            select u.Naziv).First();
                         ViewBag.Odeljenje = (from l in db.Korisniks.OfType<LekarOpstePrakse>()
-                                            join o in db.Odeljenjes on l.IDOdeljenja equals o.ID
-                                            where l.ID == pregled.IDLekara
-                                            select o.Naziv).First();
+                                             join o in db.Odeljenjes on l.IDOdeljenja equals o.ID
+                                             where l.ID == pregled.IDLekara
+                                             select o.Naziv).First();
                         return View(pregled);
                     }
                     TempData["NemaPregleda"] = "Nemate zakazanih pregleda";
@@ -85,6 +86,11 @@ namespace EvidencijaPacijenata.Controllers
         // GET: ZakazivanjePregledas/Create
         public ActionResult Create()
         {
+            //if (TempData["Vikend"] != null)
+            //{
+            //    ViewBag.Vikend = TempData["Vikend"];
+            //    TempData.Clear();
+            //}
             if (Session["IDPacijenta"] != null)
             {
                 var id = Convert.ToInt32(Session["IDPacijenta"]);
@@ -149,6 +155,11 @@ namespace EvidencijaPacijenata.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,IDPacijenta,IDLekara,DatumPregleda,VremePregleda,DatumZakazivanja,ZavrsenPregled")] ZakazivanjePregleda zakazivanjePregleda)
         {
+            //if (zakazivanjePregleda.DatumPregleda.DayOfWeek == DayOfWeek.Saturday || zakazivanjePregleda.DatumPregleda.DayOfWeek == DayOfWeek.Sunday)
+            //{
+            //    TempData["Vikend"] = "Ne možete zakazati pregled vikendom.";
+            //    return RedirectToAction("Create");
+            //}
             DateTime dt = DateTime.Now;
             DateTime dateOnly = dt.Date;
             zakazivanjePregleda.DatumZakazivanja = dateOnly;
@@ -160,9 +171,12 @@ namespace EvidencijaPacijenata.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             ViewBag.IDLekara = new SelectList(db.Korisniks, "ID", "Ime", zakazivanjePregleda.IDLekara);
             ViewBag.IDPacijenta = new SelectList(db.Korisniks, "ID", "Ime", zakazivanjePregleda.IDPacijenta);
+            List<SelectListItem> izbor1 = new List<SelectListItem>();
+            izbor1.Add(new SelectListItem { Text = "--- Izaberite termin ---", Value = "0" });
+            ViewBag.VremePregleda = new SelectList(izbor1, "Value", "Text");
+            ViewBag.DatumPregleda = DateTime.Now.Date.AddDays(1).ToString("yyyy-MM-dd");
             return View(zakazivanjePregleda);
         }
 
@@ -173,6 +187,11 @@ namespace EvidencijaPacijenata.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            //if (TempData["Vikend"] != null)
+            //{
+            //    ViewBag.Vikend = TempData["Vikend"];
+            //    TempData.Clear();
+            //}
             ZakazivanjePregleda zakazivanjePregleda = db.ZakazivanjePregledas.Find(id);
             if (zakazivanjePregleda == null)
             {
@@ -194,6 +213,17 @@ namespace EvidencijaPacijenata.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,IDPacijenta,IDLekara,DatumPregleda,VremePregleda,DatumZakazivanja,ZavrsenPregled")] ZakazivanjePregleda zakazivanjePregleda)
         {
+            //if (zakazivanjePregleda.DatumPregleda.DayOfWeek == DayOfWeek.Saturday || zakazivanjePregleda.DatumPregleda.DayOfWeek == DayOfWeek.Sunday)
+            //{
+            //    TempData["Vikend"] = "Ne možete zakazati pregled vikendom.";
+            //    List<SelectListItem> izbor1 = new List<SelectListItem>();
+            //    izbor1.Add(new SelectListItem { Text = "--- Izaberite termin ---", Value = "0" });
+            //    ViewBag.VremePregleda = new SelectList(izbor1, "Value", "Text");
+            //    ViewBag.DatumPregleda = DateTime.Now.Date.AddDays(1).ToString("yyyy-MM-dd");
+            //    ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<LekarOpstePrakse>(), "ID", "ImePrezime", zakazivanjePregleda.IDLekara);
+            //    ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>().Where(p => p.ID == zakazivanjePregleda.IDPacijenta), "ID", "ImePrezime");
+            //    return View(zakazivanjePregleda);
+            //}
             if (ModelState.IsValid)
             {
                 DateTime dt = DateTime.Now;
@@ -205,8 +235,12 @@ namespace EvidencijaPacijenata.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IDLekara = new SelectList(db.Korisniks, "ID", "Ime", zakazivanjePregleda.IDLekara);
-            ViewBag.IDPacijenta = new SelectList(db.Korisniks, "ID", "Ime", zakazivanjePregleda.IDPacijenta);
+            List<SelectListItem> izbor = new List<SelectListItem>();
+            izbor.Add(new SelectListItem { Text = "--- Izaberite termin ---", Value = "0" });
+            ViewBag.VremePregleda = new SelectList(izbor, "Value", "Text");
+            ViewBag.DatumPregleda = DateTime.Now.Date.AddDays(1).ToString("yyyy-MM-dd");
+            ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<LekarOpstePrakse>(), "ID", "ImePrezime", zakazivanjePregleda.IDLekara);
+            ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>().Where(p => p.ID == zakazivanjePregleda.IDPacijenta), "ID", "ImePrezime");
             return View(zakazivanjePregleda);
         }
 

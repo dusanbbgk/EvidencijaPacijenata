@@ -5,7 +5,8 @@
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Uputi</h2>
+<hr />
 @if (Session["IDAdmina"] != null)
 {
     <p>
@@ -16,12 +17,6 @@
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.DatumPregleda)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Korisnik)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Korisnik1)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Odeljenje.Ustanova.Naziv)
@@ -42,22 +37,16 @@
                 @Html.DisplayFor(modelItem => item.DatumPregleda)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Korisnik.Ime) @Html.DisplayFor(modelItem => item.Korisnik.Prezime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Korisnik1.Ime) @Html.DisplayFor(modelItem => item.Korisnik1.Prezime)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Odeljenje.Ustanova.Naziv)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Odeljenje.Naziv)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Korisnik2.Ime) @Html.DisplayFor(modelItem => item.Korisnik2.Prezime)
+                @Html.DisplayFor(modelItem => item.Korisnik2.ImePrezime)
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", new { id = item.ID })
+                @Html.ActionLink("Detalji", "Details", new { id = item.ID })
                 @if (Session["IDAdmina"] != null)
                 {
                     <text> | </text>@Html.ActionLink("Edit", "Edit", new { id = item.ID })<text> | </text>

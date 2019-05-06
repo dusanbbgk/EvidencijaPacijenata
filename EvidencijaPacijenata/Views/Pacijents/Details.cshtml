@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
-<h2>Detalji pacijenta</h2>
+<h2>@Model.ImePrezime - Profil</h2>
 <hr />
 <div>
     <dl class="dl-horizontal">
@@ -40,37 +40,42 @@
         <dd>
             @Html.DisplayFor(model => model.JMBG)
         </dd>
+        @if (Model.NosilacOsiguranja != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.NosilacOsiguranja)
+            </dt>
 
+            <dd>
+                @Html.DisplayFor(model => model.NosilacOsiguranja)
+            </dd>
+        }
+        @if (Model.SrodstvoSaNosiocem != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.SrodstvoSaNosiocem)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.SrodstvoSaNosiocem)
+            </dd>
+        }
+        @if (Model.IDOdeljenja != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Odeljenje.Naziv) - Odeljenje na kojem ste zadržani
+            </dt>
+
+            <dd>
+                <a href="@Url.Action("Details", "Odeljenjes", new { id = Model.IDOdeljenja })">@Html.DisplayFor(model => model.Odeljenje.Naziv)</a>
+            </dd>
+        }
         <dt>
-            @Html.DisplayNameFor(model => model.NosilacOsiguranja)
+            @Html.DisplayNameFor(model => model.Ustanova.Naziv) kojoj pripadate
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.NosilacOsiguranja)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SrodstvoSaNosiocem)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SrodstvoSaNosiocem)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IDOdeljenja)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IDOdeljenja)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IDUstanove)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IDUstanove)
+            <a href="@Url.Action("Details", "Ustanovas", new { id = Model.IDUstanove })">@Html.DisplayFor(model => model.Ustanova.Naziv)</a>
         </dd>
 
         <dt>
@@ -118,7 +123,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.IstekOsiguranja)
+            @Model.IstekOsiguranja.ToShortDateString()
         </dd>
 
     </dl>
