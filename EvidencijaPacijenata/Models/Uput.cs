@@ -12,6 +12,7 @@ namespace EvidencijaPacijenata.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
 
     public partial class Uput
     {
@@ -23,6 +24,8 @@ namespace EvidencijaPacijenata.Models
         [DisplayName("Za lekara")]
         public int IDLekaraKome { get; set; }
         [DisplayName("Datum pregleda")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public System.DateTime DatumPregleda { get; set; }
         [DisplayName("Odeljenje")]
         public int IDOdeljenja { get; set; }

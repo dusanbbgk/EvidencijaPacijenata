@@ -12,6 +12,7 @@ namespace EvidencijaPacijenata.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
 
     public partial class Karton
     {
@@ -21,6 +22,8 @@ namespace EvidencijaPacijenata.Models
         [DisplayName("Lekar")]
         public int IDLekara { get; set; }
         [DisplayName("Datum nalaza")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public System.DateTime DatumVremeNalaza { get; set; }
         public int Disanje { get; set; }
         public int Puls { get; set; }

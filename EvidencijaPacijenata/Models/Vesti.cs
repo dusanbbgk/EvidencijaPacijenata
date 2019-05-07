@@ -11,12 +11,17 @@ namespace EvidencijaPacijenata.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Vesti
     {
         public int ID { get; set; }
         public string Naslov { get; set; }
         public string Tekst { get; set; }
+        [DisplayName("Datum objave")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public System.DateTime DatumObjave { get; set; }
         public string Slika { get; set; }
     }

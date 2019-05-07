@@ -41,6 +41,7 @@ namespace EvidencijaPacijenata.Models
         [EmailAddress(ErrorMessage = "E-mail adresa nije validna")]
         [Remote("ProveriEmail", "Pacijents", HttpMethod = "POST", ErrorMessage = "Postoji u bazi")]
         public string Email { get; set; }
+        [DisplayName("Osiguranje")]
         public System.DateTime IstekOsiguranja { get; set; }
         public int Odobren { get; set; }
 
