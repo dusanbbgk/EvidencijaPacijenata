@@ -11,13 +11,15 @@ namespace EvidencijaPacijenata.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public abstract partial class Lekar : Korisnik
     {
+        [DisplayName("Naziv odeljenja")]
         public int IDOdeljenja { get; set; }
         public string Licenca { get; set; }
         public string Slika { get; set; }
-    
+
         public virtual Odeljenje Odeljenje { get; set; }
     }
 }

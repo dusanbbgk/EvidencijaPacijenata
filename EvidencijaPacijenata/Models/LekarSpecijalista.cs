@@ -15,5 +15,8 @@ namespace EvidencijaPacijenata.Models
     public partial class LekarSpecijalista : Lekar
     {
         public string Specijalizacija { get; set; }
+        public string ImePrezimeSpec() {
+            return ImePrezime + " - " + Specijalizacija;
+        }
     }
 }

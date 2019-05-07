@@ -36,10 +36,10 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.DatumPregleda)
+                @item.DatumPregleda.ToShortDateString()
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DatumZakazivanja)
+                @item.DatumZakazivanja.ToShortDateString()
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.VremePregleda)

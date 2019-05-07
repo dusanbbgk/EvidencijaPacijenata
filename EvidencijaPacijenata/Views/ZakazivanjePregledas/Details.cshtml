@@ -30,20 +30,30 @@
     </b>
     @Model.DatumZakazivanja.ToShortDateString()
 </p>
+@if (Session["IDPacijenta"] != null)
+{
+    <p>
+        <b>
+            Ustanova:
+        </b>
+        @ViewBag.Ustanova
+    </p>
+    <p>
+
+        <b>
+            Odeljenje:
+        </b>
+        @ViewBag.Odeljenje
+    </p>
+}
 <p>
-    <b>
-        Ustanova:
-    </b>
-    @ViewBag.Ustanova
-</p>
-<p>
-    <b>
-        Odeljenje:
-    </b>
-    @ViewBag.Odeljenje
-</p>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
+    @if (Session["IDPacijenta"] != null)
+    {
+        if (Convert.ToInt32(Session["IDPacijenta"]) == Model.IDPacijenta)
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
+        }
+    }
     @if (Session["IDAdmina"] != null)
     {
         <text> | </text>
