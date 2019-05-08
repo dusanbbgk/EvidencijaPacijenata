@@ -57,7 +57,7 @@ namespace EvidencijaPacijenata.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                    Session["Obavestenje"] = "ERROR:" + ex.Message.ToString();
                 }
 
             if (ModelState.IsValid)
@@ -94,8 +94,21 @@ namespace EvidencijaPacijenata.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Naslov,Tekst,DatumObjave,Slika")] Vesti vesti)
+        public ActionResult Edit([Bind(Include = "ID,Naslov,Tekst,DatumObjave,Slika")] Vesti vesti, HttpPostedFileBase file)
         {
+            if (file != null && file.ContentLength > 0)
+                try
+                {
+                    Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Imgs/Vesti"), vesti.ID.ToString()));
+                    string path = Path.Combine(Server.MapPath("~/Imgs/Vesti/" + vesti.ID.ToString()),
+                                               Path.GetFileName(file.FileName));
+                    file.SaveAs(path);
+                }
+                catch (Exception ex)
+                {
+                    Session["Obavestenje"] = "ERROR:" + ex.Message.ToString();
+                }
+
             if (ModelState.IsValid)
             {
                 db.Entry(vesti).State = EntityState.Modified;

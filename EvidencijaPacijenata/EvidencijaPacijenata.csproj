@@ -370,7 +370,7 @@
     <Content Include="Views\Shared\_Navbar.cshtml" />
     <Content Include="Views\Shared\_IzvestajiUputiPacijenta.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Pacijents\Odobreni.cshtml" />
+    <Content Include="Views\Pacijents\Neodobreni.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

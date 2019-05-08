@@ -20,11 +20,9 @@ namespace EvidencijaPacijenata.Controllers
             return Session["IDAdmina"] != null ? View(db.Korisniks.OfType<Pacijent>().OrderByDescending(p => p.ID).ToList()) : (ActionResult)RedirectToAction("Index", "Home");
         }
 
-        public ActionResult Neodobreni(int? id)
+        public ActionResult Neodobreni()
         {
-            if (id == 0)
-                return Session["IDAdmina"] != null ? View(db.Korisniks.OfType<Pacijent>().Where(p => p.Odobren == 0).OrderByDescending(p => p.ID).ToList()) : (ActionResult)RedirectToAction("Index", "Home");
-            return RedirectToAction("Index", "Home");
+            return Session["IDAdmina"] != null ? View(db.Korisniks.OfType<Pacijent>().Where(p => p.Odobren == 0).OrderByDescending(p => p.ID).ToList()) : (ActionResult)RedirectToAction("Index", "Home");
         }
         public ActionResult Pretraga(string pretraga)
         {

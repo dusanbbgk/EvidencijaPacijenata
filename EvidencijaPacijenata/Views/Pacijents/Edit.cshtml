@@ -99,7 +99,7 @@
         else if (Session["IDAdmina"] != null)
         {
             <div class="form-group">
-                @Html.LabelFor(model => model.IDUstanove, htmlAttributes: new { @class = "control-label col-md-4" })
+                @Html.LabelFor(model => model.IDUstanove, "Naziv ustanove", htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-10">
                     @Html.DropDownList("IDUstanove", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.IDUstanove, "", new { @class = "text-danger" })
