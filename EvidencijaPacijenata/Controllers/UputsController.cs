@@ -23,7 +23,7 @@ namespace EvidencijaPacijenata.Controllers
                     {
                         return View((from u in db.Uputs
                                      where u.IDPacijenta == id
-                                     orderby u.DatumPregleda
+                                     orderby u.DatumPregleda descending
                                      select u).ToList());
                     }
                     return RedirectToAction("Index", "Home");

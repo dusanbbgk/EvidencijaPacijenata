@@ -39,10 +39,10 @@ namespace EvidencijaPacijenata.Controllers
         // GET: ZakazivanjePregledas/Details/5
         public ActionResult Details(int? id)
         {
-            if (TempData["PostojiZakazanPregled"] != null)
+            if (Session["Obavestenje"] != null)
             {
-                ViewBag.PostojiZakazanPregled = TempData["PostojiZakazanPregled"];
-                TempData.Clear();
+                ViewBag.Obavestenje = Session["Obavestenje"];
+                Session["Obavestenje"] = null;
             }
             if (id == null)
             {
@@ -86,11 +86,6 @@ namespace EvidencijaPacijenata.Controllers
         // GET: ZakazivanjePregledas/Create
         public ActionResult Create()
         {
-            //if (TempData["Vikend"] != null)
-            //{
-            //    ViewBag.Vikend = TempData["Vikend"];
-            //    TempData.Clear();
-            //}
             if (Session["IDPacijenta"] != null)
             {
                 var id = Convert.ToInt32(Session["IDPacijenta"]);
@@ -99,7 +94,7 @@ namespace EvidencijaPacijenata.Controllers
                 var pregled = db.ZakazivanjePregledas.Where(z => z.IDPacijenta == id && z.DatumPregleda >= dateOnly).FirstOrDefault();
                 if (pregled != null)
                 {
-                    TempData["PostojiZakazanPregled"] = "Ne možete zakazati više od jednog pregleda pre nego što obavite već zakazan";
+                    Session["Obavestenje"] = "Ne možete zakazati više od jednog pregleda pre nego što obavite već zakazan";
                     return RedirectToAction("Details", new { id });
                 }
                 var IDPacijenta = Convert.ToInt32(Session["IDPacijenta"]);
@@ -125,24 +120,17 @@ namespace EvidencijaPacijenata.Controllers
         {
             DateTime datumPregleda = Convert.ToDateTime(DatumPregleda);
             int idLekara = Convert.ToInt32(IDLekara);
-            List<SelectListItem> termini = new List<SelectListItem>();
-            var dateNow = DateTime.Now;
-            var pocetak = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, 8, 0, 0);
-            var kraj = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, 16, 0, 0);
-            while (DateTime.Compare(pocetak, kraj) <= 0)
-            {
-                termini.Add(new SelectListItem { Text = pocetak.ToString("hh:mm"), Value = pocetak.ToString("hh:mm") });
-                pocetak = pocetak.AddMinutes(20);
-            }
+            SviTermini termini = new SviTermini();
+            termini.napuniListu();
             List<SelectListItem> slobodniTermini = new List<SelectListItem>();
-            for (int i = 0; i < termini.Count; i++)
+            for (int i = 0; i < termini.termini.Count; i++)
             {
-                DateTime datum = Convert.ToDateTime(termini[i].Value);
+                DateTime datum = Convert.ToDateTime(termini.termini[i].Value);
                 TimeSpan vreme = datum.TimeOfDay;
 
                 int termin = db.slobodniTermini(idLekara, datumPregleda, vreme).Count();
                 if (termin == 0)
-                    slobodniTermini.Add(termini[i]);
+                    slobodniTermini.Add(termini.termini[i]);
             }
             SelectList slobodniTerminiLista = new SelectList(slobodniTermini, "Value", "Text");
             return Json(slobodniTerminiLista);
@@ -155,11 +143,6 @@ namespace EvidencijaPacijenata.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,IDPacijenta,IDLekara,DatumPregleda,VremePregleda,DatumZakazivanja,ZavrsenPregled")] ZakazivanjePregleda zakazivanjePregleda)
         {
-            //if (zakazivanjePregleda.DatumPregleda.DayOfWeek == DayOfWeek.Saturday || zakazivanjePregleda.DatumPregleda.DayOfWeek == DayOfWeek.Sunday)
-            //{
-            //    TempData["Vikend"] = "Ne možete zakazati pregled vikendom.";
-            //    return RedirectToAction("Create");
-            //}
             DateTime dt = DateTime.Now;
             DateTime dateOnly = dt.Date;
             zakazivanjePregleda.DatumZakazivanja = dateOnly;
@@ -188,11 +171,6 @@ namespace EvidencijaPacijenata.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //if (TempData["Vikend"] != null)
-            //{
-            //    ViewBag.Vikend = TempData["Vikend"];
-            //    TempData.Clear();
-            //}
             ZakazivanjePregleda zakazivanjePregleda = db.ZakazivanjePregledas.Find(id);
             if (zakazivanjePregleda == null)
             {
@@ -214,17 +192,6 @@ namespace EvidencijaPacijenata.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,IDPacijenta,IDLekara,DatumPregleda,VremePregleda,DatumZakazivanja,ZavrsenPregled")] ZakazivanjePregleda zakazivanjePregleda)
         {
-            //if (zakazivanjePregleda.DatumPregleda.DayOfWeek == DayOfWeek.Saturday || zakazivanjePregleda.DatumPregleda.DayOfWeek == DayOfWeek.Sunday)
-            //{
-            //    TempData["Vikend"] = "Ne možete zakazati pregled vikendom.";
-            //    List<SelectListItem> izbor1 = new List<SelectListItem>();
-            //    izbor1.Add(new SelectListItem { Text = "--- Izaberite termin ---", Value = "0" });
-            //    ViewBag.VremePregleda = new SelectList(izbor1, "Value", "Text");
-            //    ViewBag.DatumPregleda = DateTime.Now.Date.AddDays(1).ToString("yyyy-MM-dd");
-            //    ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<LekarOpstePrakse>(), "ID", "ImePrezime", zakazivanjePregleda.IDLekara);
-            //    ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>().Where(p => p.ID == zakazivanjePregleda.IDPacijenta), "ID", "ImePrezime");
-            //    return View(zakazivanjePregleda);
-            //}
             if (ModelState.IsValid)
             {
                 DateTime dt = DateTime.Now;
