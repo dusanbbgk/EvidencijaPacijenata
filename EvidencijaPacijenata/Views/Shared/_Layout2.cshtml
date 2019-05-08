@@ -10,7 +10,7 @@
     <script src="~/Scripts/jsFile.js"></script>
     <title>Evidencija pacijenata</title>
 </head>
-<body class="bg-light" style="font-family: Montserrat;">
+<body class="bg-light">
     @Html.Partial("_Navbar")
     <div class="container-fluid mt-5 pt-2 mb-5 pb-2 bg-light h-100">
         <div class="row">
@@ -20,7 +20,7 @@
                     @Html.Partial("_LekarLogin")
                 }
             </div>
-            <div class="col-md-8 shadow">
+            <div class="col-md-8 shadow pb-5">
                 @RenderBody()
             </div>
             <div class="col-md-2">

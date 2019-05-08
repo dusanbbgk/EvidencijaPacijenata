@@ -14,14 +14,19 @@
     }
     <a href="@Url.Action("Details", "Odeljenjes", new { id = Model.Odeljenje.ID })">Nazad na odeljenje</a>
 </p>
-<h4>@Model.ImePrezime</h4>
-@if (Model.Slika == "Default.jpg")
-{
-    <img class="img-thumbnail float-right" src="~/Imgs/Lekari/Default.jpg" alt="@Model.ImePrezime">
-}
-else
-{
-    <img class="img-thumbnail float-right" src="~/Imgs/Lekari/@Model.KorisnickoIme/@Model.Slika" alt="@Model.ImePrezime">
-}
-<p><b>Licenca lekara:</b> @Model.Licenca</p>
-<p><b>Specijalizacija lekara:</b> @Model.Specijalizacija</p>
+<div class="row">
+    <div class="col-md-6">
+
+        @if (Model.Slika == "Default.jpg")
+        {
+            <img class="img-thumbnail float-right" src="~/Imgs/Lekari/Default.jpg" alt="@Model.ImePrezime">
+        }
+        else
+        {
+            <img class="img-thumbnail float-right" src="~/Imgs/Lekari/@Model.KorisnickoIme/@Model.Slika" alt="@Model.ImePrezime">
+        }
+        <h4>@Model.ImePrezime</h4>
+        <p><b>Licenca lekara:</b> @Model.Licenca</p>
+        <p><b>Specijalizacija lekara:</b> @Model.Specijalizacija</p>
+    </div>
+</div>

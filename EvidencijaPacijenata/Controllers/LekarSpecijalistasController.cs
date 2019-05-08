@@ -14,7 +14,6 @@ namespace EvidencijaPacijenata.Controllers
     public class LekarSpecijalistasController : Controller
     {
         private DBZUstanovaBetaEntities db = new DBZUstanovaBetaEntities();
-        string encryptpw;
         // GET: LekarSpecijalistas
         public ActionResult Index()
         {
@@ -67,8 +66,7 @@ namespace EvidencijaPacijenata.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Ime,Prezime,KorisnickoIme,Lozinka,DatumRodjenja,IDOdeljenja,Licenca,Slika,Specijalizacija")] LekarSpecijalista lekarSpecijalista, HttpPostedFileBase file)
         {
-            encryption(lekarSpecijalista.Lozinka);
-            lekarSpecijalista.Lozinka = encryptpw;
+            lekarSpecijalista.Lozinka = EncryptPass.EncryptFunc(lekarSpecijalista.Lozinka);
             if (file != null && file.ContentLength > 0)
                 try
                 {
@@ -92,16 +90,6 @@ namespace EvidencijaPacijenata.Controllers
             izbor.Add(new SelectListItem { Text = "--- Izaberite odeljenje ---", Value = "0" });
             ViewBag.IDOdeljenja = new SelectList(izbor, "Value", "Text");
             return View(lekarSpecijalista);
-        }
-
-        private void encryption(string lozinka)
-        {
-            string strmsg = String.Empty;
-            byte[] encode = new byte[lozinka.Length];
-            encode = Encoding.UTF8.GetBytes(lozinka);
-            strmsg = Convert.ToBase64String(encode);
-            encryptpw = strmsg;
-
         }
 
         // GET: LekarSpecijalistas/Edit/5

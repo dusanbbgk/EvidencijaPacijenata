@@ -19,7 +19,7 @@
 <link href="~/Content/VestiCSS.css" rel="stylesheet" />
 
 <div class="row text-center mt-2">
-    <div class="col-md-12 jumbotron h1 text-light rounded" style="background-color: #27247c; text-shadow: 2px 2px #baa1a1; font-family: Montserrat;">IT MEDICAL</div>
+    <div class="col-md-12 jumbotron h1 text-light rounded" style="background-color: #27247c; text-shadow: 2px 2px #baa1a1;">IT MEDICAL</div>
 </div>
 <hr class="star-light" />
 <div class="row text-center pt-2 pb-2">
@@ -41,11 +41,11 @@
                             <div class="card-img">
                                 @if (item.Slika == "Default.jpg")
                                 {
-                                    <img src="~/Imgs/Vesti/@item.Slika" class="img-thumbnail" alt="@item.Naslov">
+                                    <img src="~/Imgs/Vesti/@item.Slika" class="img-thumbnail" style="height: 200px;" alt="@item.Naslov">
                                 }
                                 else
                                 {
-                                    <img src="~/Imgs/Vesti/@item.ID.ToString()/@item.Slika" class="img-thumbnail" alt="@item.Naslov">
+                                    <img src="~/Imgs/Vesti/@item.ID.ToString()/@item.Slika" class="img-thumbnail" style="height: 200px;" alt="@item.Naslov">
                                 }
                             </div>
                         </a>

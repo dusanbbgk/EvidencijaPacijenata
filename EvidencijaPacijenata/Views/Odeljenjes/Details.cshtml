@@ -14,7 +14,7 @@
     }
     <a href="@Url.Action("Details", "Ustanovas", new { id = Model.Ustanova.ID })">Nazad na ustanovu</a>
 </p>
-<h4>@Model.Naziv</h4>
+<h4>Naziv odeljenja: @Model.Naziv</h4>
 <p><b>Slobodnih mesta:</b> @Model.SlobodnihMesta</p>
 <p><b>Lista lekara:</b></p>
 @if (((SelectList)ViewBag.listaLekaraOP).Count() == 0 && ((SelectList)ViewBag.listaLekaraS).Count() == 0)

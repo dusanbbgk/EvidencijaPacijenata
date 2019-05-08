@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 <link href="~/Content/VestiCSS.css" rel="stylesheet" />
-<h2>Vesti</h2>
+<h1>Vesti</h1>
 <hr />
 @if (Session["IDAdmina"] != null)
 {
@@ -25,20 +25,20 @@
                             <div class="card-img">
                                 @if (item.Slika == "Default.jpg")
                                 {
-                                    <img src="~/Imgs/Vesti/@item.Slika" class="img-thumbnail" alt="@item.Naslov">
+                                    <img src="~/Imgs/Vesti/@item.Slika" style="height: 200px;" class="img-thumbnail" alt="@item.Naslov">
                                 }
                                 else
                                 {
-                                    <img src="~/Imgs/Vesti/@item.ID.ToString()/@item.Slika" class="img-thumbnail" alt="@item.Naslov">
+                                    <img src="~/Imgs/Vesti/@item.ID.ToString()/@item.Slika" style="height: 200px;" class="img-thumbnail" alt="@item.Naslov">
                                 }
                             </div>
                         </a>
-                        <div class="card-desc">
+                        <div class="card-desc" style="height: 200px;">
                             <a href="@Url.Action("Details", "Vestis", new { id = item.ID})"><h3>@item.Naslov</h3></a>
                             <p>
                                 @text
                             </p>
-                            <a href="@Url.Action("Details", "Vestis", new { id = item.ID})" class="btn-card bg-primary">Procitaj vest</a>
+                            <a  href="@Url.Action("Details", "Vestis", new { id = item.ID})" class="btn-card bg-primary">Procitaj vest</a>
                         </div>
                     </div>
                 </div>

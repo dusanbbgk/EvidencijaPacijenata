@@ -145,6 +145,7 @@
     <Compile Include="Models\Administrator.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EncryptPass.cs" />
     <Compile Include="Models\Izvestaj.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

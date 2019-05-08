@@ -4,13 +4,13 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
-
-<h2>Zdravstvene ustanove</h2>
+<link href="~/Content/VestiCSS.css" rel="stylesheet" />
+<h1>Zdravstvene ustanove</h1>
 <hr />
 @if (Session["IDAdmina"] != null)
 {
     <p>
-        @Html.ActionLink("Create New", "Create")
+        @Html.ActionLink("Dodaj novu ustanovu", "Create")
     </p>
 }
 <section class="details-card">
@@ -21,11 +21,11 @@
                 <div class="card col-md-4 mb-2" style="width: 18rem;">
                     @if (item.Slika == "Default.jpg")
                     {
-                        <img class="card-img-top" src="~/Imgs/Ustanove/Default.jpg" alt="@item.Naziv">
+                        <img class="card-img-top" src="~/Imgs/Ustanove/Default.jpg" style="height: 200px;" alt="@item.Naziv">
                     }
                     else
                     {
-                        <img class="card-img-top" src="~/Imgs/Ustanove/@item.ID.ToString()/@item.Slika" alt="@item.Naziv">
+                        <img class="card-img-top" src="~/Imgs/Ustanove/@item.ID.ToString()/@item.Slika" style="height: 200px;" alt="@item.Naziv">
                     }
                     <div class="card-body">
                         <h5 class="card-title">@item.Naziv</h5>

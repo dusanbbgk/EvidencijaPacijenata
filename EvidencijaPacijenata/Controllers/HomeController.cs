@@ -10,7 +10,6 @@ namespace EvidencijaPacijenata.Controllers
     public class HomeController : Controller
     {
         private DBZUstanovaBetaEntities db = new DBZUstanovaBetaEntities();
-        string encryptpw;
         public ActionResult Index()
         {
             if (Session["Obavestenje"] != null)
@@ -32,8 +31,7 @@ namespace EvidencijaPacijenata.Controllers
         [HttpPost]
         public ActionResult PacijentLogin(string KorisnickoIme, string Lozinka)
         {
-            encryption(Lozinka);
-            Lozinka = encryptpw;
+            Lozinka = EncryptPass.EncryptFunc(Lozinka);
             DateTime dt = DateTime.Now;
             DateTime dateOnly = dt.Date;
 
@@ -63,20 +61,10 @@ namespace EvidencijaPacijenata.Controllers
                 return RedirectToAction("Index");
             }
         }
-        private void encryption(string lozinka)
-        {
-            string strmsg = String.Empty;
-            byte[] encode = new byte[lozinka.Length];
-            encode = Encoding.UTF8.GetBytes(lozinka);
-            strmsg = Convert.ToBase64String(encode);
-            encryptpw = strmsg;
-        }
-
         [HttpPost]
         public ActionResult LekarLogin(string KorisnickoIme, string Lozinka)
         {
-            encryption(Lozinka);
-            Lozinka = encryptpw;
+            Lozinka = EncryptPass.EncryptFunc(Lozinka);
             LekarOpstePrakse LOP = db.Korisniks.OfType<LekarOpstePrakse>().SingleOrDefault(k => k.KorisnickoIme == KorisnickoIme && k.Lozinka == Lozinka);
             if (LOP != null)
             {
@@ -124,8 +112,7 @@ namespace EvidencijaPacijenata.Controllers
         [HttpPost]
         public ActionResult ResetPass(string KorisnickoIme, string Email, string Lozinka)
         {
-            encryption(Lozinka);
-            Lozinka = encryptpw;
+            Lozinka = EncryptPass.EncryptFunc(Lozinka);
             Pacijent proveraPodataka = db.Korisniks.OfType<Pacijent>().SingleOrDefault(p => p.KorisnickoIme == KorisnickoIme && p.Email == Email);
             if (proveraPodataka == null)
             {
@@ -150,8 +137,7 @@ namespace EvidencijaPacijenata.Controllers
         [HttpPost]
         public ActionResult AdminLogin(string KorisnickoIme, string Lozinka)
         {
-            encryption(Lozinka);
-            Lozinka = encryptpw;
+            Lozinka = EncryptPass.EncryptFunc(Lozinka);
             Administrator admin = db.Korisniks.OfType<Administrator>().SingleOrDefault(k => k.KorisnickoIme == KorisnickoIme && k.Lozinka == Lozinka);
             if (admin != null)
             {
