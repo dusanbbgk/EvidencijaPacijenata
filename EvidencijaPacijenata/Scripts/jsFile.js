@@ -14,7 +14,9 @@
         document.forms.forma.KorisnickoIme.style.backgroundColor = "#ff9999";
         return false;
     }
-    if (lozinka_pacijent.length < 8 || !/[A-Z]/.test(lozinka_pacijent) || !/[a-z]/.test(lozinka_pacijent) || !/[0-9]/.test(lozinka_pacijent) || /[^a-zA-Z0-9]/.test(lozinka_pacijent)) {
+    if (lozinka_pacijent.length < 8 || !/[A-Z]/.test(lozinka_pacijent)
+        || !/[a-z]/.test(lozinka_pacijent) || !/[0-9]/.test(lozinka_pacijent)
+        || /[^a-zA-Z0-9]/.test(lozinka_pacijent)) {
         alert("Lozinka nije u dobrom formatu!");
         document.forms.forma.Lozinka.focus();
         document.forms.forma.Lozinka.style.backgroundColor = "#ff9999";
