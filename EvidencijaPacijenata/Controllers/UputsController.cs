@@ -137,14 +137,48 @@ namespace EvidencijaPacijenata.Controllers
             if (ModelState.IsValid)
             {
                 db.Uputs.Add(uput);
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception e) { Session["Obavestenje"] = "Uput nije napravljen - Greška: " + e; }
                 return RedirectToAction("Index");
             }
+            if (Session["Specijalizacija"] == null)
+            {
+                int IDLekaraOd = Convert.ToInt32(Session["IDLekara"]);
+                ViewBag.IDPacijenta = new SelectList(from p in db.Korisniks.OfType<Pacijent>()
+                                                     where p.ID == uput.IDPacijenta
+                                                     select p, "ID", "ImePrezime");
+                ViewBag.IDLekaraOD = new SelectList(from lop in db.Korisniks.OfType<LekarOpstePrakse>()
+                                                    where lop.ID == IDLekaraOd
+                                                    select lop, "ID", "ImePrezime");
+                ViewBag.IDUstanove = new SelectList(db.Ustanovas, "ID", "Naziv");
+                List<SelectListItem> izbor = new List<SelectListItem>();
+                izbor.Add(new SelectListItem { Text = "--- Izaberite odeljenje ---", Value = "0" });
+                ViewBag.IDOdeljenja = new SelectList(izbor, "Value", "Text");
+                List<SelectListItem> izbor2 = new List<SelectListItem>();
+                izbor2.Add(new SelectListItem { Text = "--- Izaberite lekara ---", Value = "0" });
+                ViewBag.IDLekaraKome = new SelectList(izbor2, "Value", "Text");
 
-            ViewBag.IDPacijenta = new SelectList(db.Korisniks, "ID", "Ime", uput.IDPacijenta);
-            ViewBag.IDOdeljenja = new SelectList(db.Odeljenjes, "ID", "Naziv", uput.IDOdeljenja);
-            ViewBag.IDLekaraKome = new SelectList(db.Korisniks, "ID", "Ime", uput.IDLekaraKome);
-            ViewBag.IDLekaraOd = new SelectList(db.Korisniks, "ID", "Ime", uput.IDLekaraOd);
+            }
+            else
+            {
+                int IDLekaraOd = Convert.ToInt32(Session["IDLekara"]);
+                ViewBag.IDPacijenta = new SelectList(from p in db.Korisniks.OfType<Pacijent>()
+                                                     where p.ID == uput.IDPacijenta
+                                                     select p, "ID", "ImePrezime");
+                ViewBag.IDLekaraOD = new SelectList(from lop in db.Korisniks.OfType<LekarSpecijalista>()
+                                                    where lop.ID == IDLekaraOd
+                                                    select lop, "ID", "ImePrezime");
+                ViewBag.IDUstanove = new SelectList(db.Ustanovas, "ID", "Naziv");
+                List<SelectListItem> izbor = new List<SelectListItem>();
+                izbor.Add(new SelectListItem { Text = "--- Izaberite odeljenje ---", Value = "0" });
+                ViewBag.IDOdeljenja = new SelectList(izbor, "Value", "Text");
+                List<SelectListItem> izbor2 = new List<SelectListItem>();
+                izbor2.Add(new SelectListItem { Text = "--- Izaberite lekara ---", Value = "0" });
+                ViewBag.IDLekaraKome = new SelectList(izbor2, "Value", "Text");
+            }
             return View(uput);
         }
 

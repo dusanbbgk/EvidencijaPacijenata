@@ -24,7 +24,7 @@
     <div class="col-md-6">
         @if (Model.Slika != "Default.jpg")
         {
-            <img class="img-thumbnail" src="~/Imgs/Vesti/@Model.Naslov/@Model.Slika" alt="@Model.Naslov" />
+            <img class="img-thumbnail" src="~/Imgs/Vesti/@Model.ID.ToString()/@Model.Slika" alt="@Model.Naslov" />
         }
         else
         {

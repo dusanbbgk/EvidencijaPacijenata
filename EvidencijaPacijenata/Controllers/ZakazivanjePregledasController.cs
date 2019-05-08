@@ -77,7 +77,7 @@ namespace EvidencijaPacijenata.Controllers
                                              select o.Naziv).First();
                         return View(pregled);
                     }
-                    TempData["NemaPregleda"] = "Nemate zakazanih pregleda";
+                    Session["Obavestenje"] = "Nemate zakazanih pregleda";
                 }
             }
             return RedirectToAction("Index", "Home");
@@ -169,6 +169,7 @@ namespace EvidencijaPacijenata.Controllers
             {
                 db.ZakazivanjePregledas.Add(zakazivanjePregleda);
                 db.SaveChanges();
+                Session["Obavestenje"] = "Pregled je zakazan";
                 return RedirectToAction("Index");
             }
             ViewBag.IDLekara = new SelectList(db.Korisniks, "ID", "Ime", zakazivanjePregleda.IDLekara);

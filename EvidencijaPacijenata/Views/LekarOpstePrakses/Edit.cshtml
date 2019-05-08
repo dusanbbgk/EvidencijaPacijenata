@@ -10,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
 <div class="form-horizontal">
     <h4>LekarOpstePrakse</h4>
     <hr />
@@ -18,6 +18,8 @@
     @Html.HiddenFor(model => model.ID)
     @Html.HiddenFor(model => model.Lozinka)
     @Html.HiddenFor(model => model.IDOdeljenja)
+    @Html.HiddenFor(model => model.KorisnickoIme)
+    @Html.HiddenFor(model => model.Slika)
 
     <div class="form-group">
         @Html.LabelFor(model => model.Ime, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -36,15 +38,6 @@
     </div>
 
     <div class="form-group">
-        <label class="control-label col-md-2">Korisničko ime</label>
-        @*@Html.LabelFor(model => model.KorisnickoIme, htmlAttributes: new { @class = "control-label col-md-2" })*@
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.KorisnickoIme, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.KorisnickoIme, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
         @Html.LabelFor(model => model.Licenca, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Licenca, new { htmlAttributes = new { @class = "form-control" } })
@@ -54,12 +47,14 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
+            <input type="submit" value="Potvrdi" class="btn btn-primary" />
         </div>
     </div>
 </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+@if (Session["IDAdmina"] != null)
+{
+    <div>
+        @Html.ActionLink("Nazad na listu lekara opšte prakse", "Index")
+    </div>
+}

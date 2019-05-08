@@ -34,7 +34,7 @@ namespace EvidencijaPacijenata.Controllers
                 Karton karton = db.Kartons.SingleOrDefault(k => k.IDPacijenta == id);
                 if (karton == null)
                 {
-                    Session["NemaKarton"] = "Ne postoji karton za pacijenta!";
+                    Session["Obavestenje"] = "Ne postoji karton za pacijenta!";
                     return RedirectToAction("Index", "Home");
                 }
                 return View(karton);

@@ -13,34 +13,10 @@ namespace EvidencijaPacijenata.Controllers
         string encryptpw;
         public ActionResult Index()
         {
-            if (Session["UspesnaRegistracija"] != null) {
-                ViewBag.registracija = Session["UspesnaRegistracija"];
-                Session["UspesnaRegistracija"] = null;
-            }
-            if (TempData["NemaPregleda"] != null)
+            if (Session["Obavestenje"] != null)
             {
-                ViewBag.NemaPregleda = TempData["NemaPregleda"];
-                TempData.Clear();
-            }
-            if (TempData["OdeljenjePuno"] != null)
-            {
-                ViewBag.OdeljenjePuno = TempData["OdeljenjePuno"];
-                TempData.Clear();
-            }
-            if (Session["resetPass"] != null)
-            {
-                ViewBag.resetPass = Session["resetPass"];
-                Session["resetPass"] = null;
-            }
-            if (TempData["info"] != null)
-            {
-                ViewBag.info = TempData["info"];
-                TempData.Clear();
-            }
-            if (Session["NemaKarton"] != null)
-            {
-                ViewBag.NemaKarton = Session["NemaKarton"];
-                Session["NemaKarton"] = null;
+                ViewBag.Obavestenje = Session["Obavestenje"];
+                Session["Obavestenje"] = null;
             }
             return View(db.Vestis.Take(3).OrderByDescending(v => v.DatumObjave).ToList());
         }
@@ -67,24 +43,24 @@ namespace EvidencijaPacijenata.Controllers
             {
                 if (pacijent.Odobren == 0)
                 {
-                    TempData["info"] = "Nalog Vam nije odobren!";
+                    Session["Obavestenje"] = "Nalog Vam nije odobren!";
                     return RedirectToAction("Index");
                 }
                 else if (string.Compare(dateOnly.ToString("yyyy-MM-dd"), pacijent.IstekOsiguranja.ToString("yyyy-MM-dd")) > 0)
                 {
-                    TempData["info"] = "Osiguranje Vam je isteklo!";
+                    Session["Obavestenje"] = "Osiguranje Vam je isteklo!";
                     return RedirectToAction("Index");
                 }
                 else
                 {
                     Session["IDPacijenta"] = pacijent.ID;
-                    Session["ImePrezime"] = pacijent.Ime + " " + pacijent.Prezime;
+                    Session["ImePrezime"] = pacijent.ImePrezime;
                     return RedirectToAction("Index");
                 }
             }
             else
             {
-                TempData["info"] = "Pacijent nije pronađen u bazi!";
+                Session["Obavestenje"] = "Pacijent nije pronađen u bazi!";
                 return RedirectToAction("Index");
             }
         }
@@ -106,7 +82,7 @@ namespace EvidencijaPacijenata.Controllers
             if (LOP != null)
             {
                 Session["IDLekara"] = LOP.ID;
-                Session["ImePrezime"] = LOP.Ime + " " + LOP.Prezime;
+                Session["ImePrezime"] = LOP.ImePrezime;
                 return RedirectToAction("Index");
             }
             else
@@ -115,14 +91,14 @@ namespace EvidencijaPacijenata.Controllers
                 if (LS != null)
                 {
                     Session["IDLekara"] = LS.ID;
-                    Session["ImePrezime"] = LS.Ime + " " + LS.Prezime;
+                    Session["ImePrezime"] = LS.ImePrezime;
                     Session["Specijalizacija"] = LS.Specijalizacija;
                     Session["IDOdeljenjaLekara"] = LS.IDOdeljenja;
                     return RedirectToAction("Index");
                 }
                 else
                 {
-                    TempData["info"] = "Lekar nije pronađen u bazi!";
+                    Session["Obavestenje"] = "Lekar nije pronađen u bazi!";
                     return RedirectToAction("Index");
                 }
             }
@@ -136,10 +112,10 @@ namespace EvidencijaPacijenata.Controllers
         {
             if (Session["IDPacijenta"] == null && Session["IDLekara"] == null && Session["IDAdmina"] == null)
             {
-                if (TempData["info"] != null)
+                if (Session["Obavestenje"] != null)
                 {
-                    ViewBag.info = TempData["info"];
-                    TempData["info"] = null;
+                    ViewBag.info = Session["Obavestenje"];
+                    Session["Obavestenje"] = null;
                 }
                 return View();
             }
@@ -154,13 +130,13 @@ namespace EvidencijaPacijenata.Controllers
             Pacijent proveraPodataka = db.Korisniks.OfType<Pacijent>().SingleOrDefault(p => p.KorisnickoIme == KorisnickoIme && p.Email == Email);
             if (proveraPodataka == null)
             {
-                TempData["info"] = "Korisničko ime i/ili Email adresa nisu pronađeni u bazi!";
+                Session["Obavestenje"] = "Korisničko ime i/ili Email adresa nisu pronađeni u bazi";
                 return RedirectToAction("Index");
             }
             proveraPodataka.Lozinka = Lozinka;
             db.Entry(proveraPodataka).State = EntityState.Modified;
             db.SaveChanges();
-            Session["resetPass"] = "Uspešno promenjena lozinka!";
+            Session["Obavestenje"] = "Uspešno promenjena lozinka";
             return RedirectToAction("Index", "Home");
         }
 
@@ -181,12 +157,12 @@ namespace EvidencijaPacijenata.Controllers
             if (admin != null)
             {
                 Session["IDAdmina"] = admin.ID;
-                Session["ImePrezime"] = admin.Ime + " " + admin.Prezime;
+                Session["ImePrezime"] = admin.ImePrezime;
                 return RedirectToAction("Index", "Home");
             }
             else
             {
-                TempData["info"] = "Admin nije pronađen u bazi!";
+                Session["Obavestenje"] = "Admin nije pronađen u bazi";
                 return RedirectToAction("Index", "Home");
             }
         }

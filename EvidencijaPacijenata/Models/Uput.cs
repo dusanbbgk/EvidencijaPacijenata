@@ -26,6 +26,7 @@ namespace EvidencijaPacijenata.Models
         [DisplayName("Datum pregleda")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "Polje je obavezno")]
         public System.DateTime DatumPregleda { get; set; }
         [DisplayName("Odeljenje")]
         public int IDOdeljenja { get; set; }

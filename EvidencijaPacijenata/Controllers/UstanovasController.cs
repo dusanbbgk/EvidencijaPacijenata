@@ -51,8 +51,8 @@ namespace EvidencijaPacijenata.Controllers
             if (file != null && file.ContentLength > 0)
                 try
                 {
-                    Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Imgs/Ustanove"), ustanova.Naziv));
-                    string path = Path.Combine(Server.MapPath("~/Imgs/Ustanove/" + ustanova.Naziv),
+                    Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Imgs/Ustanove"), ustanova.ID.ToString()));
+                    string path = Path.Combine(Server.MapPath("~/Imgs/Ustanove/" + ustanova.ID.ToString()),
                                                Path.GetFileName(file.FileName));
                     file.SaveAs(path);
                 }
@@ -130,7 +130,7 @@ namespace EvidencijaPacijenata.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Ustanova ustanova = db.Ustanovas.Find(id);
-            string path = Server.MapPath(@"~/Imgs/Ustanove/" + ustanova.Naziv);
+            string path = Server.MapPath(@"~/Imgs/Ustanove/" + ustanova.ID.ToString());
             Directory.Delete(path, true);
             db.Ustanovas.Remove(ustanova);
             db.SaveChanges();

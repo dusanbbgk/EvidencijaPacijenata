@@ -88,19 +88,22 @@
         <dd>
             @Html.DisplayFor(model => model.KrvaSlika)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.SpecificniPregled)
-        </dt>
+        @if (Model.SpecificniPregled != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.SpecificniPregled)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.SpecificniPregled)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.SpecificniPregled)
+            </dd>
+        }
     </dl>
 </div>
 @if (Session["IDLekara"] != null || Session["IDAdmina"] != null)
 {
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
+        @Html.ActionLink("Izmeni", "Edit", new { id = Model.ID }, new { @class = "btn btn-primary" })
         @if (Session["IDAdmina"] != null)
         {
             <text> | </text>@Html.ActionLink("Back to List", "Index")

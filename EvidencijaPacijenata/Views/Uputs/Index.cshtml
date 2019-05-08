@@ -57,6 +57,7 @@
                     <text> | <a href="@Url.Action("Create", "Izvestajs", new { id = item.IDPacijenta })">Napiši izveštaj</a> | </text>
                     <text><a href="@Url.Action("Create", "Uputs", new { id = item.IDPacijenta })">Napiši uput</a> | </text>
                     <text><a href="@Url.Action("Details", "Kartons", new { id = item.IDPacijenta })">Karton Pacijenta</a> | </text>
+                    <text><a href="@Url.Action("Index", "Izvestajs", new { id = item.IDPacijenta })">Istorija lečenja pacijenta</a> | </text>
                     <text><a href="@Url.Action("ZadrziNaOdeljenju", "Pacijents", new { id = item.IDPacijenta })">Zadrži pacijenta na odeljenju</a></text>
                 }
             </td>

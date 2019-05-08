@@ -35,7 +35,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Disanje, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Disanje, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Disanje, new { htmlAttributes = new { @min = "10", @max = "90", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Disanje, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -43,7 +43,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Puls, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Puls, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Puls, new { htmlAttributes = new { @min = "60", @max = "160", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Puls, "", new { @class = "text-danger" })
             </div>
         </div>

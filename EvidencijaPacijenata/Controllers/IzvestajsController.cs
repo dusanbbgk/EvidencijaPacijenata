@@ -114,7 +114,7 @@ namespace EvidencijaPacijenata.Controllers
             {
                 if (Session["IDAdmina"] != null)
                 {
-                    ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<LekarSpecijalista>(), "ID", "ImePrezime");
+                    ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<Lekar>(), "ID", "ImePrezime");
                     ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>(), "ID", "ImePrezime");
                     return View();
                 }
@@ -157,8 +157,8 @@ namespace EvidencijaPacijenata.Controllers
                 {
                     return HttpNotFound();
                 }
-                ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<LekarSpecijalista>(), "ID", "ImePrezime", izvestaj.IDLekara);
-                ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>(), "ID", "ImePrezime", izvestaj.IDPacijenta);
+                ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<Lekar>().Where(l => l.ID == izvestaj.IDLekara), "ID", "ImePrezime");
+                ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>().Where(l => l.ID == izvestaj.IDPacijenta), "ID", "ImePrezime");
                 return View(izvestaj);
             }
             return RedirectToAction("Index", "Home");
@@ -180,8 +180,8 @@ namespace EvidencijaPacijenata.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<LekarSpecijalista>(), "ID", "ImePrezime", izvestaj.IDLekara);
-            ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>(), "ID", "ImePrezime", izvestaj.IDPacijenta);
+            ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<Lekar>().Where(l => l.ID == izvestaj.IDLekara), "ID", "ImePrezime");
+            ViewBag.IDPacijenta = new SelectList(db.Korisniks.OfType<Pacijent>().Where(l => l.ID == izvestaj.IDPacijenta), "ID", "ImePrezime");
             return View(izvestaj);
         }
 

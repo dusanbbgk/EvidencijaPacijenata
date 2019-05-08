@@ -15,7 +15,7 @@
     }
     @if (Session["IDPacijenta"] != null || Session["IDAdmina"] != null || Session["IDLekara"] != null)
     {
-        @Html.ActionLink("Nazad na listu uputi", "Index", new { id = Model.IDPacijenta })
+        @Html.ActionLink("Nazad na listu uputi", "Index", new { id = Model.IDLekaraKome })
     }
 </p>
 <div>

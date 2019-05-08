@@ -6,14 +6,10 @@
 }
 @section Obavestenja
     {
-    @if (@ViewBag.info != null || @ViewBag.resetPass != null || @ViewBag.NemaKarton != null ||
-        @ViewBag.OdeljenjePuno != null || @ViewBag.NemaPregleda != null || @ViewBag.PostojiZakazanPregled != null ||
-            @ViewBag.registracija != null)
+    @if (@ViewBag.Obavestenje != null)
     {
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <p>@ViewBag.info</p><p>@ViewBag.resetPass</p><p>@ViewBag.NemaKarton</p>
-            <p>@ViewBag.OdeljenjePuno</p><p>@ViewBag.NemaPregleda</p><p>@ViewBag.PostojiZakazanPregled</p>
-            <p>@ViewBag.registracija</p>
+            <p>@ViewBag.Obavestenje</p>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -39,7 +35,7 @@
                                 }
                                 else
                                 {
-                                    <img src="~/Imgs/Vesti/@item.Naslov/@item.Slika" class="img-thumbnail" alt="@item.Naslov">
+                                    <img src="~/Imgs/Vesti/@item.ID.ToString()/@item.Slika" class="img-thumbnail" alt="@item.Naslov">
                                 }
                             </div>
                         </a>

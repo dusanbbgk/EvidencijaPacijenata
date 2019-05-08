@@ -54,7 +54,7 @@ namespace EvidencijaPacijenata.Controllers
             {
                 if (Provera.SlobodnihMesta == 0)
                 {
-                    TempData["OdeljenjePuno"] = "Nema slobodnih mesta na odeljenju";
+                    Session["Obavestenje"] = "Nema slobodnih mesta na odeljenju";
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -144,7 +144,6 @@ namespace EvidencijaPacijenata.Controllers
             try
             {
                 return Json(!db.Korisniks.OfType<Pacijent>().Any(p => p.Email == Email), JsonRequestBehavior.AllowGet);
-                //return Json(!IsEmailExists(Email));
             }
             catch (Exception ex)
             {
@@ -192,8 +191,8 @@ namespace EvidencijaPacijenata.Controllers
             {
                 db.Korisniks.Add(pacijent);
                 db.SaveChanges();
-                Session["UspesnaRegistracija"] = "Uspesno ste se registrovali";
-                return Session["IDPacijenta"] == null ? RedirectToAction("Index", "Home") : RedirectToAction("Index");
+                Session["Obavestenje"] = "Uspešo ste se registrovali";
+                RedirectToAction("Index", "Home");
             }
             var KrvnaGrupa = new SelectList(
                     new List<SelectListItem>

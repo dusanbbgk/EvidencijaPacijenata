@@ -39,7 +39,6 @@
         @ViewBag.Ustanova
     </p>
     <p>
-
         <b>
             Odeljenje:
         </b>
@@ -51,12 +50,12 @@
     {
         if (Convert.ToInt32(Session["IDPacijenta"]) == Model.IDPacijenta)
         {
-            @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
+            @Html.ActionLink("Izmeni", "Edit", new { id = Model.ID }, new { @class = "btn btn-primary" })
         }
     }
     @if (Session["IDAdmina"] != null)
     {
         <text> | </text>
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Nazad na listu zakazanih pregleda", "Index")
     }
 </p>
