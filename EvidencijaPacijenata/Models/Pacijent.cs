@@ -35,7 +35,7 @@ namespace EvidencijaPacijenata.Models
         [Required(ErrorMessage = "Polje je obavezno")]
         public string Adresa { get; set; }
         [Required(ErrorMessage = "Polje je obavezno")]
-        [RegularExpression(@"^06(\d{7,8})|(\d\/\d{6,7})|(\d\/\d{3}-\d{3,4})|(\d-\d{6,7})|(\d\-\d{3}-\d{3,4})$", ErrorMessage = "Nije dobar format")]
+        [RegularExpression(@"^(06(\d{7,8})|(\d\/\d{6,7})|(\d\/\d{3}-\d{3,4})|(\d-\d{6,7})|(\d\-\d{3}-\d{3,4}))|(01(\d{7,8})|(\d\/\d{6,7})|(\d\/\d{3}-\d{3,4})|(\d-\d{6,7})|(\d\-\d{3}-\d{3,4}))$", ErrorMessage = "Nije dobar format")]
         public string Telefon { get; set; }
         [Required(ErrorMessage = "Polje je obavezno")]
         [EmailAddress(ErrorMessage = "E-mail adresa nije validna")]

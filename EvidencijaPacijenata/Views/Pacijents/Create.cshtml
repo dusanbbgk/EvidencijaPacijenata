@@ -7,6 +7,14 @@
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 <script>
+    function proveriLozinku() {
+        var lozinka_pacijenta = document.getElementById("Lozinka1").value;
+        if (lozinka_pacijenta.length < 8 || !/[A-Z]/.test(lozinka_pacijenta) || !/[a-z]/.test(lozinka_pacijenta) || !/[0-9]/.test(lozinka_pacijenta) || /[^a-zA-Z0-9]/.test(lozinka_pacijenta)) {
+            alert("Lozinka nije u dobrom formatu!");
+            return false;
+        }
+        return true;
+    }
     function PonLoz() {
         var Lozinka1 = document.getElementById("Lozinka1").value;
         var Lozinka2 = document.getElementById("Lozinka2").value;
@@ -31,6 +39,7 @@
         });
 
     });
+    
 </script>
 <h2>Forma za registraciju</h2>
 <hr />
@@ -155,7 +164,7 @@
 
         <div class="form-group text-right">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Registruj se" class="btn btn-primary" />
+                <input type="submit" value="Registruj se" class="btn btn-primary" onclick="return proveriLozinku();" />
             </div>
         </div>
     </div>

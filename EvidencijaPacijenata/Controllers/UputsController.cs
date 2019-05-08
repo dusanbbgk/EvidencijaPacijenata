@@ -140,6 +140,7 @@ namespace EvidencijaPacijenata.Controllers
                 try
                 {
                     db.SaveChanges();
+                    Session["Obavestenje"] = "Uput je napisan";
                 }
                 catch (Exception e) { Session["Obavestenje"] = "Uput nije napravljen - Greška: " + e; }
                 return RedirectToAction("Index");
@@ -212,6 +213,7 @@ namespace EvidencijaPacijenata.Controllers
             {
                 db.Entry(uput).State = EntityState.Modified;
                 db.SaveChanges();
+                Session["Obavestenje"] = "Uput je izmenjen";
                 return RedirectToAction("Index");
             }
             ViewBag.IDPacijenta = new SelectList(db.Korisniks, "ID", "Ime", uput.IDPacijenta);

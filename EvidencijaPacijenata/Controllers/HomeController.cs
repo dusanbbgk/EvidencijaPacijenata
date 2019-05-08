@@ -20,7 +20,6 @@ namespace EvidencijaPacijenata.Controllers
             }
             return View(db.Vestis.Take(3).OrderByDescending(v => v.DatumObjave).ToList());
         }
-
         public ActionResult About()
         {
             return View(db.ONamaPodacis.First());

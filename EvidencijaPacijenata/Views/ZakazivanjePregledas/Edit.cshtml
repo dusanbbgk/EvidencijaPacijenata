@@ -38,6 +38,11 @@
             alert("Morate izabrati radni dan");
             return false;
         }
+        var today = new Date();
+        if (datum <= today) {
+            alert("Datum pregleda nije dobar");
+            return false;
+        }
         return true;
     }
 </script>

@@ -19,6 +19,13 @@ namespace EvidencijaPacijenata.Controllers
         {
             return Session["IDAdmina"] != null ? View(db.Korisniks.OfType<Pacijent>().OrderByDescending(p => p.ID).ToList()) : (ActionResult)RedirectToAction("Index", "Home");
         }
+
+        public ActionResult Neodobreni(int? id)
+        {
+            if (id == 0)
+                return Session["IDAdmina"] != null ? View(db.Korisniks.OfType<Pacijent>().Where(p => p.Odobren == 0).OrderByDescending(p => p.ID).ToList()) : (ActionResult)RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home");
+        }
         public ActionResult Pretraga(string pretraga)
         {
             if (Session["IDLekara"] != null)
@@ -192,7 +199,7 @@ namespace EvidencijaPacijenata.Controllers
                 db.Korisniks.Add(pacijent);
                 db.SaveChanges();
                 Session["Obavestenje"] = "Uspešo ste se registrovali";
-                RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
             }
             var KrvnaGrupa = new SelectList(
                     new List<SelectListItem>

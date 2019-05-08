@@ -136,6 +136,7 @@ namespace EvidencijaPacijenata.Controllers
             {
                 db.Izvestajs.Add(izvestaj);
                 db.SaveChanges();
+                Session["Obavestenje"] = "Izvestaj je napisan";
                 return RedirectToAction("Index");
             }
             ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<LekarSpecijalista>().Where(l => l.ID == izvestaj.IDLekara), "ID", "ImePrezime");
@@ -178,6 +179,7 @@ namespace EvidencijaPacijenata.Controllers
             {
                 db.Entry(izvestaj).State = EntityState.Modified;
                 db.SaveChanges();
+                Session["Obavestenje"] = "Izvestaj je izmenjen";
                 return RedirectToAction("Index");
             }
             ViewBag.IDLekara = new SelectList(db.Korisniks.OfType<Lekar>().Where(l => l.ID == izvestaj.IDLekara), "ID", "ImePrezime");
