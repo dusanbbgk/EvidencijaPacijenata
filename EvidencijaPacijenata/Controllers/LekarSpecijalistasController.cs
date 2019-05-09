@@ -67,22 +67,23 @@ namespace EvidencijaPacijenata.Controllers
         public ActionResult Create([Bind(Include = "ID,Ime,Prezime,KorisnickoIme,Lozinka,DatumRodjenja,IDOdeljenja,Licenca,Slika,Specijalizacija")] LekarSpecijalista lekarSpecijalista, HttpPostedFileBase file)
         {
             lekarSpecijalista.Lozinka = EncryptPass.EncryptFunc(lekarSpecijalista.Lozinka);
-            if (file != null && file.ContentLength > 0)
-                try
-                {
-                    Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Imgs/Lekari"), lekarSpecijalista.KorisnickoIme));
-                    string path = Path.Combine(Server.MapPath("~/Imgs/Lekari/" + lekarSpecijalista.KorisnickoIme),
-                                               Path.GetFileName(file.FileName));
-                    file.SaveAs(path);
-                }
-                catch (Exception ex)
-                {
-                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
-                }
+            
             if (ModelState.IsValid)
             {
                 db.Korisniks.Add(lekarSpecijalista);
                 db.SaveChanges();
+                if (file != null && file.ContentLength > 0)
+                    try
+                    {
+                        Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Imgs/Lekari"), lekarSpecijalista.KorisnickoIme));
+                        string path = Path.Combine(Server.MapPath("~/Imgs/Lekari/" + lekarSpecijalista.KorisnickoIme),
+                                                   Path.GetFileName(file.FileName));
+                        file.SaveAs(path);
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                    }
                 return RedirectToAction("Index");
             }
             ViewBag.IDUstanove = new SelectList(db.Ustanovas.ToList(), "ID", "Naziv");

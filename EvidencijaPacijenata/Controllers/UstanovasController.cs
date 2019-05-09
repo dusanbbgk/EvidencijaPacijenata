@@ -48,22 +48,23 @@ namespace EvidencijaPacijenata.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Naziv,Adresa,Telefon,Email,Slika")] Ustanova ustanova, HttpPostedFileBase file)
         {
-            if (file != null && file.ContentLength > 0)
-                try
-                {
-                    Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Imgs/Ustanove"), ustanova.ID.ToString()));
-                    string path = Path.Combine(Server.MapPath("~/Imgs/Ustanove/" + ustanova.ID.ToString()),
-                                               Path.GetFileName(file.FileName));
-                    file.SaveAs(path);
-                }
-                catch (Exception ex)
-                {
-                    Session["Obavestenje"] = "ERROR:" + ex.Message.ToString();
-                }
+            
             if (ModelState.IsValid)
             {
                 db.Ustanovas.Add(ustanova);
                 db.SaveChanges();
+                if (file != null && file.ContentLength > 0)
+                    try
+                    {
+                        Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Imgs/Ustanove"), ustanova.ID.ToString()));
+                        string path = Path.Combine(Server.MapPath("~/Imgs/Ustanove/" + ustanova.ID.ToString()),
+                                                   Path.GetFileName(file.FileName));
+                        file.SaveAs(path);
+                    }
+                    catch (Exception ex)
+                    {
+                        Session["Obavestenje"] = "ERROR:" + ex.Message.ToString();
+                    }
                 return RedirectToAction("Index");
             }
 

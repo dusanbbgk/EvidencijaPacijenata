@@ -5,12 +5,12 @@
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Lista lekara opšte prakse</h2>
 
 @if (Session["IDAdmina"] != null)
 {
     <p>
-        @Html.ActionLink("Create New", "Create")
+        @Html.ActionLink("Dodaj novog lekara opšte prakse", "Create")
     </p>
 }
 <table class="table">
@@ -52,7 +52,7 @@
                 @Html.DisplayFor(modelItem => item.Licenca)
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", new { id = item.ID })
+                @Html.ActionLink("Detalji", "Details", new { id = item.ID })
                 @if (Session["IDAdmina"] != null)
                 {
                     <text> | </text>@Html.ActionLink("Edit", "Edit", new { id = item.ID })<text> | </text>

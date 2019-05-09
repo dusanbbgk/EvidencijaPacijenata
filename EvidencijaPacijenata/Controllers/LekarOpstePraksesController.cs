@@ -68,22 +68,23 @@ namespace EvidencijaPacijenata.Controllers
         {
             lekarOpstePrakse.Lozinka = EncryptPass.EncryptFunc(lekarOpstePrakse.Lozinka);
             if (file != null && file.ContentLength > 0)
-                try
-                {
-                    Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Imgs/Lekari"), lekarOpstePrakse.KorisnickoIme));
-                    string path = Path.Combine(Server.MapPath("~/Imgs/Lekari/" + lekarOpstePrakse.KorisnickoIme),
-                                               Path.GetFileName(file.FileName));
-                    file.SaveAs(path);
-                }
-                catch (Exception ex)
-                {
-                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
-                }
+                
             if (ModelState.IsValid)
             {
                 db.Korisniks.Add(lekarOpstePrakse);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                    try
+                    {
+                        Directory.CreateDirectory(Path.Combine(Server.MapPath("~/Imgs/Lekari"), lekarOpstePrakse.KorisnickoIme));
+                        string path = Path.Combine(Server.MapPath("~/Imgs/Lekari/" + lekarOpstePrakse.KorisnickoIme),
+                                                   Path.GetFileName(file.FileName));
+                        file.SaveAs(path);
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                    }
+                    return RedirectToAction("Index");
             }
             ViewBag.IDUstanove = new SelectList(db.Ustanovas.ToList(), "ID", "Naziv");
             List<SelectListItem> izbor = new List<SelectListItem>();
