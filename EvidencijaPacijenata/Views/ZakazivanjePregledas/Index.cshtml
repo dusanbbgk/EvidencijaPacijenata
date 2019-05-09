@@ -3,15 +3,12 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout2.cshtml";
+    //DateTime danas = DateTime.Now.Date;
 }
 
-<h2>Index</h2>
-@if (Session["IDAdmina"] != null)
-{
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-}
+<h2>Lista zakazanih pregleda</h2>
+<hr />
+@*<p>Izaberi datum: <input type="date" name="datumPregleda" value=@danas.ToString("yyyy-MM-dd") /> </p>*@
 <table class="table">
     <tr>
         <th>

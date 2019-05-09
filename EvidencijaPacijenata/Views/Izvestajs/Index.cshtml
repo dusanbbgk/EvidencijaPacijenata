@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout2.cshtml";
+    DateTime danas = DateTime.Now;
 }
 
 <h2>Istorija lečenja/izveštaji</h2>
@@ -41,12 +42,14 @@
             </td>
             <td>
                 @Html.ActionLink("Detalji", "Details", new { id = item.ID })
-                @if (Session["IDAdmina"] != null || (Session["IDLekara"] != null && Convert.ToInt32(Session["IDLekara"]) == item.IDLekara))
+                @if (Session["IDAdmina"] != null || (Session["IDLekara"] != null && Convert.ToInt32(Session["IDLekara"]) == item.IDLekara && danas.Date == Convert.ToDateTime(item.DatumPregleda).Date))
                 {
                     <text> | </text>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID })<text> | </text>
-
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    @Html.ActionLink("Izmeni", "Edit", new { id = item.ID })
+                }
+                @if (Session["IDAdmina"] != null)
+                {
+                    <text> | </text>@Html.ActionLink("Obriši", "Delete", new { id = item.ID })
                 }
             </td>
         </tr>
